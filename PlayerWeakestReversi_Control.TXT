@@ -1,0 +1,2479 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
+public class PlayerWeakestReversi_Control : MonoBehaviour
+{
+    private GameObject MainCameraJointWeakestReversi;
+
+    private GameObject CursorBlack;
+    private GameObject CursorWhite;
+    private GameObject StoneBlack;
+    private GameObject StoneWhite;
+
+    private GameObject Transform_Cursor;
+    private GameObject Transform_Stone;
+
+    private List<int> IntList_PositionColor = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    private List<int> IntList_PositionPoint = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    private List<int> IntList_PositionStoneBlack = new List<int> { 27, 36 };
+    private List<int> IntList_PositionStoneWhite = new List<int> { 28, 35 };
+    //private List<int> IntList_PositionStoneBlackAndWhite = new List<int> {27,28,35,36};
+    private List<int> IntList_PositionInvestigated = new List<int> {};
+
+    private int CursorPlayerPosition = 0;
+    private int CursorEnemyPosition = 0;
+
+    private int UpperDistanceFromCursorPlayerPosition = 1;
+    private int LowerDistanceFromCursorPlayerPosition = 1;
+    private int RightDistanceFromCursorPlayerPosition = 1;
+    private int LeftDistanceFromCursorPlayerPosition = 1;
+    private int UpperRightDistanceFromCursorPlayerPosition = 1;
+    private int UpperLeftDistanceFromCursorPlayerPosition = 1;
+    private int LowerRightDistanceFromCursorPlayerPosition = 1;
+    private int LowerLeftDistanceFromCursorPlayerPosition = 1;
+
+    private int UpperDistanceFromCursorEnemyPosition = 1;
+    private int LowerDistanceFromCursorEnemyPosition = 1;
+    private int RightDistanceFromCursorEnemyPosition = 1;
+    private int LeftDistanceFromCursorEnemyPosition = 1;
+    private int UpperRightDistanceFromCursorEnemyPosition = 1;
+    private int UpperLeftDistanceFromCursorEnemyPosition = 1;
+    private int LowerRightDistanceFromCursorEnemyPosition = 1;
+    private int LowerLeftDistanceFromCursorEnemyPosition = 1;
+
+    private int UpperCandidatePointPlayer = 0;
+    private int LowerCandidatePointPlayer = 0;
+    private int RightCandidatePointPlayer = 0;
+    private int LeftCandidatePointPlayer = 0;
+    private int UpperRightCandidatePointPlayer = 0;
+    private int UpperLeftCandidatePointPlayer = 0;
+    private int LowerRightCandidatePointPlayer = 0;
+    private int LowerLeftCandidatePointPlayer = 0;
+    private int TotalCandidatePointPlayer = 0;
+
+    private int UpperCandidatePointEnemy = 0;
+    private int LowerCandidatePointEnemy = 0;
+    private int RightCandidatePointEnemy = 0;
+    private int LeftCandidatePointEnemy = 0;
+    private int UpperRightCandidatePointEnemy = 0;
+    private int UpperLeftCandidatePointEnemy = 0;
+    private int LowerRightCandidatePointEnemy = 0;
+    private int LowerLeftCandidatePointEnemy = 0;
+    private int TotalCandidatePointEnemy = 0;
+
+    private string PlayerColor = "White";
+    private string Turn = "Player";
+
+    private bool CanInvokeInvestigatation_SettingStonePlayer = true;
+    private bool CanInvokeInvestigatation_SettingStoneEnemy = true;
+
+    private bool IsFinishedUpperInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedLowerInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedRightInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedLeftInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedUpperRightInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedUpperLeftInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedLowerRightInvestigatation_SettingStonePlayer = false;
+    private bool IsFinishedLowerLeftInvestigatation_SettingStonePlayer = false;
+
+    private bool IsFinishedUpperInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedLowerInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedRightInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedLeftInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedUpperRightInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedUpperLeftInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedLowerRightInvestigatation_SettingStoneEnemy = false;
+    private bool IsFinishedLowerLeftInvestigatation_SettingStoneEnemy = false;
+
+
+
+
+
+
+
+
+
+
+
+    private bool QU = false;
+    private bool WU = false;
+    private bool EU = false;
+    private bool RU = false;
+    private bool TU = false;
+    private bool YU = false;
+    private bool UU = false;
+    private bool IU = false;
+    private bool OU = false;
+    private bool PU = false;
+    private bool AU = false;
+    private bool SU = false;
+    private bool DU = false;
+    private bool FU = false;
+    private bool GU = false;
+    private bool HU = false;
+    private bool JU = false;
+    private bool KU = false;
+    private bool LU = false;
+    private bool ZU = false;
+    private bool XU = false;
+    private bool CU = false;
+    private bool VU = false;
+    private bool BU = false;
+    private bool NU = false;
+    private bool MU = false;
+    private bool Alpha0U = false;
+    private bool Alpha1U = false;
+    private bool Alpha2U = false;
+    private bool Alpha3U = false;
+    private bool Alpha4U = false;
+    private bool Alpha5U = false;
+    private bool Alpha6U = false;
+    private bool Alpha7U = false;
+    private bool Alpha8U = false;
+    private bool Alpha9U = false;
+    private bool BackSpaceU = false;
+    private bool SpaceU = false;
+    private bool RightShiftU = false;
+    private bool LeftShiftU = false;
+    private bool RightCtrlU = false;
+    private bool LeftCtrlU = false;
+    private bool TabU = false;
+    private bool EscapeU = false;
+    private bool EnterU = false;
+    private bool UpArrowU = false;
+    private bool DownArrowU = false;
+    private bool RightArrowU = false;
+    private bool LeftArrowU = false;
+
+    private bool Q = false;
+    private bool W = false;
+    private bool E = false;
+    private bool R = false;
+    private bool T = false;
+    private bool Y = false;
+    private bool U = false;
+    private bool I = false;
+    private bool O = false;
+    private bool P = false;
+    private bool A = false;
+    private bool S = false;
+    private bool D = false;
+    private bool F = false;
+    private bool G = false;
+    private bool H = false;
+    private bool J = false;
+    private bool K = false;
+    private bool L = false;
+    private bool Z = false;
+    private bool X = false;
+    private bool C = false;
+    private bool V = false;
+    private bool B = false;
+    private bool N = false;
+    private bool M = false;
+    private bool Alpha0 = false;
+    private bool Alpha1 = false;
+    private bool Alpha2 = false;
+    private bool Alpha3 = false;
+    private bool Alpha4 = false;
+    private bool Alpha5 = false;
+    private bool Alpha6 = false;
+    private bool Alpha7 = false;
+    private bool Alpha8 = false;
+    private bool Alpha9 = false;
+    private bool BackSpace = false;
+    private bool Space = false;
+    private bool RightShift = false;
+    private bool LeftShift = false;
+    private bool RightCtrl = false;
+    private bool LeftCtrl = false;
+    private bool Tab = false;
+    private bool Escape = false;
+    private bool Enter = false;
+    private bool UpArrow = false;
+    private bool DownArrow = false;
+    private bool RightArrow = false;
+    private bool LeftArrow = false;
+
+    private bool QD = false;
+    private bool WD = false;
+    private bool ED = false;
+    private bool RD = false;
+    private bool TD = false;
+    private bool YD = false;
+    private bool UD = false;
+    private bool ID = false;
+    private bool OD = false;
+    private bool PD = false;
+    private bool AD = false;
+    private bool SD = false;
+    private bool DD = false;
+    private bool FD = false;
+    private bool GD = false;
+    private bool HD = false;
+    private bool JD = false;
+    private bool KD = false;
+    private bool LD = false;
+    private bool ZD = false;
+    private bool XD = false;
+    private bool CD = false;
+    private bool VD = false;
+    private bool BD = false;
+    private bool ND = false;
+    private bool MD = false;
+    private bool Alpha0D = false;
+    private bool Alpha1D = false;
+    private bool Alpha2D = false;
+    private bool Alpha3D = false;
+    private bool Alpha4D = false;
+    private bool Alpha5D = false;
+    private bool Alpha6D = false;
+    private bool Alpha7D = false;
+    private bool Alpha8D = false;
+    private bool Alpha9D = false;
+    private bool BackSpaceD = false;
+    private bool SpaceD = false;
+    private bool RightShiftD = false;
+    private bool LeftShiftD = false;
+    private bool RightCtrlD = false;
+    private bool LeftCtrlD = false;
+    private bool TabD = false;
+    private bool EscapeD = false;
+    private bool EnterD = false;
+    private bool UpArrowD = false;
+    private bool DownArrowD = false;
+    private bool RightArrowD = false;
+    private bool LeftArrowD = false;
+
+    private bool CanUseShortCutKey = true;
+
+    void Start()
+    {
+        MainCameraJointWeakestReversi = GameObject.Find("MainCameraJointWeakestReversi");
+
+        CursorBlack = (GameObject)Resources.Load("Object/Cursor/CursorBlack");
+        CursorWhite = (GameObject)Resources.Load("Object/Cursor/CursorWhite");
+        StoneBlack = (GameObject)Resources.Load("Object/Stone/StoneBlack");
+        StoneWhite = (GameObject)Resources.Load("Object/Stone/StoneWhite");
+
+        Transform_Cursor = GameObject.Find("Transform_Cursor");
+        Transform_Stone = GameObject.Find("Transform_Stone");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (PlayerColor == "Black")
+        {
+
+        }
+        if (PlayerColor == "White")
+        {
+            GameObject GameObject_CursorWhite = Instantiate(CursorWhite) as GameObject;
+            GameObject_CursorWhite.name = "PlayerCursor";
+            GameObject_CursorWhite.tag = "Cursor";
+            GameObject_CursorWhite.transform.position = Transform_Cursor.transform.position + new Vector3(CursorPlayerPosition % 8 + 1, 0, Mathf.FloorToInt(CursorPlayerPosition / 8) + 1);
+
+
+            for (int a = 0; a <= IntList_PositionStoneBlack.Count - 1; a++)
+            {
+                GameObject GameObject_StoneBlack = Instantiate(StoneBlack) as GameObject;
+                GameObject_StoneBlack.name = "StoneEnemy";
+                GameObject_StoneBlack.tag = "StoneEnemy";
+                GameObject_StoneBlack.transform.position = Transform_Stone.transform.position + new Vector3(IntList_PositionStoneBlack[a] % 8 + 1, 0, Mathf.FloorToInt(IntList_PositionStoneBlack[a] / 8) + 1);
+            }
+            for (int b = 0; b <= IntList_PositionStoneWhite.Count - 1; b++)
+            {
+                GameObject GameObject_StoneWhite = Instantiate(StoneWhite) as GameObject;
+                GameObject_StoneWhite.name = "StonePlayer";
+                GameObject_StoneWhite.tag = "StonePlayer";
+                GameObject_StoneWhite.transform.position = Transform_Stone.transform.position + new Vector3(IntList_PositionStoneWhite[b] % 8 + 1, 0, Mathf.FloorToInt(IntList_PositionStoneWhite[b] / 8) + 1);
+            }
+        }
+    }
+
+
+
+
+
+
+    void FixedUpdate()
+    {
+        //MainCameraJointWeakestReversi操作
+        if (UpArrow)
+        {
+            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(0.3f, 0, 0);
+        }
+        if (DownArrow)
+        {
+            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(-0.3f, 0, 0);
+        }
+        if (RightArrow)
+        {
+            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(0, -0.3f, 0);
+        }
+        if (LeftArrow)
+        {
+            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(0, 0.3f, 0);
+        }
+        if (RD)
+        {
+            MainCameraJointWeakestReversi.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+    }
+
+
+
+
+
+
+
+    void Update()
+    {
+        //ShortCutKey
+        if (CanUseShortCutKey == true)
+        {
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                QU = true;
+            }
+            else
+            {
+                QU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.W))
+            {
+                WU = true;
+            }
+            else
+            {
+                WU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                EU = true;
+            }
+            else
+            {
+                EU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                RU = true;
+            }
+            else
+            {
+                RU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.T))
+            {
+                TU = true;
+            }
+            else
+            {
+                TU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Y))
+            {
+                YU = true;
+            }
+            else
+            {
+                YU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.U))
+            {
+                UU = true;
+            }
+            else
+            {
+                UU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.I))
+            {
+                IU = true;
+            }
+            else
+            {
+                IU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.O))
+            {
+                OU = true;
+            }
+            else
+            {
+                OU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                PU = true;
+            }
+            else
+            {
+                PU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                AU = true;
+            }
+            else
+            {
+                AU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                SU = true;
+            }
+            else
+            {
+                SU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                DU = true;
+            }
+            else
+            {
+                DU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                FU = true;
+            }
+            else
+            {
+                FU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                GU = true;
+            }
+            else
+            {
+                GU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.H))
+            {
+                HU = true;
+            }
+            else
+            {
+                HU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.J))
+            {
+                JU = true;
+            }
+            else
+            {
+                JU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.K))
+            {
+                KU = true;
+            }
+            else
+            {
+                KU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.L))
+            {
+                LU = true;
+            }
+            else
+            {
+                LU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Z))
+            {
+                ZU = true;
+            }
+            else
+            {
+                ZU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.X))
+            {
+                XU = true;
+            }
+            else
+            {
+                XU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                CU = true;
+            }
+            else
+            {
+                CU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.V))
+            {
+                VU = true;
+            }
+            else
+            {
+                VU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.B))
+            {
+                BU = true;
+            }
+            else
+            {
+                BU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.N))
+            {
+                NU = true;
+            }
+            else
+            {
+                NU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.M))
+            {
+                MU = true;
+            }
+            else
+            {
+                MU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha0))
+            {
+                Alpha0U = true;
+            }
+            else
+            {
+                Alpha0U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha1))
+            {
+                Alpha1U = true;
+            }
+            else
+            {
+                Alpha1U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha2))
+            {
+                Alpha2U = true;
+            }
+            else
+            {
+                Alpha2U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha3))
+            {
+                Alpha3U = true;
+            }
+            else
+            {
+                Alpha3U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha4))
+            {
+                Alpha4U = true;
+            }
+            else
+            {
+                Alpha4U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha5))
+            {
+                Alpha5U = true;
+            }
+            else
+            {
+                Alpha5U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha6))
+            {
+                Alpha6U = true;
+            }
+            else
+            {
+                Alpha6U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha7))
+            {
+                Alpha7U = true;
+            }
+            else
+            {
+                Alpha7U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha8))
+            {
+                Alpha8U = true;
+            }
+            else
+            {
+                Alpha8U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha9))
+            {
+                Alpha9U = true;
+            }
+            else
+            {
+                Alpha9U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Backspace))
+            {
+                BackSpaceU = true;
+            }
+            else
+            {
+                BackSpaceU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                SpaceU = true;
+            }
+            else
+            {
+                SpaceU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.RightShift))
+            {
+                RightShiftU = true;
+            }
+            else
+            {
+                RightShiftU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                LeftShiftU = true;
+            }
+            else
+            {
+                LeftShiftU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.RightControl))
+            {
+                RightCtrlU = true;
+            }
+            else
+            {
+                RightCtrlU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                LeftCtrlU = true;
+            }
+            else
+            {
+                LeftCtrlU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                TabU = true;
+            }
+            else
+            {
+                TabU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                EscapeU = true;
+            }
+            else
+            {
+                EscapeU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Return))
+            {
+                EnterU = true;
+            }
+            else
+            {
+                EnterU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.UpArrow))
+            {
+                UpArrowU = true;
+            }
+            else
+            {
+                UpArrowU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                DownArrowU = true;
+            }
+            else
+            {
+                DownArrowU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                RightArrowU = true;
+            }
+            else
+            {
+                RightArrowU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                LeftArrowU = true;
+            }
+            else
+            {
+                LeftArrowU = false;
+            }
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                Q = true;
+            }
+            else
+            {
+                Q = false;
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                W = true;
+            }
+            else
+            {
+                W = false;
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                E = true;
+            }
+            else
+            {
+                E = false;
+            }
+            if (Input.GetKey(KeyCode.R))
+            {
+                R = true;
+            }
+            else
+            {
+                R = false;
+            }
+            if (Input.GetKey(KeyCode.T))
+            {
+                T = true;
+            }
+            else
+            {
+                T = false;
+            }
+            if (Input.GetKey(KeyCode.Y))
+            {
+                Y = true;
+            }
+            else
+            {
+                Y = false;
+            }
+            if (Input.GetKey(KeyCode.U))
+            {
+                U = true;
+            }
+            else
+            {
+                U = false;
+            }
+            if (Input.GetKey(KeyCode.I))
+            {
+                I = true;
+            }
+            else
+            {
+                I = false;
+            }
+            if (Input.GetKey(KeyCode.O))
+            {
+                O = true;
+            }
+            else
+            {
+                O = false;
+            }
+            if (Input.GetKey(KeyCode.P))
+            {
+                P = true;
+            }
+            else
+            {
+                P = false;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                A = true;
+            }
+            else
+            {
+                A = false;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                S = true;
+            }
+            else
+            {
+                S = false;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                D = true;
+            }
+            else
+            {
+                D = false;
+            }
+            if (Input.GetKey(KeyCode.F))
+            {
+                F = true;
+            }
+            else
+            {
+                F = false;
+            }
+            if (Input.GetKey(KeyCode.G))
+            {
+                G = true;
+            }
+            else
+            {
+                G = false;
+            }
+            if (Input.GetKey(KeyCode.H))
+            {
+                H = true;
+            }
+            else
+            {
+                H = false;
+            }
+            if (Input.GetKey(KeyCode.J))
+            {
+                J = true;
+            }
+            else
+            {
+                J = false;
+            }
+            if (Input.GetKey(KeyCode.K))
+            {
+                K = true;
+            }
+            else
+            {
+                K = false;
+            }
+            if (Input.GetKey(KeyCode.L))
+            {
+                L = true;
+            }
+            else
+            {
+                L = false;
+            }
+            if (Input.GetKey(KeyCode.Z))
+            {
+                Z = true;
+            }
+            else
+            {
+                Z = false;
+            }
+            if (Input.GetKey(KeyCode.X))
+            {
+                X = true;
+            }
+            else
+            {
+                X = false;
+            }
+            if (Input.GetKey(KeyCode.C))
+            {
+                C = true;
+            }
+            else
+            {
+                C = false;
+            }
+            if (Input.GetKey(KeyCode.V))
+            {
+                V = true;
+            }
+            else
+            {
+                V = false;
+            }
+            if (Input.GetKey(KeyCode.B))
+            {
+                B = true;
+            }
+            else
+            {
+                B = false;
+            }
+            if (Input.GetKey(KeyCode.N))
+            {
+                N = true;
+            }
+            else
+            {
+                N = false;
+            }
+            if (Input.GetKey(KeyCode.M))
+            {
+                M = true;
+            }
+            else
+            {
+                M = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha0))
+            {
+                Alpha0 = true;
+            }
+            else
+            {
+                Alpha0 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                Alpha1 = true;
+            }
+            else
+            {
+                Alpha1 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                Alpha2 = true;
+            }
+            else
+            {
+                Alpha2 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha3))
+            {
+                Alpha3 = true;
+            }
+            else
+            {
+                Alpha3 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha4))
+            {
+                Alpha4 = true;
+            }
+            else
+            {
+                Alpha4 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha5))
+            {
+                Alpha5 = true;
+            }
+            else
+            {
+                Alpha5 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha6))
+            {
+                Alpha6 = true;
+            }
+            else
+            {
+                Alpha6 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha7))
+            {
+                Alpha7 = true;
+            }
+            else
+            {
+                Alpha7 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha8))
+            {
+                Alpha8 = true;
+            }
+            else
+            {
+                Alpha8 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha9))
+            {
+                Alpha9 = true;
+            }
+            else
+            {
+                Alpha9 = false;
+            }
+            if (Input.GetKey(KeyCode.Backspace))
+            {
+                BackSpace = true;
+            }
+            else
+            {
+                BackSpace = false;
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Space = true;
+            }
+            else
+            {
+                Space = false;
+            }
+            if (Input.GetKey(KeyCode.RightShift))
+            {
+                RightShift = true;
+            }
+            else
+            {
+                RightShift = false;
+            }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                LeftShift = true;
+            }
+            else
+            {
+                LeftShift = false;
+            }
+            if (Input.GetKey(KeyCode.RightControl))
+            {
+                RightCtrl = true;
+            }
+            else
+            {
+                RightCtrl = false;
+            }
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                LeftCtrl = true;
+            }
+            else
+            {
+                LeftCtrl = false;
+            }
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                Tab = true;
+            }
+            else
+            {
+                Tab = false;
+            }
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Escape = true;
+            }
+            else
+            {
+                Escape = false;
+            }
+            if (Input.GetKey(KeyCode.Return))
+            {
+                Enter = true;
+            }
+            else
+            {
+                Enter = false;
+            }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                UpArrow = true;
+            }
+            else
+            {
+                UpArrow = false;
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                DownArrow = true;
+            }
+            else
+            {
+                DownArrow = false;
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                RightArrow = true;
+            }
+            else
+            {
+                RightArrow = false;
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                LeftArrow = true;
+            }
+            else
+            {
+                LeftArrow = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                QD = true;
+            }
+            else
+            {
+                QD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                WD = true;
+            }
+            else
+            {
+                WD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                ED = true;
+            }
+            else
+            {
+                ED = false;
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RD = true;
+            }
+            else
+            {
+                RD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                TD = true;
+            }
+            else
+            {
+                TD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                YD = true;
+            }
+            else
+            {
+                YD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                UD = true;
+            }
+            else
+            {
+                UD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                ID = true;
+            }
+            else
+            {
+                ID = false;
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                OD = true;
+            }
+            else
+            {
+                OD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                PD = true;
+            }
+            else
+            {
+                PD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                AD = true;
+            }
+            else
+            {
+                AD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                SD = true;
+            }
+            else
+            {
+                SD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                DD = true;
+            }
+            else
+            {
+                DD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                FD = true;
+            }
+            else
+            {
+                FD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                GD = true;
+            }
+            else
+            {
+                GD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                HD = true;
+            }
+            else
+            {
+                HD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                JD = true;
+            }
+            else
+            {
+                JD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                KD = true;
+            }
+            else
+            {
+                KD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                LD = true;
+            }
+            else
+            {
+                LD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                ZD = true;
+            }
+            else
+            {
+                ZD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                XD = true;
+            }
+            else
+            {
+                XD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                CD = true;
+            }
+            else
+            {
+                CD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                VD = true;
+            }
+            else
+            {
+                VD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                BD = true;
+            }
+            else
+            {
+                BD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                ND = true;
+            }
+            else
+            {
+                ND = false;
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                MD = true;
+            }
+            else
+            {
+                MD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                Alpha0D = true;
+            }
+            else
+            {
+                Alpha0D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Alpha1D = true;
+            }
+            else
+            {
+                Alpha1D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Alpha2D = true;
+            }
+            else
+            {
+                Alpha2D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Alpha3D = true;
+            }
+            else
+            {
+                Alpha3D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                Alpha4D = true;
+            }
+            else
+            {
+                Alpha4D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                Alpha5D = true;
+            }
+            else
+            {
+                Alpha5D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                Alpha6D = true;
+            }
+            else
+            {
+                Alpha6D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                Alpha7D = true;
+            }
+            else
+            {
+                Alpha7D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                Alpha8D = true;
+            }
+            else
+            {
+                Alpha8D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                Alpha9D = true;
+            }
+            else
+            {
+                Alpha9D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                BackSpaceD = true;
+            }
+            else
+            {
+                BackSpaceD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SpaceD = true;
+            }
+            else
+            {
+                SpaceD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.RightShift))
+            {
+                RightShiftD = true;
+            }
+            else
+            {
+                RightShiftD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                LeftShiftD = true;
+            }
+            else
+            {
+                LeftShiftD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.RightControl))
+            {
+                RightCtrlD = true;
+            }
+            else
+            {
+                RightCtrlD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                LeftCtrlD = true;
+            }
+            else
+            {
+                LeftCtrlD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                TabD = true;
+            }
+            else
+            {
+                TabD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                EscapeD = true;
+            }
+            else
+            {
+                EscapeD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                EnterD = true;
+            }
+            else
+            {
+                EnterD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                UpArrowD = true;
+            }
+            else
+            {
+                UpArrowD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                DownArrowD = true;
+            }
+            else
+            {
+                DownArrowD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                RightArrowD = true;
+            }
+            else
+            {
+                RightArrowD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                LeftArrowD = true;
+            }
+            else
+            {
+                LeftArrowD = false;
+            }
+        }
+
+
+
+
+        if (Turn == "Player")
+        {
+            //プレイヤーCursor操作
+            if (GameObject.FindWithTag("Cursor") != null)
+            {
+                //上移動
+                if (WD & CursorPlayerPosition <= 55)
+                {
+                    CursorPlayerPosition += 8;
+                }
+                //下移動
+                if (SD & CursorPlayerPosition >= 8)
+                {
+                    CursorPlayerPosition -= 8;
+                }
+                //右移動
+                if (DD &
+                    CursorPlayerPosition != 7 &
+                    CursorPlayerPosition != 15 &
+                    CursorPlayerPosition != 23 &
+                    CursorPlayerPosition != 31 &
+                    CursorPlayerPosition != 39 &
+                    CursorPlayerPosition != 47 &
+                    CursorPlayerPosition != 55 &
+                    CursorPlayerPosition != 63)
+                {
+                    CursorPlayerPosition += 1;
+                }
+                //左移動
+                if (AD &
+                    CursorPlayerPosition != 0 &
+                    CursorPlayerPosition != 8 &
+                    CursorPlayerPosition != 16 &
+                    CursorPlayerPosition != 24 &
+                    CursorPlayerPosition != 32 &
+                    CursorPlayerPosition != 40 &
+                    CursorPlayerPosition != 48 &
+                    CursorPlayerPosition != 56)
+                {
+                    CursorPlayerPosition -= 1;
+                }
+
+                GameObject.FindWithTag("Cursor").transform.position = Transform_Cursor.transform.position + new Vector3(CursorPlayerPosition % 8 + 1, 0, Mathf.FloorToInt(CursorPlayerPosition / 8) + 1);
+            }
+
+            //StonePlayer設置調査
+            if (SpaceD)
+            {
+                if (IntList_PositionColor[CursorPlayerPosition] == 0)
+                {
+                    if (CanInvokeInvestigatation_SettingStonePlayer == true)
+                    {
+                        CanInvokeInvestigatation_SettingStonePlayer = false;
+
+                        Invoke("Investigatation_SettingStonePlayer", 0);
+                    }
+                }
+                else
+                {
+                    Debug.Log("そこには置けません。");
+                }
+            }
+        }
+        if (Turn == "Enemy")
+        {
+            if(CanInvokeInvestigatation_SettingStoneEnemy == true)
+            {
+                CanInvokeInvestigatation_SettingStoneEnemy = false;
+
+                Invoke("Investigatation_SettingStoneEnemy", 0);
+            }
+        }
+
+
+
+
+
+
+        if (Alpha1D)
+        {
+            Debug.Log(CursorPlayerPosition);
+        }
+        if (Alpha2D)
+        {
+            Debug.Log(IntList_PositionColor[CursorPlayerPosition]);
+        }
+        if (Alpha3D)
+        {
+            Debug.Log(UpperCandidatePointPlayer);
+            Debug.Log(LowerCandidatePointPlayer);
+            Debug.Log(RightCandidatePointPlayer);
+            Debug.Log(LeftCandidatePointPlayer);
+            Debug.Log(UpperRightCandidatePointPlayer);
+            Debug.Log(UpperLeftCandidatePointPlayer);
+            Debug.Log(LowerRightCandidatePointPlayer);
+            Debug.Log(LowerLeftCandidatePointPlayer);
+        }
+        if (Alpha4D)
+        {
+            if (PlayerColor == "Black")
+            {
+
+            }
+            if (PlayerColor == "White")
+            {
+                IntList_PositionStoneBlack = new List<int> { };
+                IntList_PositionStoneWhite = new List<int> { };
+
+
+
+
+
+
+
+                int a = IntList_PositionColor.IndexOf(1, 0);
+                if (a > 0)
+                {
+                    IntList_PositionStoneBlack.Add(a);
+
+                    while (a > 0)
+                    {
+                        a = IntList_PositionColor.IndexOf(1, a + 1);
+
+                        if (a > 0)
+                        {
+                            IntList_PositionStoneBlack.Add(a);
+                        }
+                    }
+                }
+
+
+
+
+
+                int b = IntList_PositionColor.IndexOf(2, 0);
+                if (b > 0)
+                {
+                    IntList_PositionStoneWhite.Add(b);
+
+                    while (b > 0)
+                    {
+                        b = IntList_PositionColor.IndexOf(2, b + 1);
+
+                        if (b > 0)
+                        {
+                            IntList_PositionStoneWhite.Add(b);
+                        }
+                    }
+                }
+
+
+
+                for (int i = 0; i <= IntList_PositionStoneBlack.Count - 1; i++)
+                {
+                    //Debug.Log(IntList_PositionStoneWhite[a]);
+
+                    GameObject GameObject_StoneBlack = Instantiate(StoneBlack) as GameObject;
+                    GameObject_StoneBlack.name = "StoneEnemy";
+                    GameObject_StoneBlack.tag = "StoneEnemy";
+                    GameObject_StoneBlack.transform.position = Transform_Stone.transform.position + new Vector3(IntList_PositionStoneBlack[i] % 8 + 1, 0, Mathf.FloorToInt(IntList_PositionStoneBlack[i] / 8) + 1);
+                }
+                for (int i = 0; i <= IntList_PositionStoneWhite.Count - 1; i++)
+                {
+                    //Debug.Log(IntList_PositionStoneWhite[i]);
+
+                    GameObject GameObject_StoneWhite = Instantiate(StoneWhite) as GameObject;
+                    GameObject_StoneWhite.name = "StonePlayer";
+                    GameObject_StoneWhite.tag = "StonePlayer";
+                    GameObject_StoneWhite.transform.position = Transform_Stone.transform.position + new Vector3(IntList_PositionStoneWhite[i] % 8 + 1, 0, Mathf.FloorToInt(IntList_PositionStoneWhite[i] / 8) + 1);
+                }
+            }
+        }
+        if (Alpha5D)
+        {
+            for (int i = 0; i <= IntList_PositionInvestigated.Count - 1; i++)
+            {
+                Debug.Log(IntList_PositionInvestigated[i]);
+            }
+        }
+        if (Alpha6D)
+        {
+            //for (int i = 0; i <= result.Count - 1; i++)
+            //{
+            //    Debug.Log(result[i]);
+            //}
+        }
+    }
+
+
+    //StonePlayer設置調査
+    void Investigatation_SettingStonePlayer()
+    {
+        //Debug.Log("Investigatation_SettingStonePlayer was called");
+
+        if (PlayerColor == "Black")
+        {
+
+        }
+        if (PlayerColor == "White")
+        {
+            //上調査
+            if (IsFinishedUpperInvestigatation_SettingStonePlayer == false & 
+                CursorPlayerPosition <= 55)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition + (8 * UpperDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        UpperCandidatePointPlayer = 0;
+                        IsFinishedUpperInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        UpperDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        UpperCandidatePointPlayer = UpperDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedUpperInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                UpperCandidatePointPlayer = 0;
+                IsFinishedUpperInvestigatation_SettingStonePlayer = true;
+            }
+            //下調査
+            if (IsFinishedLowerInvestigatation_SettingStonePlayer == false &
+                CursorPlayerPosition >= 8)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition - (8 * LowerDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        LowerCandidatePointPlayer = 0;
+                        IsFinishedLowerInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        LowerDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        LowerCandidatePointPlayer = LowerDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedLowerInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LowerCandidatePointPlayer = 0;
+                IsFinishedLowerInvestigatation_SettingStonePlayer = true;
+            }
+            //右調査
+            if (IsFinishedRightInvestigatation_SettingStonePlayer == false & 
+                CursorPlayerPosition != 7 &
+                CursorPlayerPosition != 15 &
+                CursorPlayerPosition != 23 &
+                CursorPlayerPosition != 31 &
+                CursorPlayerPosition != 39 &
+                CursorPlayerPosition != 47 &
+                CursorPlayerPosition != 55 &
+                 CursorPlayerPosition != 63)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition + (1 * RightDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        RightCandidatePointPlayer = 0;
+                        IsFinishedRightInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        RightDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        RightCandidatePointPlayer = RightDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedRightInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                RightCandidatePointPlayer = 0;
+                IsFinishedRightInvestigatation_SettingStonePlayer = true;
+            }
+            //左調査
+            if (IsFinishedLeftInvestigatation_SettingStonePlayer == false &
+                CursorPlayerPosition != 0 &
+                CursorPlayerPosition != 8 &
+                CursorPlayerPosition != 16 &
+                CursorPlayerPosition != 24 &
+                CursorPlayerPosition != 32 &
+                CursorPlayerPosition != 40 &
+                CursorPlayerPosition != 48 &
+                CursorPlayerPosition != 56)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition - (1 * LeftDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        LeftCandidatePointPlayer = 0;
+                        IsFinishedLeftInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        LeftDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        LeftCandidatePointPlayer = LeftDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedLeftInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LeftCandidatePointPlayer = 0;
+                IsFinishedLeftInvestigatation_SettingStonePlayer = true;
+            }
+            //右上調査
+            if (IsFinishedUpperRightInvestigatation_SettingStonePlayer == false &
+                CursorPlayerPosition != 7 &
+                CursorPlayerPosition != 15 &
+                CursorPlayerPosition != 23 &
+                CursorPlayerPosition != 31 &
+                CursorPlayerPosition != 39 &
+                CursorPlayerPosition != 47 &
+                CursorPlayerPosition <= 54)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition + (9 * UpperRightDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        UpperRightCandidatePointPlayer = 0;
+                        IsFinishedUpperRightInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        UpperRightDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        UpperRightCandidatePointPlayer = UpperRightDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedUpperRightInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                UpperRightCandidatePointPlayer = 0;
+                IsFinishedUpperRightInvestigatation_SettingStonePlayer = true;
+            }
+            //左上調査
+            if (IsFinishedUpperLeftInvestigatation_SettingStonePlayer == false &
+                CursorPlayerPosition != 0 &
+                CursorPlayerPosition != 8 &
+                CursorPlayerPosition != 16 &
+                CursorPlayerPosition != 24 &
+                CursorPlayerPosition != 32 &
+                CursorPlayerPosition != 40 &
+                CursorPlayerPosition != 48 &
+                CursorPlayerPosition <= 55)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition + (7 * UpperLeftDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        UpperLeftCandidatePointPlayer = 0;
+                        IsFinishedUpperLeftInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        UpperLeftDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        UpperLeftCandidatePointPlayer = UpperLeftDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedUpperLeftInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                UpperLeftCandidatePointPlayer = 0;
+                IsFinishedUpperLeftInvestigatation_SettingStonePlayer = true;
+            }
+            //右下調査
+            if (IsFinishedLowerRightInvestigatation_SettingStonePlayer == false &
+                CursorPlayerPosition != 15 &
+                CursorPlayerPosition != 23 &
+                CursorPlayerPosition != 31 &
+                CursorPlayerPosition != 39 &
+                CursorPlayerPosition != 47 &
+                CursorPlayerPosition != 55 &
+                CursorPlayerPosition != 63 &
+                CursorPlayerPosition >= 8)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition - (7 * LowerRightDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        LowerRightCandidatePointPlayer = 0;
+                        IsFinishedLowerRightInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        LowerRightDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        LowerRightCandidatePointPlayer = LowerRightDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedLowerRightInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LowerRightCandidatePointPlayer = 0;
+                IsFinishedLowerRightInvestigatation_SettingStonePlayer = true;
+            }
+            //左下調査
+            if (IsFinishedLowerLeftInvestigatation_SettingStonePlayer == false &
+                CursorPlayerPosition != 16 &
+                CursorPlayerPosition != 24 &
+                CursorPlayerPosition != 32 &
+                CursorPlayerPosition != 40 &
+                CursorPlayerPosition != 48 &
+                CursorPlayerPosition != 56 &
+                CursorPlayerPosition >= 8)
+            {
+                switch (IntList_PositionColor[CursorPlayerPosition - (9 * LowerLeftDistanceFromCursorPlayerPosition)])
+                {
+                    case 0:
+                        LowerLeftCandidatePointPlayer = 0;
+                        IsFinishedLowerLeftInvestigatation_SettingStonePlayer = true;
+                        break;
+                    case 1:
+                        LowerLeftDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        LowerLeftCandidatePointPlayer = LowerLeftDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedLowerLeftInvestigatation_SettingStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LowerLeftCandidatePointPlayer = 0;
+                IsFinishedLowerLeftInvestigatation_SettingStonePlayer = true;
+            }
+        }
+
+        if(IsFinishedUpperInvestigatation_SettingStonePlayer == false|
+           IsFinishedLowerInvestigatation_SettingStonePlayer == false |
+           IsFinishedRightInvestigatation_SettingStonePlayer == false |
+           IsFinishedLeftInvestigatation_SettingStonePlayer == false | 
+           IsFinishedUpperRightInvestigatation_SettingStonePlayer == false |
+           IsFinishedUpperLeftInvestigatation_SettingStonePlayer == false |
+           IsFinishedLowerRightInvestigatation_SettingStonePlayer == false |
+           IsFinishedLowerLeftInvestigatation_SettingStonePlayer == false)
+        {
+            Invoke("Investigatation_SettingStonePlayer", 0);
+        }
+        else
+        {
+            if (UpperCandidatePointPlayer == 0 &
+                LowerCandidatePointPlayer == 0 &
+                RightCandidatePointPlayer == 0 &
+                LeftCandidatePointPlayer == 0 &
+                UpperRightCandidatePointPlayer == 0 &
+                UpperLeftCandidatePointPlayer == 0 &
+                LowerRightCandidatePointPlayer == 0 &
+                LowerLeftCandidatePointPlayer == 0)
+            {
+                Debug.Log("そこには置けません。");
+
+                UpperDistanceFromCursorPlayerPosition = 1;
+                LowerDistanceFromCursorPlayerPosition = 1;
+                RightDistanceFromCursorPlayerPosition = 1;
+                LeftDistanceFromCursorPlayerPosition = 1;
+                UpperRightDistanceFromCursorPlayerPosition = 1;
+                UpperLeftDistanceFromCursorPlayerPosition = 1;
+                LowerRightDistanceFromCursorPlayerPosition = 1;
+                LowerLeftDistanceFromCursorPlayerPosition = 1;
+
+                UpperCandidatePointPlayer = 0;
+                LowerCandidatePointPlayer = 0;
+                RightCandidatePointPlayer = 0;
+                LeftCandidatePointPlayer = 0;
+                UpperRightCandidatePointPlayer = 0;
+                UpperLeftCandidatePointPlayer = 0;
+                LowerRightCandidatePointPlayer = 0;
+                LowerLeftCandidatePointPlayer = 0;
+                TotalCandidatePointPlayer = 0;
+
+                IsFinishedUpperInvestigatation_SettingStonePlayer = false;
+                IsFinishedLowerInvestigatation_SettingStonePlayer = false;
+                IsFinishedRightInvestigatation_SettingStonePlayer = false;
+                IsFinishedLeftInvestigatation_SettingStonePlayer = false;
+                IsFinishedUpperRightInvestigatation_SettingStonePlayer = false;
+                IsFinishedUpperLeftInvestigatation_SettingStonePlayer = false;
+                IsFinishedLowerRightInvestigatation_SettingStonePlayer = false;
+                IsFinishedLowerLeftInvestigatation_SettingStonePlayer = false;
+
+                CanInvokeInvestigatation_SettingStonePlayer = true;
+            }
+            else
+            {
+                Debug.Log("そこには置けます。");
+
+                UpperDistanceFromCursorPlayerPosition = 1;
+                LowerDistanceFromCursorPlayerPosition = 1;
+                RightDistanceFromCursorPlayerPosition = 1;
+                LeftDistanceFromCursorPlayerPosition = 1;
+                UpperRightDistanceFromCursorPlayerPosition = 1;
+                UpperLeftDistanceFromCursorPlayerPosition = 1;
+                LowerRightDistanceFromCursorPlayerPosition = 1;
+                LowerLeftDistanceFromCursorPlayerPosition = 1;
+
+                IsFinishedUpperInvestigatation_SettingStonePlayer = false;
+                IsFinishedLowerInvestigatation_SettingStonePlayer = false;
+                IsFinishedRightInvestigatation_SettingStonePlayer = false;
+                IsFinishedLeftInvestigatation_SettingStonePlayer = false;
+                IsFinishedUpperRightInvestigatation_SettingStonePlayer = false;
+                IsFinishedUpperLeftInvestigatation_SettingStonePlayer = false;
+                IsFinishedLowerRightInvestigatation_SettingStonePlayer = false;
+                IsFinishedLowerLeftInvestigatation_SettingStonePlayer = false;
+
+                Invoke("Reset_PositionColor", 0);
+            }
+        }
+    }
+
+    //StoneEnemy設置調査
+    void Investigatation_SettingStoneEnemy()
+    {
+        Debug.Log("Investigatation_SettingStoneEnemy was called");
+
+        if (PlayerColor == "Black")
+        {
+
+        }
+        if (PlayerColor == "White")
+        {
+            //調査対象位置検索
+            if(CanTest1 == true)
+            {
+            CanTest1 = false;
+            
+            for (int i = 0; i <= IntList_PositionStoneWhite.Count - 1; i++)
+            {
+                //上
+                if (IntList_PositionStoneWhite[i] + 8 >= 0 &
+                    IntList_PositionStoneWhite[i] + 8 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] + 8] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] + 8);
+                }
+                //下
+                if (IntList_PositionStoneWhite[i] - 8 >= 0 &
+                    IntList_PositionStoneWhite[i] - 8 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] - 8] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] - 8);
+                }
+                //右
+                if (IntList_PositionStoneWhite[i] + 1 >= 0 &
+                    IntList_PositionStoneWhite[i] + 1 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] + 1] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] + 1);
+                }
+                //左
+                if (IntList_PositionStoneWhite[i] - 1 >= 0 &
+                    IntList_PositionStoneWhite[i] - 1 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] - 1] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] - 1);
+                }
+                //右上
+                if (IntList_PositionStoneWhite[i] + 9 >= 0 &
+                    IntList_PositionStoneWhite[i] + 9 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] + 9] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] + 9);
+                }
+                //左上
+                if (IntList_PositionStoneWhite[i] + 7 >= 0 &
+                    IntList_PositionStoneWhite[i] + 7 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] + 7] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] + 7);
+                }
+                //右下
+                if (IntList_PositionStoneWhite[i] - 7 >= 0 &
+                    IntList_PositionStoneWhite[i] - 7 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] - 7] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] - 7);
+                }
+                //左下
+                if (IntList_PositionStoneWhite[i] - 9 >= 0 &
+                    IntList_PositionStoneWhite[i] - 9 <= 63 &
+                    IntList_PositionColor[IntList_PositionStoneWhite[i] - 9] == 0)
+                {
+                    IntList_PositionInvestigated.Add(IntList_PositionStoneWhite[i] - 9);
+                }
+            }
+            IntList_PositionInvestigated = IntList_PositionInvestigated.Distinct().ToList();
+        }
+        
+            int IntTest = 0;
+            //上調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] <= 55)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] + (8 * UpperDistanceFromCursorEnemyPosition))
+                {
+                    case 0:
+                        UpperCandidatePointEnemy = 0;
+                        IsFinishedUpperInvestigatation_SettingStoneEnemy = true;
+                        break;
+                    case 1:
+                        UpperDistanceFromCursorEnemyPosition += 1;
+                        break;
+                    case 2:
+                        UpperCandidatePointEnemy = UpperDistanceFromCursorEnemyPosition - 1;
+                        IsFinishedUpperInvestigatation_SettingStoneEnemy = true;
+                        break;
+                }
+            }
+            //下調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] >= 8)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] - (8 * LowerDistanceFromCursorEnemyPosition))
+                {
+                    case 0:
+                        LowerCandidatePointEnemy = 0;
+                        IsFinishedLowerInvestigatation_SettingStoneEnemy = true;
+                        break;
+                    case 1:
+                        LowerDistanceFromCursorEnemyPosition += 1;
+                        break;
+                    case 2:
+                        LowerCandidatePointEnemy = LowerDistanceFromCursorEnemyPosition - 1;
+                        IsFinishedLowerInvestigatation_SettingStoneEnemy = true;
+                        break;
+                }
+           }
+            //右調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 7 &
+                IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 15 &
+                IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 23 &
+                IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 31 &
+                IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 39 &
+                IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 47 &
+                IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 55 &
+                 IntList_PositionColor[IntList_PositionInvestigated[IntTest]] != 63)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] + (1 * RightDistanceFromCursorEnemyPosition))
+                {
+                    case 0:
+                        RightCandidatePointEnemy = 0;
+                        IsFinishedRightInvestigatation_SettingStoneEnemy = true;
+                        break;
+                    case 1:
+                        RightDistanceFromCursorEnemyPosition += 1;
+                        break;
+                    case 2:
+                        RightCandidatePointEnemy = RightDistanceFromCursorEnemyPosition - 1;
+                        IsFinishedRightInvestigatation_SettingStoneEnemy = true;
+                        break;
+                }
+            }      
+            //左調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] >= 8)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[IntTest]] - (8 * LowerDistanceFromCursorEnemyPosition))
+                {
+                    case 0:
+                        LowerCandidatePointEnemy = 0;
+                        IsFinishedLowerInvestigatation_SettingStoneEnemy = true;
+                        break;
+                    case 1:
+                        LowerDistanceFromCursorEnemyPosition += 1;
+                        break;
+                    case 2:
+                        LowerCandidatePointEnemy = LowerDistanceFromCursorEnemyPosition - 1;
+                        IsFinishedLowerInvestigatation_SettingStoneEnemy = true;
+                        break;
+                }
+           }
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                    
+            
+            if (IsFinishedUpperInvestigatation_SettingStoneEnemy == false |
+                IsFinishedLowerInvestigatation_SettingStoneEnemy == false |
+                IsFinishedRightInvestigatation_SettingStoneEnemy == false)
+            {
+                Invoke("Investigatation_SettingStoneEnemy",0);
+            }
+            else
+            {
+                IntTest += 1;
+                Invoke("Investigatation_SettingStoneEnemy",0);
+            }
+                
+                
+                
+                
+                
+                
+        }
+    }
+
+
+    //リセットPositionColor
+    void Reset_PositionColor()
+    {
+        //Debug.Log("Reset_PositionColor was called");
+
+        if (PlayerColor == "Black")
+        {
+
+        }
+        if (PlayerColor == "White")
+        {
+            IntList_PositionColor[CursorPlayerPosition] = 2;
+
+            for (int i = 1; i <= UpperCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition + (8 * i)] = 2;
+            }
+            for (int i = 1; i <= LowerCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition - (8 * i)] = 2;
+            }
+            for (int i = 1; i <= RightCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition + (1 * i)] = 2;
+            }
+            for (int i = 1; i <= LeftCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition - (1 * i)] = 2;
+            }
+            for (int i = 1; i <= UpperRightCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition + (9 * i)] = 2;
+            }
+            for (int i = 1; i <= UpperLeftCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition + (7 * i)] = 2;
+            }
+            for (int i = 1; i <= LowerRightCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition - (7 * i)] = 2;
+            }
+            for (int i = 1; i <= LowerLeftCandidatePointPlayer; i++)
+            {
+                IntList_PositionColor[CursorPlayerPosition - (9 * i)] = 2;
+            }
+        }
+
+      
+
+        UpperCandidatePointPlayer = 0;
+        LowerCandidatePointPlayer = 0;
+        RightCandidatePointPlayer = 0;
+        LeftCandidatePointPlayer = 0;
+        UpperRightCandidatePointPlayer = 0;
+        UpperLeftCandidatePointPlayer = 0;
+        LowerRightCandidatePointPlayer = 0;
+        LowerLeftCandidatePointPlayer = 0;
+        TotalCandidatePointPlayer = 0;
+
+
+        Invoke("Destruction_Cursor", 0);
+        Invoke("Destruction_StonePlayer", 0);
+        Invoke("Destruction_StoneEnemy", 0);
+        Invoke("Summoning_StonePlayer", 0);
+        Invoke("Summoning_StoneEnemy", 0);
+
+        Turn = "Enemy";
+        CanInvokeInvestigatation_SettingStonePlayer = true;
+    }
+
+
+
+
+    //StonePlayer生成
+    void Summoning_StonePlayer()
+    {
+        //Debug.Log("Summoning_StonePlayer was called");
+
+        if (PlayerColor == "Black")
+        {
+
+        }
+        if (PlayerColor == "White")
+        {
+            IntList_PositionStoneWhite = new List<int> { };
+
+
+
+            int PositionStoneWhite = IntList_PositionColor.IndexOf(2, 0);
+            if (PositionStoneWhite > 0)
+            {
+                IntList_PositionStoneWhite.Add(PositionStoneWhite);
+
+                while (PositionStoneWhite > 0)
+                {
+                    PositionStoneWhite = IntList_PositionColor.IndexOf(2, PositionStoneWhite + 1);
+
+                    if (PositionStoneWhite > 0)
+                    {
+                        IntList_PositionStoneWhite.Add(PositionStoneWhite);
+                    }
+                }
+            }
+
+
+
+            for (int i = 0; i <= IntList_PositionStoneWhite.Count - 1; i++)
+            {
+                //Debug.Log(IntList_PositionStoneWhite[i]);
+
+                GameObject GameObject_StoneWhite = Instantiate(StoneWhite) as GameObject;
+                GameObject_StoneWhite.name = "StonePlayer";
+                GameObject_StoneWhite.tag = "StonePlayer";
+                GameObject_StoneWhite.transform.position = Transform_Stone.transform.position + new Vector3(IntList_PositionStoneWhite[i] % 8 + 1, 0, Mathf.FloorToInt(IntList_PositionStoneWhite[i] / 8) + 1);
+            }
+        }
+    }
+
+
+
+    //StoneEnemy生成
+    void Summoning_StoneEnemy()
+    {
+        //Debug.Log("Summoning_StoneEnemy was called");
+
+        if (PlayerColor == "Black")
+        {
+
+        }
+        if (PlayerColor == "White")
+        {
+            IntList_PositionStoneBlack = new List<int> { };
+
+
+
+            int PositionStoneBlack = IntList_PositionColor.IndexOf(1, 0);
+            if (PositionStoneBlack > 0)
+            {
+                IntList_PositionStoneBlack.Add(PositionStoneBlack);
+
+                while (PositionStoneBlack > 0)
+                {
+                    PositionStoneBlack = IntList_PositionColor.IndexOf(1, PositionStoneBlack + 1);
+
+                    if (PositionStoneBlack > 0)
+                    {
+                        IntList_PositionStoneBlack.Add(PositionStoneBlack);
+                    }
+                }
+            }
+
+
+
+            for (int i = 0; i <= IntList_PositionStoneBlack.Count - 1; i++)
+            {
+                //Debug.Log(IntList_PositionStoneWhite[a]);
+
+                GameObject GameObject_StoneBlack = Instantiate(StoneBlack) as GameObject;
+                GameObject_StoneBlack.name = "StoneEnemy";
+                GameObject_StoneBlack.tag = "StoneEnemy";
+                GameObject_StoneBlack.transform.position = Transform_Stone.transform.position + new Vector3(IntList_PositionStoneBlack[i] % 8 + 1, 0, Mathf.FloorToInt(IntList_PositionStoneBlack[i] / 8) + 1);
+            }
+        }
+    }
+
+
+
+    //Cursor消去
+    void Destruction_Cursor()
+    {
+        //Debug.Log("Destruction_Cursor was called");
+
+        Destroy(GameObject.FindWithTag("Cursor"));
+    }
+
+    //StonePlayer消去
+    void Destruction_StonePlayer()
+    {
+        //Debug.Log("Destruction_StonePlayer was called");
+
+        GameObject[] GameObject_StonePlayers = GameObject.FindGameObjectsWithTag("StonePlayer");
+        foreach (GameObject GameObject_OneOfStonePlayers in GameObject_StonePlayers)
+        {
+            Destroy(GameObject_OneOfStonePlayers);
+        }
+    }
+
+    //StoneEnemy消去
+    void Destruction_StoneEnemy()
+    {
+        //Debug.Log("Destruction_StoneEnemy was called");
+
+        GameObject[] GameObject_StoneEnemys = GameObject.FindGameObjectsWithTag("StoneEnemy");
+        foreach (GameObject GameObject_OneOfStoneEnemys in GameObject_StoneEnemys)
+        {
+            Destroy(GameObject_OneOfStoneEnemys);
+        }
+    }
+}
