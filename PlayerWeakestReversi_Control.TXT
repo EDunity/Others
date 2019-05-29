@@ -34,14 +34,14 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     private int LowerRightDistanceFromCursorPlayerPosition = 1;
     private int LowerLeftDistanceFromCursorPlayerPosition = 1;
 
-    private int UpperDistanceFromCursorEnemyPosition = 1;
-    private int LowerDistanceFromCursorEnemyPosition = 1;
-    private int RightDistanceFromCursorEnemyPosition = 1;
-    private int LeftDistanceFromCursorEnemyPosition = 1;
-    private int UpperRightDistanceFromCursorEnemyPosition = 1;
-    private int UpperLeftDistanceFromCursorEnemyPosition = 1;
-    private int LowerRightDistanceFromCursorEnemyPosition = 1;
-    private int LowerLeftDistanceFromCursorEnemyPosition = 1;
+    private int UpperDistanceFromPositionInvestigated = 1;
+    private int LowerDistanceFromPositionInvestigated = 1;
+    private int RightDistanceFromPositionInvestigated = 1;
+    private int LeftDistanceFromPositionInvestigated = 1;
+    private int UpperRightDistanceFromPositionInvestigated = 1;
+    private int UpperLeftDistanceFromPositionInvestigated = 1;
+    private int LowerRightDistanceFromPositionInvestigated = 1;
+    private int LowerLeftDistanceFromPositionInvestigated = 1;
 
     private int UpperCandidatePointPlayer = 0;
     private int LowerCandidatePointPlayer = 0;
@@ -1759,324 +1759,322 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
         if (PlayerColor == "White")
         {
-            //上調査
-            if (IsFinishedUpperCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition <= 55)
+            while (IsFinishedUpperCounting_ReturnedStoneEnemy == false |
+                   IsFinishedLowerCounting_ReturnedStoneEnemy == false |
+                   IsFinishedRightCounting_ReturnedStoneEnemy == false |
+                   IsFinishedLeftCounting_ReturnedStoneEnemy == false |
+                   IsFinishedUpperRightCounting_ReturnedStoneEnemy == false |
+                   IsFinishedUpperLeftCounting_ReturnedStoneEnemy == false |
+                   IsFinishedLowerRightCounting_ReturnedStoneEnemy == false |
+                   IsFinishedLowerLeftCounting_ReturnedStoneEnemy == false)
             {
-                switch (IntList_PositionColor[CursorPlayerPosition + (8 * UpperDistanceFromCursorPlayerPosition)])
+                //上調査
+                if (IsFinishedUpperCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition <= 55)
                 {
-                    case 0:
-                        UpperCandidatePointPlayer = 0;
-                        IsFinishedUpperCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        UpperDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        UpperCandidatePointPlayer = UpperDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedUpperCounting_ReturnedStoneEnemy = true;
-                        break;
+                    switch (IntList_PositionColor[CursorPlayerPosition + (8 * UpperDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            UpperCandidatePointPlayer = 0;
+                            IsFinishedUpperCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            UpperDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            UpperCandidatePointPlayer = UpperDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedUpperCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                UpperCandidatePointPlayer = 0;
-                IsFinishedUpperCounting_ReturnedStoneEnemy = true;
-            }
-            //下調査
-            if (IsFinishedLowerCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition >= 8)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition - (8 * LowerDistanceFromCursorPlayerPosition)])
+                else
                 {
-                    case 0:
-                        LowerCandidatePointPlayer = 0;
-                        IsFinishedLowerCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        LowerDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        LowerCandidatePointPlayer = LowerDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedLowerCounting_ReturnedStoneEnemy = true;
-                        break;
+                    UpperCandidatePointPlayer = 0;
+                    IsFinishedUpperCounting_ReturnedStoneEnemy = true;
                 }
-            }
-            else
-            {
-                LowerCandidatePointPlayer = 0;
-                IsFinishedLowerCounting_ReturnedStoneEnemy = true;
-            }
-            //右調査
-            if (IsFinishedRightCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition != 7 &
-                CursorPlayerPosition != 15 &
-                CursorPlayerPosition != 23 &
-                CursorPlayerPosition != 31 &
-                CursorPlayerPosition != 39 &
-                CursorPlayerPosition != 47 &
-                CursorPlayerPosition != 55 &
-                 CursorPlayerPosition != 63)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition + (1 * RightDistanceFromCursorPlayerPosition)])
+                //下調査
+                if (IsFinishedLowerCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition >= 8)
                 {
-                    case 0:
-                        RightCandidatePointPlayer = 0;
-                        IsFinishedRightCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        RightDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        RightCandidatePointPlayer = RightDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedRightCounting_ReturnedStoneEnemy = true;
-                        break;
+                    switch (IntList_PositionColor[CursorPlayerPosition - (8 * LowerDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            LowerCandidatePointPlayer = 0;
+                            IsFinishedLowerCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            LowerDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            LowerCandidatePointPlayer = LowerDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedLowerCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                RightCandidatePointPlayer = 0;
-                IsFinishedRightCounting_ReturnedStoneEnemy = true;
-            }
-            //左調査
-            if (IsFinishedLeftCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition != 0 &
-                CursorPlayerPosition != 8 &
-                CursorPlayerPosition != 16 &
-                CursorPlayerPosition != 24 &
-                CursorPlayerPosition != 32 &
-                CursorPlayerPosition != 40 &
-                CursorPlayerPosition != 48 &
-                CursorPlayerPosition != 56)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition - (1 * LeftDistanceFromCursorPlayerPosition)])
+                else
                 {
-                    case 0:
-                        LeftCandidatePointPlayer = 0;
-                        IsFinishedLeftCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        LeftDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        LeftCandidatePointPlayer = LeftDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedLeftCounting_ReturnedStoneEnemy = true;
-                        break;
+                    LowerCandidatePointPlayer = 0;
+                    IsFinishedLowerCounting_ReturnedStoneEnemy = true;
                 }
-            }
-            else
-            {
-                LeftCandidatePointPlayer = 0;
-                IsFinishedLeftCounting_ReturnedStoneEnemy = true;
-            }
-            //右上調査
-            if (IsFinishedUpperRightCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition != 7 &
-                CursorPlayerPosition != 15 &
-                CursorPlayerPosition != 23 &
-                CursorPlayerPosition != 31 &
-                CursorPlayerPosition != 39 &
-                CursorPlayerPosition != 47 &
-                CursorPlayerPosition <= 54)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition + (9 * UpperRightDistanceFromCursorPlayerPosition)])
+                //右調査
+                if (IsFinishedRightCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition != 7 &
+                    CursorPlayerPosition != 15 &
+                    CursorPlayerPosition != 23 &
+                    CursorPlayerPosition != 31 &
+                    CursorPlayerPosition != 39 &
+                    CursorPlayerPosition != 47 &
+                    CursorPlayerPosition != 55 &
+                     CursorPlayerPosition != 63)
                 {
-                    case 0:
-                        UpperRightCandidatePointPlayer = 0;
-                        IsFinishedUpperRightCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        UpperRightDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        UpperRightCandidatePointPlayer = UpperRightDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedUpperRightCounting_ReturnedStoneEnemy = true;
-                        break;
+                    switch (IntList_PositionColor[CursorPlayerPosition + (1 * RightDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            RightCandidatePointPlayer = 0;
+                            IsFinishedRightCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            RightDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            RightCandidatePointPlayer = RightDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedRightCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                UpperRightCandidatePointPlayer = 0;
-                IsFinishedUpperRightCounting_ReturnedStoneEnemy = true;
-            }
-            //左上調査
-            if (IsFinishedUpperLeftCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition != 0 &
-                CursorPlayerPosition != 8 &
-                CursorPlayerPosition != 16 &
-                CursorPlayerPosition != 24 &
-                CursorPlayerPosition != 32 &
-                CursorPlayerPosition != 40 &
-                CursorPlayerPosition != 48 &
-                CursorPlayerPosition <= 55)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition + (7 * UpperLeftDistanceFromCursorPlayerPosition)])
+                else
                 {
-                    case 0:
-                        UpperLeftCandidatePointPlayer = 0;
-                        IsFinishedUpperLeftCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        UpperLeftDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        UpperLeftCandidatePointPlayer = UpperLeftDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedUpperLeftCounting_ReturnedStoneEnemy = true;
-                        break;
+                    RightCandidatePointPlayer = 0;
+                    IsFinishedRightCounting_ReturnedStoneEnemy = true;
                 }
-            }
-            else
-            {
-                UpperLeftCandidatePointPlayer = 0;
-                IsFinishedUpperLeftCounting_ReturnedStoneEnemy = true;
-            }
-            //右下調査
-            if (IsFinishedLowerRightCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition != 15 &
-                CursorPlayerPosition != 23 &
-                CursorPlayerPosition != 31 &
-                CursorPlayerPosition != 39 &
-                CursorPlayerPosition != 47 &
-                CursorPlayerPosition != 55 &
-                CursorPlayerPosition != 63 &
-                CursorPlayerPosition >= 8)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition - (7 * LowerRightDistanceFromCursorPlayerPosition)])
+                //左調査
+                if (IsFinishedLeftCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition != 0 &
+                    CursorPlayerPosition != 8 &
+                    CursorPlayerPosition != 16 &
+                    CursorPlayerPosition != 24 &
+                    CursorPlayerPosition != 32 &
+                    CursorPlayerPosition != 40 &
+                    CursorPlayerPosition != 48 &
+                    CursorPlayerPosition != 56)
                 {
-                    case 0:
-                        LowerRightCandidatePointPlayer = 0;
-                        IsFinishedLowerRightCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        LowerRightDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        LowerRightCandidatePointPlayer = LowerRightDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedLowerRightCounting_ReturnedStoneEnemy = true;
-                        break;
+                    switch (IntList_PositionColor[CursorPlayerPosition - (1 * LeftDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            LeftCandidatePointPlayer = 0;
+                            IsFinishedLeftCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            LeftDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            LeftCandidatePointPlayer = LeftDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedLeftCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                LowerRightCandidatePointPlayer = 0;
-                IsFinishedLowerRightCounting_ReturnedStoneEnemy = true;
-            }
-            //左下調査
-            if (IsFinishedLowerLeftCounting_ReturnedStoneEnemy == false &
-                CursorPlayerPosition != 16 &
-                CursorPlayerPosition != 24 &
-                CursorPlayerPosition != 32 &
-                CursorPlayerPosition != 40 &
-                CursorPlayerPosition != 48 &
-                CursorPlayerPosition != 56 &
-                CursorPlayerPosition >= 8)
-            {
-                switch (IntList_PositionColor[CursorPlayerPosition - (9 * LowerLeftDistanceFromCursorPlayerPosition)])
+                else
                 {
-                    case 0:
-                        LowerLeftCandidatePointPlayer = 0;
-                        IsFinishedLowerLeftCounting_ReturnedStoneEnemy = true;
-                        break;
-                    case 1:
-                        LowerLeftDistanceFromCursorPlayerPosition += 1;
-                        break;
-                    case 2:
-                        LowerLeftCandidatePointPlayer = LowerLeftDistanceFromCursorPlayerPosition - 1;
-                        IsFinishedLowerLeftCounting_ReturnedStoneEnemy = true;
-                        break;
+                    LeftCandidatePointPlayer = 0;
+                    IsFinishedLeftCounting_ReturnedStoneEnemy = true;
                 }
-            }
-            else
-            {
-                LowerLeftCandidatePointPlayer = 0;
-                IsFinishedLowerLeftCounting_ReturnedStoneEnemy = true;
+                //右上調査
+                if (IsFinishedUpperRightCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition != 7 &
+                    CursorPlayerPosition != 15 &
+                    CursorPlayerPosition != 23 &
+                    CursorPlayerPosition != 31 &
+                    CursorPlayerPosition != 39 &
+                    CursorPlayerPosition != 47 &
+                    CursorPlayerPosition <= 54)
+                {
+                    switch (IntList_PositionColor[CursorPlayerPosition + (9 * UpperRightDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            UpperRightCandidatePointPlayer = 0;
+                            IsFinishedUpperRightCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            UpperRightDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            UpperRightCandidatePointPlayer = UpperRightDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedUpperRightCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    UpperRightCandidatePointPlayer = 0;
+                    IsFinishedUpperRightCounting_ReturnedStoneEnemy = true;
+                }
+                //左上調査
+                if (IsFinishedUpperLeftCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition != 0 &
+                    CursorPlayerPosition != 8 &
+                    CursorPlayerPosition != 16 &
+                    CursorPlayerPosition != 24 &
+                    CursorPlayerPosition != 32 &
+                    CursorPlayerPosition != 40 &
+                    CursorPlayerPosition != 48 &
+                    CursorPlayerPosition <= 55)
+                {
+                    switch (IntList_PositionColor[CursorPlayerPosition + (7 * UpperLeftDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            UpperLeftCandidatePointPlayer = 0;
+                            IsFinishedUpperLeftCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            UpperLeftDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            UpperLeftCandidatePointPlayer = UpperLeftDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedUpperLeftCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    UpperLeftCandidatePointPlayer = 0;
+                    IsFinishedUpperLeftCounting_ReturnedStoneEnemy = true;
+                }
+                //右下調査
+                if (IsFinishedLowerRightCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition != 15 &
+                    CursorPlayerPosition != 23 &
+                    CursorPlayerPosition != 31 &
+                    CursorPlayerPosition != 39 &
+                    CursorPlayerPosition != 47 &
+                    CursorPlayerPosition != 55 &
+                    CursorPlayerPosition != 63 &
+                    CursorPlayerPosition >= 8)
+                {
+                    switch (IntList_PositionColor[CursorPlayerPosition - (7 * LowerRightDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            LowerRightCandidatePointPlayer = 0;
+                            IsFinishedLowerRightCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            LowerRightDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            LowerRightCandidatePointPlayer = LowerRightDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedLowerRightCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    LowerRightCandidatePointPlayer = 0;
+                    IsFinishedLowerRightCounting_ReturnedStoneEnemy = true;
+                }
+                //左下調査
+                if (IsFinishedLowerLeftCounting_ReturnedStoneEnemy == false &
+                    CursorPlayerPosition != 16 &
+                    CursorPlayerPosition != 24 &
+                    CursorPlayerPosition != 32 &
+                    CursorPlayerPosition != 40 &
+                    CursorPlayerPosition != 48 &
+                    CursorPlayerPosition != 56 &
+                    CursorPlayerPosition >= 8)
+                {
+                    switch (IntList_PositionColor[CursorPlayerPosition - (9 * LowerLeftDistanceFromCursorPlayerPosition)])
+                    {
+                        case 0:
+                            LowerLeftCandidatePointPlayer = 0;
+                            IsFinishedLowerLeftCounting_ReturnedStoneEnemy = true;
+                            break;
+                        case 1:
+                            LowerLeftDistanceFromCursorPlayerPosition += 1;
+                            break;
+                        case 2:
+                            LowerLeftCandidatePointPlayer = LowerLeftDistanceFromCursorPlayerPosition - 1;
+                            IsFinishedLowerLeftCounting_ReturnedStoneEnemy = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    LowerLeftCandidatePointPlayer = 0;
+                    IsFinishedLowerLeftCounting_ReturnedStoneEnemy = true;
+                }
             }
         }
 
-        if (IsFinishedUpperCounting_ReturnedStoneEnemy == false |
-            IsFinishedLowerCounting_ReturnedStoneEnemy == false |
-            IsFinishedRightCounting_ReturnedStoneEnemy == false |
-            IsFinishedLeftCounting_ReturnedStoneEnemy == false |
-            IsFinishedUpperRightCounting_ReturnedStoneEnemy == false |
-            IsFinishedUpperLeftCounting_ReturnedStoneEnemy == false |
-            IsFinishedLowerRightCounting_ReturnedStoneEnemy == false |
-            IsFinishedLowerLeftCounting_ReturnedStoneEnemy == false)
+
+        if (UpperCandidatePointPlayer == 0 &
+            LowerCandidatePointPlayer == 0 &
+            RightCandidatePointPlayer == 0 &
+            LeftCandidatePointPlayer == 0 &
+            UpperRightCandidatePointPlayer == 0 &
+            UpperLeftCandidatePointPlayer == 0 &
+            LowerRightCandidatePointPlayer == 0 &
+            LowerLeftCandidatePointPlayer == 0)
         {
-            Invoke("Counting_ReturnedStoneEnemy", 0);
+            Debug.Log("そこには置けません。");
+
+            UpperDistanceFromCursorPlayerPosition = 1;
+            LowerDistanceFromCursorPlayerPosition = 1;
+            RightDistanceFromCursorPlayerPosition = 1;
+            LeftDistanceFromCursorPlayerPosition = 1;
+            UpperRightDistanceFromCursorPlayerPosition = 1;
+            UpperLeftDistanceFromCursorPlayerPosition = 1;
+            LowerRightDistanceFromCursorPlayerPosition = 1;
+            LowerLeftDistanceFromCursorPlayerPosition = 1;
+
+            UpperCandidatePointPlayer = 0;
+            LowerCandidatePointPlayer = 0;
+            RightCandidatePointPlayer = 0;
+            LeftCandidatePointPlayer = 0;
+            UpperRightCandidatePointPlayer = 0;
+            UpperLeftCandidatePointPlayer = 0;
+            LowerRightCandidatePointPlayer = 0;
+            LowerLeftCandidatePointPlayer = 0;
+            TotalCandidatePointPlayer = 0;
+
+            IsFinishedUpperCounting_ReturnedStoneEnemy = false;
+            IsFinishedLowerCounting_ReturnedStoneEnemy = false;
+            IsFinishedRightCounting_ReturnedStoneEnemy = false;
+            IsFinishedLeftCounting_ReturnedStoneEnemy = false;
+            IsFinishedUpperRightCounting_ReturnedStoneEnemy = false;
+            IsFinishedUpperLeftCounting_ReturnedStoneEnemy = false;
+            IsFinishedLowerRightCounting_ReturnedStoneEnemy = false;
+            IsFinishedLowerLeftCounting_ReturnedStoneEnemy = false;
+
+            CanInvokeCounting_ReturnedStoneEnemy = true;
         }
         else
         {
-            if (UpperCandidatePointPlayer == 0 &
-                LowerCandidatePointPlayer == 0 &
-                RightCandidatePointPlayer == 0 &
-                LeftCandidatePointPlayer == 0 &
-                UpperRightCandidatePointPlayer == 0 &
-                UpperLeftCandidatePointPlayer == 0 &
-                LowerRightCandidatePointPlayer == 0 &
-                LowerLeftCandidatePointPlayer == 0)
-            {
-                Debug.Log("そこには置けません。");
+            Debug.Log("そこには置けます。");
 
-                UpperDistanceFromCursorPlayerPosition = 1;
-                LowerDistanceFromCursorPlayerPosition = 1;
-                RightDistanceFromCursorPlayerPosition = 1;
-                LeftDistanceFromCursorPlayerPosition = 1;
-                UpperRightDistanceFromCursorPlayerPosition = 1;
-                UpperLeftDistanceFromCursorPlayerPosition = 1;
-                LowerRightDistanceFromCursorPlayerPosition = 1;
-                LowerLeftDistanceFromCursorPlayerPosition = 1;
+            UpperDistanceFromCursorPlayerPosition = 1;
+            LowerDistanceFromCursorPlayerPosition = 1;
+            RightDistanceFromCursorPlayerPosition = 1;
+            LeftDistanceFromCursorPlayerPosition = 1;
+            UpperRightDistanceFromCursorPlayerPosition = 1;
+            UpperLeftDistanceFromCursorPlayerPosition = 1;
+            LowerRightDistanceFromCursorPlayerPosition = 1;
+            LowerLeftDistanceFromCursorPlayerPosition = 1;
 
-                UpperCandidatePointPlayer = 0;
-                LowerCandidatePointPlayer = 0;
-                RightCandidatePointPlayer = 0;
-                LeftCandidatePointPlayer = 0;
-                UpperRightCandidatePointPlayer = 0;
-                UpperLeftCandidatePointPlayer = 0;
-                LowerRightCandidatePointPlayer = 0;
-                LowerLeftCandidatePointPlayer = 0;
-                TotalCandidatePointPlayer = 0;
+            IsFinishedUpperCounting_ReturnedStoneEnemy = false;
+            IsFinishedLowerCounting_ReturnedStoneEnemy = false;
+            IsFinishedRightCounting_ReturnedStoneEnemy = false;
+            IsFinishedLeftCounting_ReturnedStoneEnemy = false;
+            IsFinishedUpperRightCounting_ReturnedStoneEnemy = false;
+            IsFinishedUpperLeftCounting_ReturnedStoneEnemy = false;
+            IsFinishedLowerRightCounting_ReturnedStoneEnemy = false;
+            IsFinishedLowerLeftCounting_ReturnedStoneEnemy = false;
 
-                IsFinishedUpperCounting_ReturnedStoneEnemy = false;
-                IsFinishedLowerCounting_ReturnedStoneEnemy = false;
-                IsFinishedRightCounting_ReturnedStoneEnemy = false;
-                IsFinishedLeftCounting_ReturnedStoneEnemy = false;
-                IsFinishedUpperRightCounting_ReturnedStoneEnemy = false;
-                IsFinishedUpperLeftCounting_ReturnedStoneEnemy = false;
-                IsFinishedLowerRightCounting_ReturnedStoneEnemy = false;
-                IsFinishedLowerLeftCounting_ReturnedStoneEnemy = false;
-
-                CanInvokeCounting_ReturnedStoneEnemy = true;
-            }
-            else
-            {
-                Debug.Log("そこには置けます。");
-
-                UpperDistanceFromCursorPlayerPosition = 1;
-                LowerDistanceFromCursorPlayerPosition = 1;
-                RightDistanceFromCursorPlayerPosition = 1;
-                LeftDistanceFromCursorPlayerPosition = 1;
-                UpperRightDistanceFromCursorPlayerPosition = 1;
-                UpperLeftDistanceFromCursorPlayerPosition = 1;
-                LowerRightDistanceFromCursorPlayerPosition = 1;
-                LowerLeftDistanceFromCursorPlayerPosition = 1;
-
-                IsFinishedUpperCounting_ReturnedStoneEnemy = false;
-                IsFinishedLowerCounting_ReturnedStoneEnemy = false;
-                IsFinishedRightCounting_ReturnedStoneEnemy = false;
-                IsFinishedLeftCounting_ReturnedStoneEnemy = false;
-                IsFinishedUpperRightCounting_ReturnedStoneEnemy = false;
-                IsFinishedUpperLeftCounting_ReturnedStoneEnemy = false;
-                IsFinishedLowerRightCounting_ReturnedStoneEnemy = false;
-                IsFinishedLowerLeftCounting_ReturnedStoneEnemy = false;
-
-                Invoke("Reset_PositionColor", 0);
-            }
+            Invoke("Reset_PositionColor", 0);
         }
+
     }
 
     void Finding_PositionAroundStonePlayer()
     {
-        //Debug.Log("Finding_PositionAroundStonePlayer was called");
+        Debug.Log("Finding_PositionAroundStonePlayer was called");
 
         if (PlayerColor == "Black")
         {
@@ -2154,210 +2152,241 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         Debug.Log("Counting_ReturnedStonePlayer was called");
 
         int i = 0;
-        //上調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] <= 55)
+
+        while (IsFinishedUpperCounting_ReturnedStonePlayer == false |
+               IsFinishedLowerCounting_ReturnedStonePlayer == false |
+               IsFinishedRightCounting_ReturnedStonePlayer == false |
+               IsFinishedLeftCounting_ReturnedStonePlayer == false |
+               IsFinishedUpperRightCounting_ReturnedStonePlayer == false |
+               IsFinishedUpperLeftCounting_ReturnedStonePlayer == false |
+               IsFinishedLowerRightCounting_ReturnedStonePlayer == false |
+               IsFinishedLowerLeftCounting_ReturnedStonePlayer == false)
         {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i]] + (8 * UpperDistanceFromCursorEnemyPosition))
+            //上調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] <= 55)
             {
-                case 0:
-                    UpperCandidatePointEnemy = 0;
-                    IsFinishedUpperCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    UpperDistanceFromCursorEnemyPosition += 1;
-                    break;
-                case 2:
-                    UpperCandidatePointEnemy = UpperDistanceFromCursorEnemyPosition - 1;
-                    IsFinishedUpperCounting_ReturnedStonePlayer = true;
-                    break;
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i]] + (8 * UpperDistanceFromPositionInvestigated))
+                {
+                    case 0:
+                        UpperCandidatePointEnemy = 0;
+                        IsFinishedUpperCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        UpperDistanceFromPositionInvestigated += 1;
+                        break;
+                    case 2:
+                        UpperCandidatePointEnemy = UpperDistanceFromPositionInvestigated - 1;
+                        IsFinishedUpperCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                UpperCandidatePointEnemy = 0;
+                IsFinishedUpperCounting_ReturnedStonePlayer = true;
+            }
+            //下調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] >= 8)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i]] - (8 * LowerDistanceFromPositionInvestigated))
+                {
+                    case 0:
+                        LowerCandidatePointEnemy = 0;
+                        IsFinishedLowerCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        LowerDistanceFromPositionInvestigated += 1;
+                        break;
+                    case 2:
+                        LowerCandidatePointEnemy = LowerDistanceFromPositionInvestigated - 1;
+                        IsFinishedLowerCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LowerCandidatePointEnemy = 0;
+                IsFinishedLowerCounting_ReturnedStonePlayer = true;
+            }
+            //右調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 7 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 15 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 23 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 31 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 39 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 47 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 55 &
+                 IntList_PositionColor[IntList_PositionInvestigated[i]] != 63)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i]] + (1 * RightDistanceFromPositionInvestigated))
+                {
+                    case 0:
+                        RightCandidatePointEnemy = 0;
+                        IsFinishedRightCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        RightDistanceFromPositionInvestigated += 1;
+                        break;
+                    case 2:
+                        RightCandidatePointEnemy = RightDistanceFromPositionInvestigated - 1;
+                        IsFinishedRightCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                RightCandidatePointEnemy = 0;
+                IsFinishedRightCounting_ReturnedStonePlayer = true;
+            }
+            //左調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 0 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 8 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 16 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 24 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 32 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 40 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 48 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 56)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i]] - (1 * LeftDistanceFromPositionInvestigated))
+                {
+                    case 0:
+                        LeftCandidatePointEnemy = 0;
+                        IsFinishedLeftCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        LeftDistanceFromPositionInvestigated += 1;
+                        break;
+                    case 2:
+                        LeftCandidatePointEnemy = LeftDistanceFromPositionInvestigated - 1;
+                        IsFinishedLeftCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LeftCandidatePointEnemy = 0;
+                IsFinishedLeftCounting_ReturnedStonePlayer = true;
+            }
+            //右上調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 7 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 15 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 23 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 31 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 39 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 47 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] <= 54)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i] + (9 * UpperRightDistanceFromPositionInvestigated)])
+                {
+                    case 0:
+                        UpperRightCandidatePointEnemy = 0;
+                        IsFinishedUpperRightCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        UpperRightDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        UpperRightCandidatePointEnemy = UpperRightDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedUpperRightCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                UpperRightCandidatePointEnemy = 0;
+                IsFinishedUpperRightCounting_ReturnedStonePlayer = true;
+            }
+            //左上調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 0 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 8 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 16 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 24 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 32 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 40 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 48 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] <= 55)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i] + (7 * UpperLeftDistanceFromPositionInvestigated)])
+                {
+                    case 0:
+                        UpperLeftCandidatePointEnemy = 0;
+                        IsFinishedUpperLeftCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        UpperLeftDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        UpperLeftCandidatePointEnemy = UpperLeftDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedUpperLeftCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                UpperLeftCandidatePointEnemy = 0;
+                IsFinishedUpperLeftCounting_ReturnedStonePlayer = true;
+            }
+            //右下調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 15 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 23 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 31 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 39 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 47 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 55 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 63 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] >= 8)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i] - (7 * LowerRightDistanceFromPositionInvestigated)])
+                {
+                    case 0:
+                        LowerRightCandidatePointEnemy = 0;
+                        IsFinishedLowerRightCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        LowerRightDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        LowerRightCandidatePointEnemy = LowerRightDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedLowerRightCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LowerRightCandidatePointEnemy = 0;
+                IsFinishedLowerRightCounting_ReturnedStonePlayer = true;
+            }
+            //左下調査
+            if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 16 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 24 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 32 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 40 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 48 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] != 56 &
+                IntList_PositionColor[IntList_PositionInvestigated[i]] >= 8)
+            {
+                switch (IntList_PositionColor[IntList_PositionInvestigated[i] - (9 * LowerLeftDistanceFromPositionInvestigated)])
+                {
+                    case 0:
+                        LowerLeftCandidatePointEnemy = 0;
+                        IsFinishedLowerLeftCounting_ReturnedStonePlayer = true;
+                        break;
+                    case 1:
+                        LowerLeftDistanceFromCursorPlayerPosition += 1;
+                        break;
+                    case 2:
+                        LowerLeftCandidatePointEnemy = LowerLeftDistanceFromCursorPlayerPosition - 1;
+                        IsFinishedLowerLeftCounting_ReturnedStonePlayer = true;
+                        break;
+                }
+            }
+            else
+            {
+                LowerLeftCandidatePointEnemy = 0;
+                IsFinishedLowerLeftCounting_ReturnedStonePlayer = true;
             }
         }
-        //下調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] >= 8)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i]] - (8 * LowerDistanceFromCursorEnemyPosition))
-            {
-                case 0:
-                    LowerCandidatePointEnemy = 0;
-                    IsFinishedLowerCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    LowerDistanceFromCursorEnemyPosition += 1;
-                    break;
-                case 2:
-                    LowerCandidatePointEnemy = LowerDistanceFromCursorEnemyPosition - 1;
-                    IsFinishedLowerCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        //右調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 7 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 15 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 23 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 31 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 39 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 47 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 55 &
-             IntList_PositionColor[IntList_PositionInvestigated[i]] != 63)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i]] + (1 * RightDistanceFromCursorEnemyPosition))
-            {
-                case 0:
-                    RightCandidatePointEnemy = 0;
-                    IsFinishedRightCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    RightDistanceFromCursorEnemyPosition += 1;
-                    break;
-                case 2:
-                    RightCandidatePointEnemy = RightDistanceFromCursorEnemyPosition - 1;
-                    IsFinishedRightCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        //左調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 0 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 8 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 16 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 24 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 32 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 40 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 48 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 56)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i]] - (1 * LeftDistanceFromCursorEnemyPosition))
-            {
-                case 0:
-                    LeftCandidatePointEnemy = 0;
-                    IsFinishedLeftCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    LeftDistanceFromCursorEnemyPosition += 1;
-                    break;
-                case 2:
-                    LeftCandidatePointEnemy = LeftDistanceFromCursorEnemyPosition - 1;
-                    IsFinishedLeftCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        //右上調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 7 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 15 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 23 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 31 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 39 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 47 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] <= 54)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i] + (9 * UpperRightDistanceFromCursorEnemyPosition)])
-            {
-                case 0:
-                    UpperRightCandidatePointPlayer = 0;
-                    IsFinishedUpperRightCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    UpperRightDistanceFromCursorPlayerPosition += 1;
-                    break;
-                case 2:
-                    UpperRightCandidatePointPlayer = UpperRightDistanceFromCursorPlayerPosition - 1;
-                    IsFinishedUpperRightCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        else
-        {
-            UpperRightCandidatePointPlayer = 0;
-            IsFinishedUpperRightCounting_ReturnedStonePlayer = true;
-        }
-        //左上調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 0 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 8 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 16 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 24 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 32 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 40 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 48 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] <= 55)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i] + (7 * UpperLeftDistanceFromCursorEnemyPosition)])
-            {
-                case 0:
-                    UpperLeftCandidatePointPlayer = 0;
-                    IsFinishedUpperLeftCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    UpperLeftDistanceFromCursorPlayerPosition += 1;
-                    break;
-                case 2:
-                    UpperLeftCandidatePointPlayer = UpperLeftDistanceFromCursorPlayerPosition - 1;
-                    IsFinishedUpperLeftCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        else
-        {
-            UpperLeftCandidatePointPlayer = 0;
-            IsFinishedUpperLeftCounting_ReturnedStonePlayer = true;
-        }
-        //右下調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 15 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 23 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 31 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 39 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 47 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 55 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 63 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] >= 8)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i] - (7 * LowerRightDistanceFromCursorEnemyPosition)])
-            {
-                case 0:
-                    LowerRightCandidatePointPlayer = 0;
-                    IsFinishedLowerRightCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    LowerRightDistanceFromCursorPlayerPosition += 1;
-                    break;
-                case 2:
-                    LowerRightCandidatePointPlayer = LowerRightDistanceFromCursorPlayerPosition - 1;
-                    IsFinishedLowerRightCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        else
-        {
-            LowerRightCandidatePointPlayer = 0;
-            IsFinishedLowerRightCounting_ReturnedStonePlayer = true;
-        }
-        //左下調査
-        if (IntList_PositionColor[IntList_PositionInvestigated[i]] != 16 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 24 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 32 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 40 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 48 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] != 56 &
-            IntList_PositionColor[IntList_PositionInvestigated[i]] >= 8)
-        {
-            switch (IntList_PositionColor[IntList_PositionInvestigated[i] - (9 * LowerLeftDistanceFromCursorEnemyPosition)])
-            {
-                case 0:
-                    LowerLeftCandidatePointPlayer = 0;
-                    IsFinishedLowerLeftCounting_ReturnedStonePlayer = true;
-                    break;
-                case 1:
-                    LowerLeftDistanceFromCursorPlayerPosition += 1;
-                    break;
-                case 2:
-                    LowerLeftCandidatePointPlayer = LowerLeftDistanceFromCursorPlayerPosition - 1;
-                    IsFinishedLowerLeftCounting_ReturnedStonePlayer = true;
-                    break;
-            }
-        }
-        else
-        {
-            LowerLeftCandidatePointPlayer = 0;
-            IsFinishedLowerLeftCounting_ReturnedStonePlayer = true;
-        }
 
 
 
@@ -2372,30 +2401,22 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-        if (IsFinishedUpperCounting_ReturnedStonePlayer == false |
-            IsFinishedLowerCounting_ReturnedStonePlayer == false |
-            IsFinishedRightCounting_ReturnedStonePlayer == false |
-            IsFinishedLeftCounting_ReturnedStonePlayer == false |
-            IsFinishedUpperRightCounting_ReturnedStonePlayer == false |
-            IsFinishedUpperLeftCounting_ReturnedStonePlayer == false |
-            IsFinishedLowerRightCounting_ReturnedStonePlayer == false |
-            IsFinishedLowerLeftCounting_ReturnedStonePlayer == false )
-        {
-            Invoke("Counting_ReturnedStonePlayer", 0);
-        }
-        else
-        {
-            i += 1;
-            Invoke("Counting_ReturnedStonePlayer", 0);
-        }
+        //if (IsFinishedUpperCounting_ReturnedStonePlayer == false |
+        //    IsFinishedLowerCounting_ReturnedStonePlayer == false |
+        //    IsFinishedRightCounting_ReturnedStonePlayer == false |
+        //    IsFinishedLeftCounting_ReturnedStonePlayer == false |
+        //    IsFinishedUpperRightCounting_ReturnedStonePlayer == false |
+        //    IsFinishedUpperLeftCounting_ReturnedStonePlayer == false |
+        //    IsFinishedLowerRightCounting_ReturnedStonePlayer == false |
+        //    IsFinishedLowerLeftCounting_ReturnedStonePlayer == false )
+        //{
+        //    Invoke("Counting_ReturnedStonePlayer", 0);
+        //}
+        //else
+        //{
+        //    i += 1;
+        //    Invoke("Counting_ReturnedStonePlayer", 0);
+        //}
 
 
 
@@ -2528,8 +2549,6 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
             for (int i = 0; i <= IntList_PositionStoneWhite.Count - 1; i++)
             {
-                //Debug.Log(IntList_PositionStoneWhite[i]);
-
                 GameObject GameObject_StoneWhite = Instantiate(StoneWhite) as GameObject;
                 GameObject_StoneWhite.name = "StonePlayer";
                 GameObject_StoneWhite.tag = "StonePlayer";
@@ -2619,3 +2638,4 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
     }
 }
+
