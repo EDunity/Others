@@ -3596,6 +3596,19 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     {
         Turn = "";
 
+        CanInvokeReset_ColorPlayer = false;
+        CanInvokeFinding_PositionAroundStonePlayer = false;
+
+        CancelInvoke("Finding_PositionAroundStoneAI");
+        CancelInvoke("Squeezing_PositionAroundStoneAI");
+        CancelInvoke("Determination_PositonSetStonePlayer");
+        CancelInvoke("Reset_ColorPlayer");
+
+        CancelInvoke("Finding_PositionAroundStonePlayer");
+        CancelInvoke("Squeezing_PositionAroundStonePlayer");
+        CancelInvoke("Determination_PositonSetStoneAI");
+        CancelInvoke("Reset_ColorAI");
+
         Debug.Log("黒  :  " + IntList_PositionStoneBlack.Count);
         Debug.Log("白  :  " + IntList_PositionStoneWhite.Count);
 
