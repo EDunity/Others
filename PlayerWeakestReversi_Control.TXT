@@ -73,6 +73,10 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     private bool CanInvokeReset_ColorPlayer = false;
     private bool CanInvokeFinding_PositionAroundStonePlayer = true;
     private bool CanInvokeDisplaying_Result = true;
+    private bool CanInvokeIntermittentUpperMovement_CursorPlayer = true;
+    private bool CanInvokeIntermittentLowerMovement_CursorPlayer = true;
+    private bool CanInvokeIntermittentRightMovement_CursorPlayer = true;
+    private bool CanInvokeIntermittentLeftMovement_CursorPlayer = true;
 
     private bool IsFinishedCountingUpperPointPlayer = false;
     private bool IsFinishedCountingLowerPointPlayer = false;
@@ -1521,40 +1525,72 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
             if (GameObject.FindWithTag("Cursor"))
             {
                 //上移動
-                if (WD & PositionCursorPlayer <= 55)
+                if (W & !S & !D & !A)
                 {
-                    PositionCursorPlayer += 8;
+                    if (CanInvokeIntermittentUpperMovement_CursorPlayer == true)
+                    {
+                        CanInvokeIntermittentUpperMovement_CursorPlayer = false;
+
+                        Invoke("IntermittentUpperMovement_CursorPlayer", 0);
+                        Invoke("ContinuousUpperMovement_CursorPlayer", 0.25f);
+                    }
+                }
+                if (WU)
+                {
+                    CanInvokeIntermittentUpperMovement_CursorPlayer = true;
+
+                    CancelInvoke("ContinuousUpperMovement_CursorPlayer");
                 }
                 //下移動
-                if (SD & PositionCursorPlayer >= 8)
+                if (S & !W & !D & !A)
                 {
-                    PositionCursorPlayer -= 8;
+                    if (CanInvokeIntermittentLowerMovement_CursorPlayer == true)
+                    {
+                        CanInvokeIntermittentLowerMovement_CursorPlayer = false;
+
+                        Invoke("IntermittentLowerMovement_CursorPlayer", 0);
+                        Invoke("ContinuousLowerMovement_CursorPlayer", 0.25f);
+                    }
+                }
+                if (SU)
+                {
+                    CanInvokeIntermittentLowerMovement_CursorPlayer = true;
+
+                    CancelInvoke("ContinuousLowerMovement_CursorPlayer");
                 }
                 //右移動
-                if (DD &
-                    PositionCursorPlayer != 7 &
-                    PositionCursorPlayer != 15 &
-                    PositionCursorPlayer != 23 &
-                    PositionCursorPlayer != 31 &
-                    PositionCursorPlayer != 39 &
-                    PositionCursorPlayer != 47 &
-                    PositionCursorPlayer != 55 &
-                    PositionCursorPlayer != 63)
+                if (D & !W & !S & !A)
                 {
-                    PositionCursorPlayer += 1;
+                    if (CanInvokeIntermittentRightMovement_CursorPlayer == true)
+                    {
+                        CanInvokeIntermittentRightMovement_CursorPlayer = false;
+
+                        Invoke("IntermittentRightMovement_CursorPlayer", 0);
+                        Invoke("ContinuousRightMovement_CursorPlayer", 0.25f);
+                    }
+                }
+                if (DU)
+                {
+                    CanInvokeIntermittentRightMovement_CursorPlayer = true;
+
+                    CancelInvoke("ContinuousRightMovement_CursorPlayer");
                 }
                 //左移動
-                if (AD &
-                    PositionCursorPlayer != 0 &
-                    PositionCursorPlayer != 8 &
-                    PositionCursorPlayer != 16 &
-                    PositionCursorPlayer != 24 &
-                    PositionCursorPlayer != 32 &
-                    PositionCursorPlayer != 40 &
-                    PositionCursorPlayer != 48 &
-                    PositionCursorPlayer != 56)
+                if (A & !W & !S & !D)
                 {
-                    PositionCursorPlayer -= 1;
+                    if (CanInvokeIntermittentLeftMovement_CursorPlayer == true)
+                    {
+                        CanInvokeIntermittentLeftMovement_CursorPlayer = false;
+
+                        Invoke("IntermittentLeftMovement_CursorPlayer", 0);
+                        Invoke("ContinuousLeftMovement_CursorPlayer", 0.25f);
+                    }
+                }
+                if (AU)
+                {
+                    CanInvokeIntermittentLeftMovement_CursorPlayer = true;
+
+                    CancelInvoke("ContinuousLeftMovement_CursorPlayer");
                 }
 
                 GameObject.FindWithTag("Cursor").transform.position = Transform_Cursor.transform.position + new Vector3(PositionCursorPlayer % 8 + 1, 0, Mathf.FloorToInt(PositionCursorPlayer / 8) + 1);
@@ -3591,6 +3627,135 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //CursorPlayer断続上移動
+    void IntermittentUpperMovement_CursorPlayer()
+    {
+        if (PositionCursorPlayer <= 55)
+        {
+            PositionCursorPlayer += 8;
+        }
+    }
+    //CursorPlayer連続上移動
+    void ContinuousUpperMovement_CursorPlayer()
+    {
+        if (W & !S & !D & !A)
+        {
+            Invoke("ContinuousUpperMovement_CursorPlayer", 0.05f);
+            Invoke("IntermittentUpperMovement_CursorPlayer", 0);
+        }
+    }
+    //CursorPlayer断続下移動
+    void IntermittentLowerMovement_CursorPlayer()
+    {
+        if (PositionCursorPlayer >= 8)
+        {
+            PositionCursorPlayer -= 8;
+        }
+    }
+    //CursorPlayer連続下移動
+    void ContinuousLowerMovement_CursorPlayer()
+    {
+        if (S & !W & !D & !A)
+        {
+            Invoke("ContinuousLowerMovement_CursorPlayer", 0.05f);
+            Invoke("IntermittentLowerMovement_CursorPlayer", 0);
+        }
+    }
+    //CursorPlayer連続右移動
+    void IntermittentRightMovement_CursorPlayer()
+    {
+        if (PositionCursorPlayer != 7 &
+            PositionCursorPlayer != 15 &
+            PositionCursorPlayer != 23 &
+            PositionCursorPlayer != 31 &
+            PositionCursorPlayer != 39 &
+            PositionCursorPlayer != 47 &
+            PositionCursorPlayer != 55 &
+            PositionCursorPlayer != 63)
+        {
+            PositionCursorPlayer += 1;
+        }
+    }
+    //CursorPlayer連続右移動
+    void ContinuousRightMovement_CursorPlayer()
+    {
+        if (D & !W & !S & !A)
+        {
+            Invoke("ContinuousRightMovement_CursorPlayer", 0.05f);
+            Invoke("IntermittentRightMovement_CursorPlayer", 0);
+        }
+    }
+    //CursorPlayer断続左移動
+    void IntermittentLeftMovement_CursorPlayer()
+    {
+        if (PositionCursorPlayer != 0 &
+            PositionCursorPlayer != 8 &
+            PositionCursorPlayer != 16 &
+            PositionCursorPlayer != 24 &
+            PositionCursorPlayer != 32 &
+            PositionCursorPlayer != 40 &
+            PositionCursorPlayer != 48 &
+            PositionCursorPlayer != 56)
+        {
+            PositionCursorPlayer -= 1;
+        }
+    }
+    //CursorPlayer連続左移動
+    void ContinuousLeftMovement_CursorPlayer()
+    {
+        if (A & !W & !S & !D)
+        {
+            Invoke("ContinuousLeftMovement_CursorPlayer", 0.05f);
+            Invoke("IntermittentLeftMovement_CursorPlayer", 0);
+        }
+    }
+
+
+
+
+
+
+
+
+
     //結果表示
     void Displaying_Result()
     {
@@ -3634,20 +3799,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
