@@ -16,14 +16,20 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     private GameObject Transform_Stone;
 
     private List<int> IntList_Color = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+
     private List<int> IntList_PointPlayer = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private List<int> IntList_PointAI = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
     private List<int> IntList_PositionStoneBlack = new List<int> { 27, 36 };
     private List<int> IntList_PositionStoneWhite = new List<int> { 28, 35 };
+
     private List<int> IntList_PositionAroundStonePlayer = new List<int> { };
     private List<int> IntList_PositionAroundStoneAI = new List<int> { };
-    private List<int> IntList_PositionPointPlayer = new List<int> { };
-    private List<int> IntList_PositionPointAI = new List<int> { };
+
+    private List<int> IntList_PositionCanSetStonePlayer = new List<int> { };
+    private List<int> IntList_PositionCanSetStoneAI = new List<int> { };
+
+    private List<int> IntList_PositionLeastReturnStonePlayer = new List<int> { };
 
     private int PositionCursorPlayer = 0;
     private int PositionCursorAI = 0;
@@ -281,6 +287,9 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         if (PlayerColor == "Black")
         {
+            IntList_PositionCanSetStonePlayer = new List<int> { 20,29,34,43};
+            IntList_PositionCanSetStoneAI = new List<int> { 19,26,37,44};
+
             Invoke("Summoning_CursorPlayer", 0);
             Invoke("Summoning_StonePlayer", 0);
             Invoke("Summoning_StoneAI", 0);
@@ -1679,14 +1688,12 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
         if (Alpha3D)
         {
-            Debug.Log(UpperPointPlayer);
-            Debug.Log(LowerPointPlayer);
-            Debug.Log(RightPointPlayer);
-            Debug.Log(LeftPointPlayer);
-            Debug.Log(UpperRightPointPlayer);
-            Debug.Log(UpperLeftPointPlayer);
-            Debug.Log(LowerRightPointPlayer);
-            Debug.Log(LowerLeftPointPlayer);
+            Debug.Log("StoneAIを設置可能な座標");
+            for (int i = 0; i < IntList_PositionCanSetStoneAI.Count; i++)
+            {
+                Debug.Log(IntList_PositionCanSetStoneAI[i] + "  :  " + i);
+            }
+            Debug.Log("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
         if (Alpha4D)
         {
@@ -1708,11 +1715,16 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
         if (Alpha6D)
         {
-            Debug.Log(Turn);
+            Debug.Log("StonePlayerを設置可能な座標");
+            for (int i = 0; i < IntList_PositionCanSetStonePlayer.Count; i++)
+            {
+                Debug.Log(IntList_PositionCanSetStonePlayer[i] + "  :  " + i);
+            }
+            Debug.Log("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
         if (Alpha7D)
         {
-            Debug.Log(CanInvokeFinding_PositionAroundStonePlayer);
+            Invoke("Finding_PositionCanSetStoneAINotAround4Corner", 0);
         }
         if (Alpha8D)
         {
@@ -1838,7 +1850,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         Invoke("Squeezing_PositionAroundStoneAI", 0);
     }
-    //StoneAIの周りのポイントを取得
+    //StoneAIの周りの座標のポイントを取得
     void Squeezing_PositionAroundStoneAI()
     {
         //Debug.Log("Squeezing_PositionAroundStoneAI was called");
@@ -2219,24 +2231,36 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         }
 
-        Invoke("Determination_PositonSetStonePlayer", 0);
+        Invoke("Finding_PositionCanSetStonePlayer", 0);
     }
-    //StonePlayerを設置できるか調査
-    void Determination_PositonSetStonePlayer()
+    //StonePlayerを設置できる座標が存在するかしないか
+    void Finding_PositionCanSetStonePlayer()
     {
-        //Debug.Log("Determination_PositonSetStonePlayer was called");
-
-        IntList_PositionPointPlayer = new List<int> { };
+        //Debug.Log("Finding_PositionCanSetStonePlayer was called");
 
         if (PlayerColor == "Black")
         {
             if (IntList_PointPlayer.All(value => value == 0) == true)
             {
+                //StonePlayerを設置できる座標が存在しない
+
                 Turn = "AI";
                 CanInvokeFinding_PositionAroundStonePlayer = true;
             }
             else
             {
+                //StonePlayerを設置できる座標が存在する
+
+                IntList_PositionCanSetStonePlayer = new List<int> { };
+
+                for (int i = 0; i < IntList_PointPlayer.Count; i++)
+                {
+                    if (IntList_PointPlayer[i] >= 1)
+                    {
+                        IntList_PositionCanSetStonePlayer.Add(i);
+                    }
+                }
+
                 CanInvokeReset_ColorPlayer = true;
             }
         }
@@ -2763,7 +2787,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         Invoke("Squeezing_PositionAroundStonePlayer", 0);
     }
-    //StonePlayerの周りのポイントを取得
+    //StonePlayerの周りの座標のポイントを取得
     void Squeezing_PositionAroundStonePlayer()
     {
         //Debug.Log("Squeezing_PositionAroundStonePlayer was called");
@@ -3144,19 +3168,19 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         }
 
-        Invoke("Determination_PositonSetStoneAI", 0);
+        Invoke("Finding_PositionCanSetStoneAI", 0);
     }
-    //StoneAIを設置できるか調査
-    void Determination_PositonSetStoneAI()
+    //StoneAIを設置できる座標が存在するかしないか
+    void Finding_PositionCanSetStoneAI()
     {
-        //Debug.Log("Determination_PositonSetStoneAI was called");
-
-        IntList_PositionPointAI = new List<int> { };
+        //Debug.Log("Finding_PositionCanSetStoneAI was called");
 
         if (PlayerColor == "Black")
         {
             if (IntList_PointAI.All(value => value == 0) == true)
             {
+                //StoneAIを設置できる座標が存在しない
+
                 //Debug.Log("AIはStoneAIを設置することができません。");
 
                 Turn = "Player";
@@ -3165,45 +3189,115 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
             }
             else
             {
+                //StoneAIを設置できる座標が存在する
+
                 //Debug.Log("AIはStoneAIを設置することができます。");
 
-                for (int i = 1; i <= 18; i++)
+                IntList_PositionCanSetStoneAI = new List<int> { };
+
+                for (int i = 0; i < IntList_PointAI.Count; i++)
                 {
-                    if (IntList_PointAI.All(value => value != i) == true)
+                    if (IntList_PointAI[i] >= 1)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        int PositionPointAI = IntList_PointAI.IndexOf(i, 0);
-                        if (PositionPointAI >= 0)
-                        {
-                            IntList_PositionPointAI.Add(PositionPointAI);
-
-                            while (PositionPointAI >= 0)
-                            {
-                                PositionPointAI = IntList_PointAI.IndexOf(i, PositionPointAI + 1);
-
-                                if (PositionPointAI >= 0)
-                                {
-                                    IntList_PositionPointAI.Add(PositionPointAI);
-                                }
-                            }
-                        }
-
-                        break;
+                        IntList_PositionCanSetStoneAI.Add(i);
                     }
                 }
 
-                PositionCursorAI = IntList_PositionPointAI[Mathf.FloorToInt(Random.Range(0, IntList_PositionPointAI.Count))];
-
-                Invoke("Reset_ColorAI", 0);
+                Invoke("Finding_PositionCanSetStoneAIAround4Corner", 0);
             }
         }
         if (PlayerColor == "White")
         {
 
         }
+    }
+    //4つの角の周りにStoneAIを設置できる座標が存在するかしないか
+    void Finding_PositionCanSetStoneAIAround4Corner ()
+    {
+        //Debug.Log("Finding_PositionCanSetStoneAIAround4Corner was called");
+
+        if (IntList_PositionCanSetStoneAI.Any(value => value != 1 | value != 6 | value != 8 | value != 15 | value != 48 | value != 55 | value != 57 | value != 62) == true)
+        {
+            //4つの角の周りにStoneAIを設置できる座標が存在する
+
+            Invoke("Finding_PositionCanSetStoneAINotAround4Corner", 0);
+        }
+        else
+        {
+            //4つの角の周りにStoneAIを設置できる座標が存在しない
+
+            Invoke("Determination_PositonSetStoneAI", 0);
+        }
+    }
+    //4つの角の周り以外にStoneAIを設置できる座標が存在するかしないか
+    void Finding_PositionCanSetStoneAINotAround4Corner ()
+    {
+        //Debug.Log("Finding_PositionCanSetStoneAINotAround4Corner was called");
+
+        if (IntList_PositionCanSetStoneAI.Any(value => value != 1 & value != 6 & value != 8 & value != 15 & value != 48 & value != 55 & value != 57 & value != 62) == true)
+        {
+            //4つの角の周り以外にStoneAIを設置できる座標が存在する
+
+            Debug.Log("4つの角の周り以外にStoneAIを設置できる座標が存在する");
+        }
+        else
+        {
+            //4つの角の周り以外にStoneAIを設置できる座標が存在しない
+
+            Debug.Log("4つの角の周り以外にStoneAIを設置できる座標が存在しない");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    //StoneAIを設置する座標を決定
+    void Determination_PositonSetStoneAI()
+    {
+        //Debug.Log("Determination_PositonSetStoneAI was called");
+
+        IntList_PositionLeastReturnStonePlayer = new List<int> { };
+
+        //StonePlayerがひっくり返る数が一番少ない座標を見つける
+        for (int i = 1; i <= 18; i++)
+        {
+            if (IntList_PointAI.All(value => value != i) == true)
+            {
+                continue;
+            }
+            else
+            {
+                int PositionLeastReturnStonePlayer = IntList_PointAI.IndexOf(i, 0);
+                if (PositionLeastReturnStonePlayer >= 0)
+                {
+                    IntList_PositionLeastReturnStonePlayer.Add(PositionLeastReturnStonePlayer);
+
+                    while (PositionLeastReturnStonePlayer >= 0)
+                    {
+                        PositionLeastReturnStonePlayer = IntList_PointAI.IndexOf(i, PositionLeastReturnStonePlayer + 1);
+
+                        if (PositionLeastReturnStonePlayer >= 0)
+                        {
+                            IntList_PositionLeastReturnStonePlayer.Add(PositionLeastReturnStonePlayer);
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+
+        PositionCursorAI = IntList_PositionLeastReturnStonePlayer[Mathf.FloorToInt(Random.Range(0, IntList_PositionLeastReturnStonePlayer.Count))];
+
+        Invoke("Reset_ColorAI", 0);
+
     }
     //ColorAIをリセット
     void Reset_ColorAI()
@@ -3766,12 +3860,12 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         CancelInvoke("Finding_PositionAroundStoneAI");
         CancelInvoke("Squeezing_PositionAroundStoneAI");
-        CancelInvoke("Determination_PositonSetStonePlayer");
+        CancelInvoke("Finding_PositionCanSetStonePlayer");
         CancelInvoke("Reset_ColorPlayer");
 
         CancelInvoke("Finding_PositionAroundStonePlayer");
         CancelInvoke("Squeezing_PositionAroundStonePlayer");
-        CancelInvoke("Determination_PositonSetStoneAI");
+        CancelInvoke("Finding_PositionCanSetStoneAI");
         CancelInvoke("Reset_ColorAI");
 
         Debug.Log("黒  :  " + IntList_PositionStoneBlack.Count);
@@ -3848,20 +3942,11 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
             IntList_PositionStoneBlack = new List<int> { };
 
-            int PositionStoneBlack = IntList_Color.IndexOf(1, 0);
-
-            if (PositionStoneBlack >= 0)
+            for(int i = 0; i < IntList_Color.Count; i++)
             {
-                IntList_PositionStoneBlack.Add(PositionStoneBlack);
-
-                while (PositionStoneBlack >= 0)
+                if (IntList_Color[i] == 1)
                 {
-                    PositionStoneBlack = IntList_Color.IndexOf(1, PositionStoneBlack + 1);
-
-                    if (PositionStoneBlack >= 0)
-                    {
-                        IntList_PositionStoneBlack.Add(PositionStoneBlack);
-                    }
+                    IntList_PositionStoneBlack.Add(i);
                 }
             }
 
@@ -3886,25 +3971,13 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
             IntList_PositionStoneWhite = new List<int> { };
 
-
-
-            int PositionStoneWhite = IntList_Color.IndexOf(2, 0);
-            if (PositionStoneWhite >= 0)
+            for (int i = 0; i < IntList_Color.Count; i++)
             {
-                IntList_PositionStoneWhite.Add(PositionStoneWhite);
-
-                while (PositionStoneWhite >= 0)
+                if (IntList_Color[i] == 2)
                 {
-                    PositionStoneWhite = IntList_Color.IndexOf(2, PositionStoneWhite + 1);
-
-                    if (PositionStoneWhite >= 0)
-                    {
-                        IntList_PositionStoneWhite.Add(PositionStoneWhite);
-                    }
+                    IntList_PositionStoneWhite.Add(i);
                 }
             }
-
-
 
             for (int i = 0; i < IntList_PositionStoneWhite.Count; i++)
             {
