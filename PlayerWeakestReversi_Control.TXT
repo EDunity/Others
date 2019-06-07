@@ -29,6 +29,10 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     private List<int> IntList_PositionCanSetStonePlayer = new List<int> { };
     private List<int> IntList_PositionCanSetStoneAI = new List<int> { };
 
+    private List<int> IntList_PositionCanSetStoneAIAroundCorner = new List<int> { };
+
+    private List<int> IntList_PositionOverlaped = new List<int> { };
+
     private List<int> IntList_PositionLeastReturnStonePlayer = new List<int> { };
 
     private int PositionCursorPlayer = 0;
@@ -287,8 +291,8 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         if (PlayerColor == "Black")
         {
-            IntList_PositionCanSetStonePlayer = new List<int> { 20,29,34,43};
-            IntList_PositionCanSetStoneAI = new List<int> { 19,26,37,44};
+            IntList_PositionCanSetStonePlayer = new List<int> { 20, 29, 34, 43 };
+            IntList_PositionCanSetStoneAI = new List<int> { 19, 26, 37, 44 };
 
             Invoke("Summoning_CursorPlayer", 0);
             Invoke("Summoning_StonePlayer", 0);
@@ -1524,7 +1528,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
 
 
-        
+
 
 
 
@@ -1620,7 +1624,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
                 }
             }
         }
-        if(Turn == "AI")
+        if (Turn == "AI")
         {
             if (CanInvokeFinding_PositionAroundStonePlayer == true)
             {
@@ -1634,7 +1638,8 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
 
 
-        if (IntList_Color.All(value => value != 0) == true)
+        if (IntList_Color.All(value => value != 0) == true |
+            IntList_PointPlayer.Count == 0 & IntList_PointAI.Count == 0)
         {
             if (CanInvokeDisplaying_Result == true)
             {
@@ -1724,7 +1729,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
         if (Alpha7D)
         {
-            Invoke("Finding_PositionCanSetStoneAINotAround4Corner", 0);
+
         }
         if (Alpha8D)
         {
@@ -1738,7 +1743,12 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
         if (Alpha9D)
         {
-            Invoke("Finding_PositionAroundStonePlayer", 0);
+            Debug.Log("StoneAIもStonePlayerも設置可能な座標");
+            for (int i = 0; i < IntList_PositionOverlaped.Count; i++)
+            {
+                Debug.Log(IntList_PositionOverlaped[i] + "  :  " + i);
+            }
+            Debug.Log("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 
@@ -2233,7 +2243,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         Invoke("Finding_PositionCanSetStonePlayer", 0);
     }
-    //StonePlayerを設置できる座標が存在するかしないか
+    //StonePlayerを設置可能な座標が存在するかしないか
     void Finding_PositionCanSetStonePlayer()
     {
         //Debug.Log("Finding_PositionCanSetStonePlayer was called");
@@ -2242,14 +2252,13 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
             if (IntList_PointPlayer.All(value => value == 0) == true)
             {
-                //StonePlayerを設置できる座標が存在しない
+                //StonePlayerを設置可能な座標が存在しない
 
-                Turn = "AI";
-                CanInvokeFinding_PositionAroundStonePlayer = true;
+                Invoke("Chenging_Turn", 0);
             }
             else
             {
-                //StonePlayerを設置できる座標が存在する
+                //StonePlayerを設置可能な座標が存在する
 
                 IntList_PositionCanSetStonePlayer = new List<int> { };
 
@@ -2669,7 +2678,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
 
         }
-        
+
         UpperPointPlayer = 0;
         LowerPointPlayer = 0;
         RightPointPlayer = 0;
@@ -2685,9 +2694,13 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         Invoke("Summoning_StonePlayer", 0);
         Invoke("Summoning_StoneAI", 0);
 
-        Turn = "AI";
-        CanInvokeFinding_PositionAroundStonePlayer = true;
+        Invoke("Chenging_Turn", 0);
     }
+
+
+
+
+
 
 
 
@@ -3170,7 +3183,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         Invoke("Finding_PositionCanSetStoneAI", 0);
     }
-    //StoneAIを設置できる座標が存在するかしないか
+    //StoneAIを設置可能な座標が存在するかしないか
     void Finding_PositionCanSetStoneAI()
     {
         //Debug.Log("Finding_PositionCanSetStoneAI was called");
@@ -3179,17 +3192,15 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
             if (IntList_PointAI.All(value => value == 0) == true)
             {
-                //StoneAIを設置できる座標が存在しない
+                //StoneAIを設置可能な座標が存在しない
 
                 //Debug.Log("AIはStoneAIを設置することができません。");
 
-                Turn = "Player";
-                Invoke("Summoning_CursorPlayer", 0);
-                Invoke("Finding_PositionAroundStoneAI", 0);
+                Invoke("Chenging_Turn", 0);
             }
             else
             {
-                //StoneAIを設置できる座標が存在する
+                //StoneAIを設置可能な座標が存在する
 
                 //Debug.Log("AIはStoneAIを設置することができます。");
 
@@ -3203,7 +3214,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
                     }
                 }
 
-                Invoke("Finding_PositionCanSetStoneAIAround4Corner", 0);
+                Invoke("Finding_StoneOnCorner", 0);
             }
         }
         if (PlayerColor == "White")
@@ -3211,54 +3222,687 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         }
     }
-    //4つの角の周りにStoneAIを設置できる座標が存在するかしないか
-    void Finding_PositionCanSetStoneAIAround4Corner ()
+    //全ての角に石が既に存在するかしないか
+    void Finding_StoneOnCorner()
     {
-        //Debug.Log("Finding_PositionCanSetStoneAIAround4Corner was called");
+        //Debug.Log("Finding_StonePlayerOnCorner was called");
 
-        if (IntList_PositionCanSetStoneAI.Any(value => value != 1 | value != 6 | value != 8 | value != 15 | value != 48 | value != 55 | value != 57 | value != 62) == true)
+        if (IntList_Color[0] != 0 &
+            IntList_Color[7] != 0 &
+            IntList_Color[56] != 0 &
+            IntList_Color[63] != 0)
         {
-            //4つの角の周りにStoneAIを設置できる座標が存在する
+            //全ての角に石が既に存在する
 
-            Invoke("Finding_PositionCanSetStoneAINotAround4Corner", 0);
+            Invoke("Finding_PositionCanSetStoneAIExpectingCorner", 0);
         }
         else
         {
-            //4つの角の周りにStoneAIを設置できる座標が存在しない
+            //全ての角に石が既に存在しない
+
+            Invoke("Finding_PositionCanSetStoneAIAroundCorner", 0);
+        }
+    }
+    //角の周りにStoneAIを設置可能な座標が存在するかしないか
+    void Finding_PositionCanSetStoneAIAroundCorner()
+    {
+        //Debug.Log("Finding_PositionCanSetStoneAIAroundCorner was called");
+
+        if (IntList_PositionCanSetStoneAI.Any(value => value != 1 | value != 6 | value != 8 | value != 15 | value != 48 | value != 55 | value != 57 | value != 62) == true)
+        {
+            //角の周りにStoneAIを設置可能な座標が存在する
+
+            Invoke("Investigatation_ValueOfPositionAroundCorner", 0);
+        }
+        else
+        {
+            //角の周りにStoneAIを設置可能な座標が存在しない
+
+            Invoke("Finding_PositionCanSetStoneAIExpectingCorner", 0);
+        }
+    }
+    //角の周りにStoneAIを設置する価値があるかないか
+    void Investigatation_ValueOfPositionAroundCorner()
+    {
+        //Debug.Log("Investigatation_ValueOfPositionAroundCorner was called");
+
+        IntList_PositionCanSetStoneAIAroundCorner = new List<int> { };
+
+        if (IntList_Color[0] == 0)
+        {
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 1) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(1);
+            }
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 8) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(8);
+            }
+        }
+        if (IntList_Color[7] == 0)
+        {
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 6) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(6);
+            }
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 15) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(15);
+            }
+        }
+        if (IntList_Color[56] == 0)
+        {
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 48) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(48);
+            }
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 57) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(57);
+            }
+        }
+        if (IntList_Color[63] == 0)
+        {
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 55) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(55);
+            }
+            if (IntList_PositionCanSetStoneAI.Any(value => value == 62) == true)
+            {
+                IntList_PositionCanSetStoneAIAroundCorner.Add(62);
+            }
+        }
+
+        if (IntList_PositionCanSetStoneAIAroundCorner.Count > 0)
+        {
+            //角の周りにStoneAIを設置する価値がある
+            //(角に石が設置されていない座標が存在しその周りにStoneAIを設置可能な座標が存在する)
+
+            //IntList_PointAIの石が設置されていない座標の周りの座標以外の全ての座標のポイントを0にする
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 1) == true)
+            {
+                IntList_PointAI[1] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 6) == true)
+            {
+                IntList_PointAI[6] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 8) == true)
+            {
+                IntList_PointAI[8] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 15) == true)
+            {
+                IntList_PointAI[15] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 48) == true)
+            {
+                IntList_PointAI[48] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 55) == true)
+            {
+                IntList_PointAI[55] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 57) == true)
+            {
+                IntList_PointAI[57] = 0;
+            }
+            if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 62) == true)
+            {
+                IntList_PointAI[62] = 0;
+            }
+
+            for (int i = 0; i < IntList_PointAI.Count; i++)
+            {
+                if (i != 1 &
+                    i != 6 &
+                    i != 8 &
+                    i != 15 &
+                    i != 48 &
+                    i != 55 &
+                    i != 57 &
+                    i != 62)
+                {
+                    IntList_PointAI[i] = 0;
+                }
+            }
+
+            Invoke("Finding_PositionOverlaped", 0);
+        }
+        else
+        {
+            //角の周りにStoneAIを設置する価値がない
+            //(もう既に角に石が設置されていてその周りにStoneAIを設置する意味がない)
+
+            Invoke("Finding_PositionCanSetStoneAIExpectingCorner", 0);
+        }
+    }
+    //角以外にStoneAIを設置可能な座標が存在するか
+    void Finding_PositionCanSetStoneAIExpectingCorner()
+    {
+        //Debug.Log("Finding_PositionCanSetStoneAIExpectingCorner was called");
+
+        if (IntList_PositionCanSetStoneAI.Any(value => value != 0 & value != 7 & value != 56 & value != 63) == true)
+        {
+            //角以外にStoneAIを設置可能な座標が存在する
+
+            //IntList_PointAIのすべての角の座標のポイントを0にする
+            IntList_PointAI[0] = 0;
+            IntList_PointAI[7] = 0;
+            IntList_PointAI[56] = 0;
+            IntList_PointAI[63] = 0;
+
+            Invoke("Finding_PositionOverlaped", 0);
+        }
+        else
+        {
+            //角以外にStoneAIを設置可能な座標が存在しない
+
+            Invoke("Finding_PositionOverlaped", 0);
+        }
+    }
+
+
+
+
+
+
+    //StoneAIもStonePlayerも設置可能な座標が存在するかしないか
+    void Finding_PositionOverlaped()
+    {
+        //Debug.Log("Finding_PositionOverlaped was called");
+
+        IntList_PositionOverlaped = new List<int> { };
+
+        IntList_PositionAroundStoneAI = new List<int> { };
+        for (int i = 0; i < IntList_PositionStoneWhite.Count; i++)
+        {
+            //上
+            if (IntList_PositionStoneWhite[i] + 8 >= 0 &
+                IntList_PositionStoneWhite[i] + 8 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] + 8] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] + 8);
+                }
+            }
+            //下
+            if (IntList_PositionStoneWhite[i] - 8 >= 0 &
+                IntList_PositionStoneWhite[i] - 8 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] - 8] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] - 8);
+                }
+            }
+            //右
+            if (IntList_PositionStoneWhite[i] + 1 >= 0 &
+                IntList_PositionStoneWhite[i] + 1 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] + 1] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] + 1);
+                }
+            }
+            //左
+            if (IntList_PositionStoneWhite[i] - 1 >= 0 &
+                IntList_PositionStoneWhite[i] - 1 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] - 1] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] - 1);
+                }
+            }
+            //右上
+            if (IntList_PositionStoneWhite[i] + 9 >= 0 &
+                IntList_PositionStoneWhite[i] + 9 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] + 9] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] + 9);
+                }
+            }
+            //左上
+            if (IntList_PositionStoneWhite[i] + 7 >= 0 &
+                IntList_PositionStoneWhite[i] + 7 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] + 7] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] + 7);
+                }
+            }
+            //右下
+            if (IntList_PositionStoneWhite[i] - 7 >= 0 &
+                IntList_PositionStoneWhite[i] - 7 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] - 7] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] - 7);
+                }
+            }
+            //左下
+            if (IntList_PositionStoneWhite[i] - 9 >= 0 &
+                IntList_PositionStoneWhite[i] - 9 <= 63)
+            {
+                if (IntList_Color[IntList_PositionStoneWhite[i] - 9] == 0)
+                {
+                    IntList_PositionAroundStoneAI.Add(IntList_PositionStoneWhite[i] - 9);
+                }
+            }
+        }
+        IntList_PositionAroundStoneAI = IntList_PositionAroundStoneAI.Distinct().ToList();
+        IntList_PositionAroundStoneAI.Sort();
+        IntList_PositionAroundStoneAI.Reverse();
+        IntList_PointPlayer = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        for (int i = 0; i < IntList_PositionAroundStoneAI.Count; i++)
+        {
+            while (IsFinishedCountingUpperPointPlayer == false |
+                   IsFinishedCountingLowerPointPlayer == false |
+                   IsFinishedCountingRightPointPlayer == false |
+                   IsFinishedCountingLeftPointPlayer == false |
+                   IsFinishedCountingUpperRightPointPlayer == false |
+                   IsFinishedCountingUpperLeftPointPlayer == false |
+                   IsFinishedCountingLowerRightPointPlayer == false |
+                   IsFinishedCountingLowerLeftPointPlayer == false)
+            {
+                //上調査
+                if (IsFinishedCountingUpperPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] <= 55 &
+                        IntList_PositionAroundStoneAI[i] + (8 * UpperDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] + (8 * UpperDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] + (8 * UpperDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                UpperPointPlayer = 0;
+                                IsFinishedCountingUpperPointPlayer = true;
+                                break;
+                            case 2:
+                                UpperDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                UpperPointPlayer = UpperDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingUpperPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        UpperPointPlayer = 0;
+                        IsFinishedCountingUpperPointPlayer = true;
+                    }
+                }
+                //下調査
+                if (IsFinishedCountingLowerPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] >= 8 &
+                        IntList_PositionAroundStoneAI[i] - (8 * LowerDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] - (8 * LowerDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] - (8 * LowerDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                LowerPointPlayer = 0;
+                                IsFinishedCountingLowerPointPlayer = true;
+                                break;
+                            case 2:
+                                LowerDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                LowerPointPlayer = LowerDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingLowerPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        LowerPointPlayer = 0;
+                        IsFinishedCountingLowerPointPlayer = true;
+                    }
+                }
+                //右調査
+                if (IsFinishedCountingRightPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] != 7 &
+                        IntList_PositionAroundStoneAI[i] != 15 &
+                        IntList_PositionAroundStoneAI[i] != 23 &
+                        IntList_PositionAroundStoneAI[i] != 31 &
+                        IntList_PositionAroundStoneAI[i] != 39 &
+                        IntList_PositionAroundStoneAI[i] != 47 &
+                        IntList_PositionAroundStoneAI[i] != 55 &
+                        IntList_PositionAroundStoneAI[i] != 63 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 0 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 8 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 16 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 24 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 32 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 40 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 48 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) != 56 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] + (1 * RightDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                RightPointPlayer = 0;
+                                IsFinishedCountingRightPointPlayer = true;
+                                break;
+                            case 2:
+                                RightDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                RightPointPlayer = RightDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingRightPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        RightPointPlayer = 0;
+                        IsFinishedCountingRightPointPlayer = true;
+                    }
+                }
+                //左調査
+                if (IsFinishedCountingLeftPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] != 0 &
+                        IntList_PositionAroundStoneAI[i] != 8 &
+                        IntList_PositionAroundStoneAI[i] != 16 &
+                        IntList_PositionAroundStoneAI[i] != 24 &
+                        IntList_PositionAroundStoneAI[i] != 32 &
+                        IntList_PositionAroundStoneAI[i] != 40 &
+                        IntList_PositionAroundStoneAI[i] != 48 &
+                        IntList_PositionAroundStoneAI[i] != 56 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 7 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 15 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 23 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 31 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 39 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 47 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 55 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) != 63 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] - (1 * LeftDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                LeftPointPlayer = 0;
+                                IsFinishedCountingLeftPointPlayer = true;
+                                break;
+                            case 2:
+                                LeftDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                LeftPointPlayer = LeftDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingLeftPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        LeftPointPlayer = 0;
+                        IsFinishedCountingLeftPointPlayer = true;
+                    }
+                }
+                //右上調査
+                if (IsFinishedCountingUpperRightPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] != 7 &
+                        IntList_PositionAroundStoneAI[i] != 15 &
+                        IntList_PositionAroundStoneAI[i] != 23 &
+                        IntList_PositionAroundStoneAI[i] != 31 &
+                        IntList_PositionAroundStoneAI[i] != 39 &
+                        IntList_PositionAroundStoneAI[i] != 47 &
+                        IntList_PositionAroundStoneAI[i] <= 54 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 0 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 8 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 16 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 24 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 32 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 40 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 48 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) != 56 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] + (9 * UpperRightDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                UpperRightPointPlayer = 0;
+                                IsFinishedCountingUpperRightPointPlayer = true;
+                                break;
+                            case 2:
+                                UpperRightDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                UpperRightPointPlayer = UpperRightDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingUpperRightPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        UpperRightPointPlayer = 0;
+                        IsFinishedCountingUpperRightPointPlayer = true;
+                    }
+                }
+                //左上調査
+                if (IsFinishedCountingUpperLeftPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] != 0 &
+                        IntList_PositionAroundStoneAI[i] != 8 &
+                        IntList_PositionAroundStoneAI[i] != 16 &
+                        IntList_PositionAroundStoneAI[i] != 24 &
+                        IntList_PositionAroundStoneAI[i] != 32 &
+                        IntList_PositionAroundStoneAI[i] != 40 &
+                        IntList_PositionAroundStoneAI[i] != 48 &
+                        IntList_PositionAroundStoneAI[i] <= 55 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 7 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 15 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 23 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 31 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 39 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 47 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 55 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) != 63 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] + (7 * UpperLeftDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                UpperLeftPointPlayer = 0;
+                                IsFinishedCountingUpperLeftPointPlayer = true;
+                                break;
+                            case 2:
+                                UpperLeftDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                UpperLeftPointPlayer = UpperLeftDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingUpperLeftPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        UpperLeftPointPlayer = 0;
+                        IsFinishedCountingUpperLeftPointPlayer = true;
+                    }
+                }
+                //右下調査
+                if (IsFinishedCountingLowerRightPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] != 15 &
+                        IntList_PositionAroundStoneAI[i] != 23 &
+                        IntList_PositionAroundStoneAI[i] != 31 &
+                        IntList_PositionAroundStoneAI[i] != 39 &
+                        IntList_PositionAroundStoneAI[i] != 47 &
+                        IntList_PositionAroundStoneAI[i] != 55 &
+                        IntList_PositionAroundStoneAI[i] != 63 &
+                        IntList_PositionAroundStoneAI[i] >= 8 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 0 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 8 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 16 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 24 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 32 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 40 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 48 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) != 56 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] - (7 * LowerRightDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                LowerRightPointPlayer = 0;
+                                IsFinishedCountingLowerRightPointPlayer = true;
+                                break;
+                            case 2:
+                                LowerRightDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                LowerRightPointPlayer = LowerRightDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingLowerRightPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        LowerRightPointPlayer = 0;
+                        IsFinishedCountingLowerRightPointPlayer = true;
+                    }
+                }
+                //左下調査
+                if (IsFinishedCountingLowerLeftPointPlayer == false)
+                {
+                    if (IntList_PositionAroundStoneAI[i] != 16 &
+                        IntList_PositionAroundStoneAI[i] != 24 &
+                        IntList_PositionAroundStoneAI[i] != 32 &
+                        IntList_PositionAroundStoneAI[i] != 40 &
+                        IntList_PositionAroundStoneAI[i] != 48 &
+                        IntList_PositionAroundStoneAI[i] != 56 &
+                        IntList_PositionAroundStoneAI[i] >= 9 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 7 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 15 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 23 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 31 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 39 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 47 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 55 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) != 63 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) >= 0 &
+                        IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI) <= 63)
+                    {
+                        switch (IntList_Color[IntList_PositionAroundStoneAI[i] - (9 * LowerLeftDistanceFromPositionAroundStoneAI)])
+                        {
+                            case 0:
+                                LowerLeftPointPlayer = 0;
+                                IsFinishedCountingLowerLeftPointPlayer = true;
+                                break;
+                            case 2:
+                                LowerLeftDistanceFromPositionAroundStoneAI += 1;
+                                break;
+                            case 1:
+                                LowerLeftPointPlayer = LowerLeftDistanceFromPositionAroundStoneAI - 1;
+                                IsFinishedCountingLowerLeftPointPlayer = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        LowerLeftPointPlayer = 0;
+                        IsFinishedCountingLowerLeftPointPlayer = true;
+                    }
+                }
+
+                if (IsFinishedCountingUpperPointPlayer == true &
+                    IsFinishedCountingLowerPointPlayer == true &
+                    IsFinishedCountingRightPointPlayer == true &
+                    IsFinishedCountingLeftPointPlayer == true &
+                    IsFinishedCountingUpperRightPointPlayer == true &
+                    IsFinishedCountingUpperLeftPointPlayer == true &
+                    IsFinishedCountingLowerRightPointPlayer == true &
+                    IsFinishedCountingLowerLeftPointPlayer == true)
+                {
+                    IntList_PointPlayer[IntList_PositionAroundStoneAI[i]] = UpperPointPlayer + LowerPointPlayer + RightPointPlayer + LeftPointPlayer + UpperRightPointPlayer + UpperLeftPointPlayer + LowerRightPointPlayer + LowerLeftPointPlayer;
+
+                    UpperDistanceFromPositionAroundStoneAI = 1;
+                    LowerDistanceFromPositionAroundStoneAI = 1;
+                    RightDistanceFromPositionAroundStoneAI = 1;
+                    LeftDistanceFromPositionAroundStoneAI = 1;
+                    UpperRightDistanceFromPositionAroundStoneAI = 1;
+                    UpperLeftDistanceFromPositionAroundStoneAI = 1;
+                    LowerRightDistanceFromPositionAroundStoneAI = 1;
+                    LowerLeftDistanceFromPositionAroundStoneAI = 1;
+
+                    UpperPointPlayer = 0;
+                    LowerPointPlayer = 0;
+                    RightPointPlayer = 0;
+                    LeftPointPlayer = 0;
+                    UpperRightPointPlayer = 0;
+                    UpperLeftPointPlayer = 0;
+                    LowerRightPointPlayer = 0;
+                    LowerLeftPointPlayer = 0;
+
+                    IsFinishedCountingUpperPointPlayer = false;
+                    IsFinishedCountingLowerPointPlayer = false;
+                    IsFinishedCountingRightPointPlayer = false;
+                    IsFinishedCountingLeftPointPlayer = false;
+                    IsFinishedCountingUpperRightPointPlayer = false;
+                    IsFinishedCountingUpperLeftPointPlayer = false;
+                    IsFinishedCountingLowerRightPointPlayer = false;
+                    IsFinishedCountingLowerLeftPointPlayer = false;
+
+                    break;
+                }
+            }
+        }
+        IntList_PositionCanSetStonePlayer = new List<int> { };
+        for (int i = 0; i < IntList_PointPlayer.Count; i++)
+        {
+            if (IntList_PointPlayer[i] >= 1)
+            {
+                IntList_PositionCanSetStonePlayer.Add(i);
+            }
+        }
+
+        IntList_PositionOverlaped = IntList_PositionCanSetStoneAI.Intersect(IntList_PositionCanSetStonePlayer).ToList();
+
+        if (IntList_PositionOverlaped.Count > 0)
+        {
+            //StoneAIもStonePlayerも設置可能な座標が存在する
+
+            Debug.Log("StoneAIもStonePlayerも設置可能な座標が存在する");
+
+            //StoneAIもStonePlayerも設置可能な座標のポイントを0にする
+            for (int i = 0; i < IntList_PointAI.Count; i++)
+            {
+                if (IntList_PositionOverlaped.Contains(i) == true)
+                {
+                    IntList_PointAI[i] = 0;
+                }
+            }
+
+            Invoke("Determination_PositonSetStoneAI", 0);
+        }
+        else
+        {
+            //StoneAIもStonePlayerも設置可能な座標が存在しない
+
+            Debug.Log("StoneAIもStonePlayerも設置可能な座標が存在しない");
 
             Invoke("Determination_PositonSetStoneAI", 0);
         }
     }
-    //4つの角の周り以外にStoneAIを設置できる座標が存在するかしないか
-    void Finding_PositionCanSetStoneAINotAround4Corner ()
-    {
-        //Debug.Log("Finding_PositionCanSetStoneAINotAround4Corner was called");
-
-        if (IntList_PositionCanSetStoneAI.Any(value => value != 1 & value != 6 & value != 8 & value != 15 & value != 48 & value != 55 & value != 57 & value != 62) == true)
-        {
-            //4つの角の周り以外にStoneAIを設置できる座標が存在する
-
-            Debug.Log("4つの角の周り以外にStoneAIを設置できる座標が存在する");
-        }
-        else
-        {
-            //4つの角の周り以外にStoneAIを設置できる座標が存在しない
-
-            Debug.Log("4つの角の周り以外にStoneAIを設置できる座標が存在しない");
-        }
-    }
 
 
 
 
 
-
-
-
-
-
-
-    //StoneAIを設置する座標を決定
+    //StoneAIを設置した際にひっくり返るStonePlayerの数が一番少ない座標を取得
     void Determination_PositonSetStoneAI()
     {
         //Debug.Log("Determination_PositonSetStoneAI was called");
@@ -3715,9 +4359,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         Invoke("Summoning_StonePlayer", 0);
         Invoke("Summoning_StoneAI", 0);
 
-        Turn = "Player";
-        Invoke("Summoning_CursorPlayer", 0);
-        Invoke("Finding_PositionAroundStoneAI", 0);
+        Invoke("Chenging_Turn", 0);
     }
 
 
@@ -3848,12 +4490,33 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
 
 
+    //Turnチェンジ
+    void Chenging_Turn()
+    {
+        //Debug.Log("Chenging_Turn was called");
 
+        if (Turn == "Player")
+        {
+            //Debug.Log("ターンをAIに変更");
 
+            Turn = "AI";
+            CanInvokeFinding_PositionAroundStonePlayer = true;
+        }
+        else if (Turn == "AI")
+        {
+            //Debug.Log("ターンをプレイヤーに変更");
+
+            Turn = "Player";
+            Invoke("Summoning_CursorPlayer", 0);
+            Invoke("Finding_PositionAroundStoneAI", 0);
+        }
+    }
     //結果表示
     void Displaying_Result()
     {
         Turn = "";
+
+        Invoke("Destruction_Cursor", 0);
 
         CanInvokeReset_ColorPlayer = false;
         CanInvokeFinding_PositionAroundStonePlayer = false;
@@ -3886,14 +4549,6 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
             Debug.Log("引き分け");
         }
     }
-
-
-
-
-
-
-
- 
 
 
 
@@ -3942,7 +4597,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
             IntList_PositionStoneBlack = new List<int> { };
 
-            for(int i = 0; i < IntList_Color.Count; i++)
+            for (int i = 0; i < IntList_Color.Count; i++)
             {
                 if (IntList_Color[i] == 1)
                 {
