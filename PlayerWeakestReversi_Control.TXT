@@ -15,6 +15,12 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     private GameObject Transform_Cursor;
     private GameObject Transform_Stone;
 
+    private GameObject AudioSourcePlayerWeakestReversi_1;
+    private GameObject AudioSourcePlayerWeakestReversi_2;
+
+    private AudioSource AudioSource_AudioSourcePlayerWeakestReversi_1;
+    private AudioSource AudioSource_AudioSourcePlayerWeakestReversi_2;
+
     private List<int> IntList_Color = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
 
     private List<int> IntList_PointPlayer = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -32,8 +38,11 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
     private List<int> IntList_PositionCanSetStoneAIAroundCorner = new List<int> { };
 
     private List<int> IntList_PositionOverlaped = new List<int> { };
+    private List<int> IntList_PositionNotOverlaped = new List<int> { };
 
     private List<int> IntList_PositionLeastReturnStonePlayer = new List<int> { };
+
+    private float CameraAngleX;
 
     private int PositionCursorPlayer = 0;
     private int PositionCursorAI = 0;
@@ -285,9 +294,11 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         Transform_Cursor = GameObject.Find("Transform_Cursor");
         Transform_Stone = GameObject.Find("Transform_Stone");
 
+        AudioSourcePlayerWeakestReversi_1 = GameObject.Find("AudioSourcePlayerWeakestReversi_1");
+        AudioSourcePlayerWeakestReversi_2 = GameObject.Find("AudioSourcePlayerWeakestReversi_2");
 
-
-
+        AudioSource_AudioSourcePlayerWeakestReversi_1 = AudioSourcePlayerWeakestReversi_1.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSourcePlayerWeakestReversi_2 = AudioSourcePlayerWeakestReversi_2.transform.GetComponent<AudioSource>();
 
         if (PlayerColor == "Black")
         {
@@ -312,24 +323,24 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         //MainCameraJointWeakestReversi操作
         if (UpArrow)
         {
-            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(0.3f, 0, 0);
+            if(CameraAngleX <= 0)
+            {
+                CameraAngleX += 0.3f;
+            }
+
         }
         if (DownArrow)
         {
-            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(-0.3f, 0, 0);
-        }
-        if (RightArrow)
-        {
-            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(0, -0.3f, 0);
-        }
-        if (LeftArrow)
-        {
-            MainCameraJointWeakestReversi.transform.eulerAngles += new Vector3(0, 0.3f, 0);
+            if(CameraAngleX >= -50)
+            {
+                CameraAngleX += -0.3f;
+            }
         }
         if (RD)
         {
-            MainCameraJointWeakestReversi.transform.eulerAngles = new Vector3(0, 0, 0);
+            CameraAngleX = 0;
         }
+        MainCameraJointWeakestReversi.transform.eulerAngles = new Vector3(CameraAngleX, 0, 0);
     }
 
 
@@ -1615,12 +1626,16 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
                 {
                     //Debug.Log("PlayerはそこにStonePlayerを設置することができます。");
 
+                    AudioSource_AudioSourcePlayerWeakestReversi_1.Play();
+
                     CanInvokeReset_ColorPlayer = false;
                     Invoke("Reset_ColorPlayer", 0);
                 }
                 else
                 {
                     //Debug.Log("PlayerはそこにStonePlayerを設置することができません。");
+
+                    AudioSource_AudioSourcePlayerWeakestReversi_2.Play();
                 }
             }
         }
@@ -1648,17 +1663,6 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
                 Invoke("Displaying_Result", 0);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1729,7 +1733,12 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         }
         if (Alpha7D)
         {
-
+            Debug.Log("StoneAIしか設置できない座標");
+            for (int i = 0; i < IntList_PositionNotOverlaped.Count; i++)
+            {
+                Debug.Log(IntList_PositionNotOverlaped[i] + "  :  " + i);
+            }
+            Debug.Log("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
         if (Alpha8D)
         {
@@ -3322,34 +3331,42 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 1) == true)
             {
                 IntList_PointAI[1] = 0;
+                IntList_PositionCanSetStoneAI.Remove(1);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 6) == true)
             {
                 IntList_PointAI[6] = 0;
+                IntList_PositionCanSetStoneAI.Remove(6);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 8) == true)
             {
                 IntList_PointAI[8] = 0;
+                IntList_PositionCanSetStoneAI.Remove(8);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 15) == true)
             {
                 IntList_PointAI[15] = 0;
+                IntList_PositionCanSetStoneAI.Remove(15);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 48) == true)
             {
                 IntList_PointAI[48] = 0;
+                IntList_PositionCanSetStoneAI.Remove(48);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 55) == true)
             {
                 IntList_PointAI[55] = 0;
+                IntList_PositionCanSetStoneAI.Remove(55);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 57) == true)
             {
                 IntList_PointAI[57] = 0;
+                IntList_PositionCanSetStoneAI.Remove(57);
             }
             if (IntList_PositionCanSetStoneAIAroundCorner.All(value => value != 62) == true)
             {
                 IntList_PointAI[62] = 0;
+                IntList_PositionCanSetStoneAI.Remove(62);
             }
 
             for (int i = 0; i < IntList_PointAI.Count; i++)
@@ -3364,10 +3381,11 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
                     i != 62)
                 {
                     IntList_PointAI[i] = 0;
+                    IntList_PositionCanSetStoneAI.Remove(i);
                 }
             }
 
-            Invoke("Finding_PositionOverlaped", 0);
+            Invoke("Finding_PositionNotOverlaped", 0);
         }
         else
         {
@@ -3391,28 +3409,26 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
             IntList_PointAI[7] = 0;
             IntList_PointAI[56] = 0;
             IntList_PointAI[63] = 0;
+            IntList_PositionCanSetStoneAI.Remove(0);
+            IntList_PositionCanSetStoneAI.Remove(7);
+            IntList_PositionCanSetStoneAI.Remove(56);
+            IntList_PositionCanSetStoneAI.Remove(63);
 
-            Invoke("Finding_PositionOverlaped", 0);
+            Invoke("Finding_PositionNotOverlaped", 0);
         }
         else
         {
             //角以外にStoneAIを設置可能な座標が存在しない
 
-            Invoke("Finding_PositionOverlaped", 0);
+            Invoke("Finding_PositionNotOverlaped", 0);
         }
     }
-
-
-
-
-
-
-    //StoneAIもStonePlayerも設置可能な座標が存在するかしないか
-    void Finding_PositionOverlaped()
+    //StoneAIしか設置できない座標が存在するかしないか
+    void Finding_PositionNotOverlaped()
     {
-        //Debug.Log("Finding_PositionOverlaped was called");
+        //Debug.Log("Finding_PositionNotOverlaped was called");
 
-        IntList_PositionOverlaped = new List<int> { };
+        IntList_PositionNotOverlaped = new List<int> { };
 
         IntList_PositionAroundStoneAI = new List<int> { };
         for (int i = 0; i < IntList_PositionStoneWhite.Count; i++)
@@ -3869,13 +3885,34 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
             }
         }
 
+        IntList_PositionNotOverlaped = IntList_PositionCanSetStoneAI.Except(IntList_PositionCanSetStonePlayer).ToList();
+
+        if(IntList_PositionNotOverlaped.Count > 0)
+        {
+            //StoneAIしか設置できない座標が存在する
+
+            Invoke("Finding_PositionOverlaped", 0);
+        }
+        else
+        {
+            //StoneAIしか設置できない座標が存在しない
+
+            Invoke("Determination_PositonSetStoneAI", 0);
+        }
+
+    }
+    //StoneAIもStonePlayerも設置可能な座標が存在するかしないか
+    void Finding_PositionOverlaped()
+    {
+        //Debug.Log("Finding_PositionOverlaped was called");
+
+        IntList_PositionOverlaped = new List<int> { };
+
         IntList_PositionOverlaped = IntList_PositionCanSetStoneAI.Intersect(IntList_PositionCanSetStonePlayer).ToList();
 
         if (IntList_PositionOverlaped.Count > 0)
         {
             //StoneAIもStonePlayerも設置可能な座標が存在する
-
-            Debug.Log("StoneAIもStonePlayerも設置可能な座標が存在する");
 
             //StoneAIもStonePlayerも設置可能な座標のポイントを0にする
             for (int i = 0; i < IntList_PointAI.Count; i++)
@@ -3883,6 +3920,7 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
                 if (IntList_PositionOverlaped.Contains(i) == true)
                 {
                     IntList_PointAI[i] = 0;
+                    IntList_PositionCanSetStoneAI.Remove(i);
                 }
             }
 
@@ -3892,16 +3930,9 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
         {
             //StoneAIもStonePlayerも設置可能な座標が存在しない
 
-            Debug.Log("StoneAIもStonePlayerも設置可能な座標が存在しない");
-
             Invoke("Determination_PositonSetStoneAI", 0);
         }
     }
-
-
-
-
-
     //StoneAIを設置した際にひっくり返るStonePlayerの数が一番少ない座標を取得
     void Determination_PositonSetStoneAI()
     {
@@ -4344,6 +4375,8 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
         }
 
+        AudioSource_AudioSourcePlayerWeakestReversi_1.Play();
+
         UpperPointAI = 0;
         LowerPointAI = 0;
         RightPointAI = 0;
@@ -4683,3 +4716,4 @@ public class PlayerWeakestReversi_Control : MonoBehaviour
 
 
 }
+
