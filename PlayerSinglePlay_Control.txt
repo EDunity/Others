@@ -70,7 +70,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                             0,0,0,0,0,0,0,0,0,0,
                                                             0,0,0,0,0,0,0,0,0,0};
 
-    private List<int> IntList_BlockType = new List<int> { 1, 2, 3 };
+    private List<int> IntList_BlockType = new List<int> { 1, 2, 3, 4, 5, 6 };
     private List<int> IntList_DirectionType = new List<int> { 1, 2, 3, 4 };
     private List<int> IntList_ColorType = new List<int> { 1, 2, 3 };
 
@@ -79,10 +79,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private List<int> IntList_DataOfTemporaryBlock = new List<int> { };
     private List<int> IntList_DataOfBlock1 = new List<int> { 0, 1, 10, 11 };
     private List<int> IntList_DataOfBlock2 = new List<int> { 10, 11, 12, 21 };
-    private List<int> IntList_DataOfBlock3 = new List<int> { 10,11,21,22};
-    private List<int> IntList_DataOfBlock4 = new List<int> { };
-    private List<int> IntList_DataOfBlock5 = new List<int> { };
-    private List<int> IntList_DataOfBlock6 = new List<int> { };
+    private List<int> IntList_DataOfBlock3 = new List<int> { 10, 11, 21, 22 };
+    private List<int> IntList_DataOfBlock4 = new List<int> { 11, 12, 20, 21 };
+    private List<int> IntList_DataOfBlock5 = new List<int> { 10 ,11 ,12, 22 };
+    private List<int> IntList_DataOfBlock6 = new List<int> { 10, 11, 12, 20 };
     private List<int> IntList_DataOfBlock7 = new List<int> { };
     private List<int> IntList_DataOfBlock8 = new List<int> { };
 
@@ -91,9 +91,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private List<int> IntList_SideLengthOfBlock1 = new List<int> { 2, 2, 2, 2 };
     private List<int> IntList_SideLengthOfBlock2 = new List<int> { 3, 2, 3, 2 };
     private List<int> IntList_SideLengthOfBlock3 = new List<int> { 3, 2, 3, 2 };
-    private List<int> IntList_SideLengthOfBlock4 = new List<int> { };
-    private List<int> IntList_SideLengthOfBlock5 = new List<int> { };
-    private List<int> IntList_SideLengthOfBlock6 = new List<int> { };
+    private List<int> IntList_SideLengthOfBlock4 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock5 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock6 = new List<int> { 3, 2, 3, 2 };
     private List<int> IntList_SideLengthOfBlock7 = new List<int> { };
     private List<int> IntList_SideLengthOfBlock8 = new List<int> { };
 
@@ -123,7 +123,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private Color Albedo_Default = new Color(1, 1, 1, 1);
     private Color Emission_Default = new Color(0, 0, 0, 0);
 
-    private int NumberOfBlockTypes = 3;
+    private int ScoreSinglePlay = 0;
+    private int NumberOfCombos = 0;
+    private int NumberOfRens = 2;
 
     private int BlockType_CurrentBlock;
     private int DirectionType_CurrentBlock;
@@ -315,9 +317,15 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         IntList_DataOfBlocks.Add(IntList_DataOfBlock1);
         IntList_DataOfBlocks.Add(IntList_DataOfBlock2);
         IntList_DataOfBlocks.Add(IntList_DataOfBlock3);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock4);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock5);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock6);
         IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock1);
         IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock2);
         IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock3);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock4);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock5);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock6);
         IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate1);
         IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate2);
         IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate3);
@@ -326,27 +334,27 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
 
 
-        //CurrentBlock‚Ì‰Šúİ’è
+        //CurrentBlockã®åˆæœŸè¨­å®š
         if (IsInitialStart == true)
         {
-            //CurrentBlock‚Ìí—ŞŒˆ‚ß
+            //CurrentBlockã®ç¨®é¡æ±ºã‚
             BlockType_CurrentBlock = IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
             //IntList_BlockType.Remove(BlockType_CurrentBlock);
             IntList_DataOfCurrentBlock = IntList_DataOfBlocks[BlockType_CurrentBlock - 1];
             IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfBlocks[BlockType_CurrentBlock - 1];
 
     
-            //CurrentBlock‚ÌŒü‚«Œˆ‚ß
+            //CurrentBlockã®å‘ãæ±ºã‚
             DirectionType_CurrentBlock = IntList_DirectionType[Mathf.FloorToInt(Random.Range(1, IntList_DirectionType.Count + 1)) - 1];
             //IntList_DirectionType.Remove(DirectionType_CurrentBlock);
 
 
-            //CurrentBlock‚Ì‰ŠúÀ•WŒˆ‚ß
-            Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock[DirectionType_CurrentBlock - 1] - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock[DirectionType_CurrentBlock - 1] - 1].Count + 1)) - 1];
-            IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock[DirectionType_CurrentBlock - 1] - 1].Remove(Coordinate_CurrentBlock);
+            //CurrentBlockã®åˆæœŸåº§æ¨™æ±ºã‚
+            Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+            //IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Remove(Coordinate_CurrentBlock);
 
 
-            //CurrentBlock‚ÌFŒˆ‚ß
+            //CurrentBlockã®è‰²æ±ºã‚
             ColorType_CurrentBlock = IntList_ColorType[Mathf.FloorToInt(Random.Range(1, IntList_ColorType.Count + 1)) - 1];
             //IntList_ColorType.Remove(ColorType_CurrentBlock);
 
@@ -359,7 +367,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
     }
 
-
+ 
     void Update()
     {
         //ShortCutKey
@@ -1547,25 +1555,21 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
 
 
-        //CurrentBlock‚ÌRateOfFreeFall
-        //if ()
-        //{
+        //CurrentBlockã®RateOfFreeFall
+        RateOfFreeFall = FloatList_RateOfFreeFall[Mathf.FloorToInt(ScoreSinglePlay / 10000)];
 
-        //}
-        RateOfFreeFall = FloatList_RateOfFreeFall[0];
+        
 
 
-
-
-        //CurrentBlock‚Ì‘€ì
+        //CurrentBlockã®æ“ä½œ
         if (IntList_TableOfCube.Contains(1) == true)
         {
-            //CurrentBlock‚Ì‰ºˆÚ“®
+            //CurrentBlockã®ä¸‹ç§»å‹•
             if (S & !D & !A & !E & !Q)
             {
                 Invoke("ContinuousDownMovement_CurrentBlock", 0);
             }
-            //CurrentBlock‚Ì‰EˆÚ“®
+            //CurrentBlockã®å³ç§»å‹•
             if (D & !S & !A & !E & !Q)
             {
                 if (CanInvokeIntermittentRightMovement_CurrentBlock == true)
@@ -1585,7 +1589,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
                 CancelInvoke("ContinuousRightMovement_CurrentBlock");
             }
-            //CurrentBlock‚Ì¶ˆÚ“®
+            //CurrentBlockã®å·¦ç§»å‹•
             if (A & !S & !D & !E & !Q)
             {
                 if (CanInvokeIntermittentLeftMovement_CurrentBlock == true)
@@ -1605,7 +1609,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
                 CancelInvoke("ContinuousLeftMovement_CurrentBlock");
             }
-            //CurrentBlock‚Ì‰E‰ñ“]
+            //CurrentBlockã®å³å›è»¢
             if (ED & !S & !D & !A & !Q)
             {
                 Invoke("RightRoll_CurrentBlock", 0);
@@ -1613,7 +1617,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 CancelInvoke("Disassembly_CurrentBlock");
                 CanInvokeDisassembly_CurrentBlock = true;
             }
-            //CurrentBlock‚Ì¶‰ñ“]
+            //CurrentBlockã®å·¦å›è»¢
             if (QD & !S & !D & !A & !E)
             {
                 Invoke("LeftRoll_CurrentBlock", 0);
@@ -1621,11 +1625,19 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 CancelInvoke("Disassembly_CurrentBlock");
                 CanInvokeDisassembly_CurrentBlock = true;
             }
+
+
+            //CurrentBlockã®ãƒ›ãƒ¼ãƒ«ãƒ‰
+            if (WD & !S & !D & !A & !E & !Q)
+            {
+
+            }
+
         }
 
 
 
-        //FrameMode‚ÌØ‚è‘Ö‚¦
+        //FrameModeã®åˆ‡ã‚Šæ›¿ãˆ
         if (FD)
         {
             if (FrameMode == true)
@@ -1675,48 +1687,49 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
         if (Alpha3D)
         {
-            Debug.Log(IntList_StartCoordinate1.Count);
+
         }
         if (Alpha4D)
         {
-            Debug.Log(IntList_StartCoordinate2.Count);
+            ScoreSinglePlay += 10000;
         }
         if (Alpha5D)
         {
-            Debug.Log(IntList_StartCoordinate3.Count);
+
         }
         if (Alpha6D)
         {
-            Debug.Log(IntList_StartCoordinate4.Count);
-        }
 
+        }
+        Debug.Log(ScoreSinglePlay);
     }
 
 
 
-    //CurrentBlock‚ÌÄİ’è
+    //CurrentBlockã®å†è¨­å®š
     void Reset_SinglePlay()
     {
+        NumberOfCombos = 0;
         CanInvokeDisassembly_CurrentBlock = true;
 
-        //CurrentBlock‚Ìí—ŞŒˆ‚ß
+        //CurrentBlockã®ç¨®é¡æ±ºã‚
         BlockType_CurrentBlock = IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
         //IntList_BlockType.Remove(BlockType_CurrentBlock);
         IntList_DataOfCurrentBlock = IntList_DataOfBlocks[BlockType_CurrentBlock - 1];
         IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfBlocks[BlockType_CurrentBlock - 1];
 
 
-        //CurrentBlock‚ÌŒü‚«Œˆ‚ß
+        //CurrentBlockã®å‘ãæ±ºã‚
         DirectionType_CurrentBlock = IntList_DirectionType[Mathf.FloorToInt(Random.Range(1, IntList_DirectionType.Count + 1)) - 1];
         //IntList_DirectionType.Remove(DirectionType_CurrentBlock);
 
 
-        //CurrentBlock‚Ì‰ŠúÀ•WŒˆ‚ß
-        Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock[DirectionType_CurrentBlock - 1] - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock[DirectionType_CurrentBlock - 1] - 1].Count + 1)) - 1];
-        IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock[DirectionType_CurrentBlock - 1] - 1].Remove(Coordinate_CurrentBlock);
+        //CurrentBlockã®åˆæœŸåº§æ¨™æ±ºã‚
+        Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+        //IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Remove(Coordinate_CurrentBlock);
 
 
-        //CurrentBlock‚ÌFŒˆ‚ß
+        //CurrentBlockã®è‰²æ±ºã‚
         ColorType_CurrentBlock = IntList_ColorType[Mathf.FloorToInt(Random.Range(1, IntList_ColorType.Count + 1)) - 1];
         //IntList_ColorType.Remove(ColorType_CurrentBlock);
 
@@ -1726,11 +1739,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
 
 
-    //CurrentBlock‚Ì¢Š«
+    //CurrentBlockã®å¬å–š
     void Summoning_CurrentBlock()
     {
-        Debug.Log(Coordinate_CurrentBlock);
-
         for (int a = 1; a < DirectionType_CurrentBlock; a++)
         {
             IntList_DataOfTemporaryBlock = new List<int> { };
@@ -1748,13 +1759,16 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
         }
 
+        ScoreSinglePlay += 30;
+        NumberOfRens += 1;
+
         Invoke("Painting_Cube", 0);
     }
 
 
 
 
-    //CurrentBlock‚Ì©—R—‰º
+    //CurrentBlockã®è‡ªç”±è½ä¸‹
     void FreeFall_CurrentBlock()
     {
         Invoke("ContinuousDownMovement_CurrentBlock", 0);
@@ -1765,7 +1779,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
 
 
-    //CurrentBlock‚Ì‰ºˆÚ“®(F)
+    //CurrentBlockã®ä¸‹ç§»å‹•(F)
     void ContinuousDownMovement_CurrentBlock()
     {
         if(IntList_TableOfCube.Contains(1) == true)
@@ -1783,7 +1797,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
             if (IntList_DataOfCurrentBlock.Count == CanDownMovement_CurrentBlock)
             {
-                //CurrentBlock‚Ì‰ºˆÚ“®‚ª‰Â”\‚È
+                //CurrentBlockã®ä¸‹ç§»å‹•ãŒå¯èƒ½ãªæ™‚
                 for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
                 {
                     IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
@@ -1802,7 +1816,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             }
             else
             {
-                //CurrentBlock‚Ì‰ºˆÚ“®‚ª•s‰Â”\‚È
+                //CurrentBlockã®ä¸‹ç§»å‹•ãŒä¸å¯èƒ½ãªæ™‚
 
 
                 if (CanInvokeDisassembly_CurrentBlock == true)
@@ -1821,178 +1835,190 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             CanDownMovement_CurrentBlock = 0;
         }
     }
-    //CurrentBlock‚Ì‰EˆÚ“®(S)
+    //CurrentBlockã®å³ç§»å‹•(S)
     void IntermittentRightMovement_CurrentBlock()
     {
-        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        if(IntList_TableOfCube.Contains(1) == true)
         {
-            if ((Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] -9) % 10 != 0)
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
             {
-                if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] + 1] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] + 1] == 1)
+                if ((Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 9) % 10 != 0)
                 {
-                    CanRightMovement_CurrentBlock += 1;
+                    if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] + 1] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] + 1] == 1)
+                    {
+                        CanRightMovement_CurrentBlock += 1;
+                    }
                 }
             }
-        }
 
-        if (IntList_DataOfCurrentBlock.Count == CanRightMovement_CurrentBlock)
-        {
-            //CurrentBlock‚Ì‰EˆÚ“®‚ª‰Â”\‚È
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            if (IntList_DataOfCurrentBlock.Count == CanRightMovement_CurrentBlock)
             {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                //CurrentBlockã®å³ç§»å‹•ãŒå¯èƒ½ãªæ™‚
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                Coordinate_CurrentBlock += 1;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
             }
 
-            Coordinate_CurrentBlock += 1;
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
-            }
-
-            Invoke("Painting_Cube", 0);
+            CanRightMovement_CurrentBlock = 0;
         }
-
-        CanRightMovement_CurrentBlock = 0;
     }
-    //CurrentBlock‚Ì‰EˆÚ“®(F)
+    //CurrentBlockã®å³ç§»å‹•(F)
     void ContinuousRightMovement_CurrentBlock()
     {
         if (D & !S & !A & !E & !Q)
         {
-            Invoke("ContinuousRightMovement_CurrentBlock", 0.05f);
+            Invoke("ContinuousRightMovement_CurrentBlock", 0.03f);
             Invoke("IntermittentRightMovement_CurrentBlock", 0);
         }
     }
-    //CurrentBlock‚Ì¶ˆÚ“®(S)
+    //CurrentBlockã®å·¦ç§»å‹•(S)
     void IntermittentLeftMovement_CurrentBlock()
     {
-        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        if (IntList_TableOfCube.Contains(1) == true)
         {
-            if ((Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]) % 10 != 0)
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
             {
-                if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 1] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 1] == 1)
+                if ((Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]) % 10 != 0)
                 {
-                    CanLeftMovement_CurrentBlock += 1;
+                    if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 1] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 1] == 1)
+                    {
+                        CanLeftMovement_CurrentBlock += 1;
+                    }
                 }
             }
-        }
 
-        if (IntList_DataOfCurrentBlock.Count == CanLeftMovement_CurrentBlock)
-        {
-            //CurrentBlock‚Ì¶ˆÚ“®‚ª‰Â”\‚È
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            if (IntList_DataOfCurrentBlock.Count == CanLeftMovement_CurrentBlock)
             {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                //CurrentBlockã®å·¦ç§»å‹•ãŒå¯èƒ½ãªæ™‚
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                Coordinate_CurrentBlock -= 1;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
             }
 
-            Coordinate_CurrentBlock -= 1;
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
-            }
-
-            Invoke("Painting_Cube", 0);
+            CanLeftMovement_CurrentBlock = 0;
         }
-
-        CanLeftMovement_CurrentBlock = 0;
     }
-    //CurrentBlock‚Ì¶ˆÚ“®(F)
+    //CurrentBlockã®å·¦ç§»å‹•(F)
     void ContinuousLeftMovement_CurrentBlock()
     {
         if (A & !S & !D & !E & !Q)
         {
-            Invoke("ContinuousLeftMovement_CurrentBlock", 0.05f);
+            Invoke("ContinuousLeftMovement_CurrentBlock", 0.03f);
             Invoke("IntermittentLeftMovement_CurrentBlock", 0);
         }   
     }
-    //CurrentBlock‚Ì‰E‰ñ“]
+    //CurrentBlockã®å³å›è»¢
     void RightRoll_CurrentBlock()
     {
-        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        if (IntList_TableOfCube.Contains(1) == true)
         {
-            if (IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1)] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1)] == 1)
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
             {
-                CanRightRoll_CurrentBlock += 1;
+                if (IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1)] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1)] == 1)
+                {
+                    CanRightRoll_CurrentBlock += 1;
+                }
+
+            }
+            if (IntList_DataOfCurrentBlock.Count == CanRightRoll_CurrentBlock)
+            {
+                //CurrentBlockã®å³å›è»¢ãŒå¯èƒ½ãªæ™‚
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                IntList_DataOfTemporaryBlock = new List<int> { };
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_DataOfTemporaryBlock.Add((IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1));
+                }
+
+                IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
             }
 
+            CanRightRoll_CurrentBlock = 0;
         }
-        if (IntList_DataOfCurrentBlock.Count == CanRightRoll_CurrentBlock)
-        {
-            //CurrentBlock‚Ì‰E‰ñ“]‚ª‰Â”\‚È
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
-            }
-
-            IntList_DataOfTemporaryBlock = new List<int> { };
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_DataOfTemporaryBlock.Add((IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1));
-            }
-
-            IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
-            }
-
-            Invoke("Painting_Cube", 0);
-        }
-
-        CanRightRoll_CurrentBlock = 0;
     }
-    //CurrentBlock‚Ì¶‰ñ“]
+    //CurrentBlockã®å·¦å›è»¢
     void LeftRoll_CurrentBlock()
     {
-        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        if (IntList_TableOfCube.Contains(1) == true)
         {
-            if (IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1))] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1))] == 1)
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
             {
-                CanLeftRoll_CurrentBlock += 1;
+                if (IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1))] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1))] == 1)
+                {
+                    CanLeftRoll_CurrentBlock += 1;
+                }
             }
+            if (IntList_DataOfCurrentBlock.Count == CanLeftRoll_CurrentBlock)
+            {
+                //CurrentBlockã®å·¦å›è»¢ãŒå¯èƒ½ãªæ™‚
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                IntList_DataOfTemporaryBlock = new List<int> { };
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_DataOfTemporaryBlock.Add((IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1)));
+                }
+
+                IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
+            }
+
+            CanLeftRoll_CurrentBlock = 0;
         }
-        if (IntList_DataOfCurrentBlock.Count == CanLeftRoll_CurrentBlock)
-        {
-            //CurrentBlock‚Ì¶‰ñ“]‚ª‰Â”\‚È
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
-            }
-
-            IntList_DataOfTemporaryBlock = new List<int> { };
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_DataOfTemporaryBlock.Add((IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1)));
-            }
-
-            IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
-                IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
-            }
-
-            Invoke("Painting_Cube", 0);
-        }
-
-        CanLeftRoll_CurrentBlock = 0;
     }
 
 
-    //Cube‚ÌõF
+    //Cubeã®æŸ“è‰²
     void Painting_Cube()
     {
         for (int i = 0; i < 250; i++)
@@ -2070,7 +2096,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     }
 
 
-    //CurrentBlock‚Ì•ª‰ğ
+    //CurrentBlockã®åˆ†è§£
     void Disassembly_CurrentBlock()
     {
         if (IntList_TableOfCube.Contains(1) == true)
@@ -2090,10 +2116,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 if (i >= 10)
                 {
-                    //PartOfCurrentBlock‚ªÅ‰ºs‚Å‚Í‚È‚¢
+                    //PartOfCurrentBlockãŒæœ€ä¸‹è¡Œã§ã¯ãªã„æ™‚
                     if (IntList_TableOfCube[i - 10] == 0)
                     {
-                        //PartOfCurrentBlock‚Ì‰º‚ÌÀ•W‚É‰½‚à‚È‚©‚Á‚½
+                        //PartOfCurrentBlockã®ä¸‹ã®åº§æ¨™ã«ä½•ã‚‚ãªã‹ã£ãŸæ™‚
                         IntList_TableOfColor[i - 10] = ColorType_CurrentBlock;
                         IntList_TableOfColor[i] = 0;
 
@@ -2102,13 +2128,13 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     }
                     if (IntList_TableOfCube[i - 10] != 0 & IntList_TableOfCube[i - 10] != 1 & IntList_TableOfCube[i - 10] != 2)
                     {
-                        //PartOfCurrentBlock‚Ì‰º‚ÌÀ•W‚É‰½‚©‚ ‚Á‚½
+                        //PartOfCurrentBlockã®ä¸‹ã®åº§æ¨™ã«ä½•ã‹ã‚ã£ãŸæ™‚
                         IntList_TableOfCube [i] = 3;
                     }
                 }
                 if (i < 10)
                 {
-                    //PartOfCurrentBlock‚ªÅ‰ºs‚Ì
+                    //PartOfCurrentBlockãŒæœ€ä¸‹è¡Œã®æ™‚
                     IntList_TableOfCube[i] = 3;
                 }
             }
@@ -2116,20 +2142,20 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
         if(IntList_TableOfCube.Contains(2) == true)
         {
-            Invoke("Disassembly_CurrentBlock", 0.1f);
+            Invoke("Disassembly_CurrentBlock", 0.15f);
         }
 
         if (IntList_TableOfCube.Contains(1) == false & IntList_TableOfCube.Contains(2) == false)
         {
-            Invoke("Sorting_CurrentBlock", 0);
+            Invoke("Sorting_PartOfCurrentBlock", 0);
         }
 
         Invoke("Painting_Cube", 0);
     }
 
 
-    //CurrentBlock‚Ìd•ª‚¯
-    void Sorting_CurrentBlock()
+    //PartOfCurrentBlockã®ä»•åˆ†ã‘
+    void Sorting_PartOfCurrentBlock()
     {
         for (int i = 0; i < IntList_TableOfCube.Count; i++)
         {
@@ -2165,7 +2191,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     switch (IntList_TableOfColor[i])
                     {
                         case 1:
-                            //ã’²¸
+                            //ä¸Šèª¿æŸ»
                             if (i <= 289)
                             {
                                 if (IntList_TableOfCube[i + 10] == 4)
@@ -2174,7 +2200,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //‰º’²¸
+                            //ä¸‹èª¿æŸ»
                             if (i >= 10)
                             {
                                 if (IntList_TableOfCube[i - 10] == 4)
@@ -2183,7 +2209,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //‰E’²¸
+                            //å³èª¿æŸ»
                             if (i % 10 + 1 <= 9)
                             {
                                 if (IntList_TableOfCube[i + 1] == 4)
@@ -2192,7 +2218,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //¶’²¸
+                            //å·¦èª¿æŸ»
                             if (i % 10 + 1 >= 2)
                             {
                                 if (IntList_TableOfCube[i - 1] == 4)
@@ -2203,7 +2229,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                             break;
                         case 2:
-                            //ã’²¸
+                            //ä¸Šèª¿æŸ»
                             if (i <= 289)
                             {
                                 if (IntList_TableOfCube[i + 10] == 6)
@@ -2212,7 +2238,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //‰º’²¸
+                            //ä¸‹èª¿æŸ»
                             if (i >= 10)
                             {
                                 if (IntList_TableOfCube[i - 10] == 6)
@@ -2221,7 +2247,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //‰E’²¸
+                            //å³èª¿æŸ»
                             if (i % 10 + 1 <= 9)
                             {
                                 if (IntList_TableOfCube[i + 1] == 6)
@@ -2230,7 +2256,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //¶’²¸
+                            //å·¦èª¿æŸ»
                             if (i % 10 + 1 >= 2)
                             {
                                 if (IntList_TableOfCube[i - 1] == 6)
@@ -2241,7 +2267,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                             break;
                         case 3:
-                            //ã’²¸
+                            //ä¸Šèª¿æŸ»
                             if (i <= 289)
                             {
                                 if (IntList_TableOfCube[i + 10] == 8)
@@ -2250,7 +2276,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //‰º’²¸
+                            //ä¸‹èª¿æŸ»
                             if (i >= 10)
                             {
                                 if (IntList_TableOfCube[i - 10] == 8)
@@ -2259,7 +2285,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //‰E’²¸
+                            //å³èª¿æŸ»
                             if (i % 10 + 1 <= 9)
                             {
                                 if (IntList_TableOfCube[i + 1] == 8)
@@ -2268,7 +2294,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     a = false;
                                 }
                             }
-                            //¶’²¸
+                            //å·¦èª¿æŸ»
                             if (i % 10 + 1 >= 2)
                             {
                                 if (IntList_TableOfCube[i - 1] == 8)
@@ -2317,7 +2343,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     switch (IntList_TableOfCube[i])
                     {
                         case 4:
-                            //ã’²¸
+                            //ä¸Šèª¿æŸ»
                             if (i <= 289)
                             {
                                 if (IntList_TableOfCube[i + 10] == 5)
@@ -2326,7 +2352,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //‰º’²¸
+                            //ä¸‹èª¿æŸ»
                             if (i >= 10)
                             {
                                 if (IntList_TableOfCube[i - 10] == 5)
@@ -2335,7 +2361,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //‰E’²¸
+                            //å³èª¿æŸ»
                             if (i % 10 + 1 <= 9)
                             {
                                 if (IntList_TableOfCube[i + 1] == 5)
@@ -2344,7 +2370,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //¶’²¸
+                            //å·¦èª¿æŸ»
                             if (i % 10 + 1 >= 2)
                             {
                                 if (IntList_TableOfCube[i - 1] == 5)
@@ -2355,7 +2381,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                             break;
                         case 6:
-                            //ã’²¸
+                            //ä¸Šèª¿æŸ»
                             if (i <= 289)
                             {
                                 if (IntList_TableOfCube[i + 10] == 7)
@@ -2364,7 +2390,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //‰º’²¸
+                            //ä¸‹èª¿æŸ»
                             if (i >= 10)
                             {
                                 if (IntList_TableOfCube[i - 10] == 7)
@@ -2373,7 +2399,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //‰E’²¸
+                            //å³èª¿æŸ»
                             if (i % 10 + 1 <= 9)
                             {
                                 if (IntList_TableOfCube[i + 1] == 7)
@@ -2382,7 +2408,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //¶’²¸
+                            //å·¦èª¿æŸ»
                             if (i % 10 + 1 >= 2)
                             {
                                 if (IntList_TableOfCube[i - 1] == 7)
@@ -2393,7 +2419,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                             break;
                         case 8:
-                            //ã’²¸
+                            //ä¸Šèª¿æŸ»
                             if (i <= 289)
                             {
                                 if (IntList_TableOfCube[i + 10] == 9)
@@ -2402,7 +2428,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //‰º’²¸
+                            //ä¸‹èª¿æŸ»
                             if (i >= 10)
                             {
                                 if (IntList_TableOfCube[i - 10] == 9)
@@ -2411,7 +2437,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //‰E’²¸
+                            //å³èª¿æŸ»
                             if (i % 10 + 1 <= 9)
                             {
                                 if (IntList_TableOfCube[i + 1] == 9)
@@ -2420,7 +2446,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     b = false;
                                 }
                             }
-                            //¶’²¸
+                            //å·¦èª¿æŸ»
                             if (i % 10 + 1 >= 2)
                             {
                                 if (IntList_TableOfCube[i - 1] == 9)
@@ -2435,26 +2461,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             }
         }
 
-        Invoke("Destruction_CurrentBlock", 0);
-    }
-
-
-    //CurrentBlock‚ÌÁ‹
-    void Destruction_CurrentBlock()
-    {
         if (IntList_TableOfCube.Contains(5) == true | IntList_TableOfCube.Contains(7) == true | IntList_TableOfCube.Contains(9) == true)
         {
-            for (int i = 0; i < IntList_TableOfCube.Count; i++)
-            {
-                if (IntList_TableOfCube[i] == 5 | IntList_TableOfCube[i] == 7 | IntList_TableOfCube[i] == 9)
-                {
-                    IntList_TableOfCube[i] = 0;
-                    IntList_TableOfColor[i] = 0;
-                }
-            }
-
-            Invoke("Painting_Cube", 0);
-            Invoke("aaa", 0);
+            Invoke("Calculation_ScoreSinglePlay", 0);
         }
         else
         {
@@ -2462,8 +2471,80 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
     }
 
-    //
-    void aaa()
+
+    //ScoreSinglePlayã®æ›ç®—
+    void Calculation_ScoreSinglePlay()
+    {
+        NumberOfCombos += 1;
+
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (IntList_TableOfCube[i] == 5 | IntList_TableOfCube[i] == 7 | IntList_TableOfCube[i] == 9)
+            {
+                //é€šå¸¸æ›ç®—
+                ScoreSinglePlay += 50;
+            }
+        }
+        if (IntList_TableOfCube.Contains(3) == false & IntList_TableOfCube.Contains(4) == false & IntList_TableOfCube.Contains(6) == false & IntList_TableOfCube.Contains(8) == false)
+        {
+            //ALLCLEARæ›ç®—
+            ScoreSinglePlay += 500;
+        }
+        if (NumberOfCombos >= 2)
+        {
+            //COMBOæ›ç®—
+            ScoreSinglePlay += 1000;
+        }
+        if (NumberOfRens == 1)
+        {
+            //RENæ›ç®—
+            ScoreSinglePlay += 300;
+        }
+        if (IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == false & IntList_TableOfCube.Contains(9) == false |
+            IntList_TableOfCube.Contains(5) == false & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == false |
+            IntList_TableOfCube.Contains(5) == false & IntList_TableOfCube.Contains(7) == false & IntList_TableOfCube.Contains(9) == true)
+        {
+            //SINGLEæ›ç®—
+            ScoreSinglePlay += 0;
+        }
+        if (IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == false |
+            IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == false & IntList_TableOfCube.Contains(9) == true |
+            IntList_TableOfCube.Contains(5) == false & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == true)
+        {
+            //DOUBLEæ›ç®—
+            ScoreSinglePlay += 2000;
+        }
+        if (IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == true)
+        {
+            //TRIPLEæ›ç®—
+            ScoreSinglePlay += 3000;
+        }
+
+        NumberOfRens = 0;
+
+        Invoke("Destruction_PartOfCurrentBlock", 0);
+    }
+
+
+    //PartOfCurrentBlockã®æ¶ˆå»
+    void Destruction_PartOfCurrentBlock()
+    {
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (IntList_TableOfCube[i] == 5 | IntList_TableOfCube[i] == 7 | IntList_TableOfCube[i] == 9)
+            {
+                IntList_TableOfCube[i] = 0;
+                IntList_TableOfColor[i] = 0;
+            }
+        }
+
+        Invoke("Painting_Cube", 0);
+        Invoke("FreeFall_PartOfCurrentBlock", 0);
+    }
+
+
+    //PartOfCurrentBlockã®è‡ªç”±è½ä¸‹
+    void FreeFall_PartOfCurrentBlock()
     {
         if (IntList_TableOfCube.Contains(3) == true | IntList_TableOfCube.Contains(4) == true | IntList_TableOfCube.Contains(6) == true | IntList_TableOfCube.Contains(8) == true)
         {
@@ -2504,27 +2585,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
         if (IntList_TableOfCube.Contains(2) == true)
         {
-            Invoke("aaa", 0.1f);
+            Invoke("FreeFall_PartOfCurrentBlock", 0.15f);
         }
 
         if (IntList_TableOfCube.Contains(2) == false)
         {
-            Invoke("Reset_SinglePlay", 0);
+            Invoke("Sorting_PartOfCurrentBlock", 0.5f);
         }
 
         Invoke("Painting_Cube", 0);
     }
    
-
-
-
-
-
-
-
-
-
-
 
 
 
