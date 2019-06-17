@@ -1556,8 +1556,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
 
         //CurrentBlockのRateOfFreeFall
-        RateOfFreeFall = FloatList_RateOfFreeFall[Mathf.FloorToInt(ScoreSinglePlay / 10000)];
-
+        if(Mathf.FloorToInt(ScoreSinglePlay / 10000) <= 19)
+        {
+            RateOfFreeFall = FloatList_RateOfFreeFall[Mathf.FloorToInt(ScoreSinglePlay / 10000)];
+        }
+        else
+        {
+             RateOfFreeFall = FloatList_RateOfFreeFall[20];
+        }
         
 
 
