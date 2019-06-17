@@ -103,7 +103,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private List<int> IntList_StartCoordinate3 = new List<int> { 250, 251, 252, 253, 254, 255, 256, 257 };
     private List<int> IntList_StartCoordinate4 = new List<int> { 250, 251, 252, 253, 254, 255, 256 };
 
-    private List<float> FloatList_RateOfFreeFall = new List<float> { 0.6f, 0.55f, 0.5f, 0.45f, 0.4f, 0.35f, 0.3f, 0.25f, 0.2f, 0.15f, 0.1f, 0.09f, 0.08f, 0.07f, 0.06f, 0.05f, 0.04f, 0.03f, 0.02f, 0.01f, 0 };
+    private List<float> FloatList_RateOfFreeFall = new List<float> { 0.65f,0.60f.0.55,0.50f,0.45f,0.40f,0.35f,0.30f,0.25f,0.20f,0.15f,0.10f,0.09f,0.08f,0.07f,0.06f,0.05f,0.04f,0.03f,0.02f,0.01f };
 
     private Color Albedo_Red = new Color(1, 0, 0, 1);
     private Color Emission_Red = new Color(1, 0, 0.5f, 10);
