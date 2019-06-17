@@ -1,1 +1,2607 @@
-a
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
+public class PlayerSinglePlay_Control : MonoBehaviour
+{
+    private GameObject Cube;
+
+    private List<GameObject> GameObjectList_Cube = new List<GameObject> { };
+
+    private List<int> IntList_TableOfColor = new List<int> {0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0};
+    private List<int> IntList_TableOfCube = new List<int> {0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0,
+                                                            0,0,0,0,0,0,0,0,0,0};
+
+    private List<int> IntList_BlockType = new List<int> { 1, 2, 3, 4, 5, 6 };
+    private List<int> IntList_DirectionType = new List<int> { 1, 2, 3, 4 };
+    private List<int> IntList_ColorType = new List<int> { 1, 2, 3 };
+
+    private List<List<int>> IntList_DataOfBlocks = new List<List<int>> { };
+    private List<int> IntList_DataOfCurrentBlock = new List<int> { };
+    private List<int> IntList_DataOfTemporaryBlock = new List<int> { };
+    private List<int> IntList_DataOfBlock1 = new List<int> { 0, 1, 10, 11 };
+    private List<int> IntList_DataOfBlock2 = new List<int> { 10, 11, 12, 21 };
+    private List<int> IntList_DataOfBlock3 = new List<int> { 10, 11, 21, 22 };
+    private List<int> IntList_DataOfBlock4 = new List<int> { 11, 12, 20, 21 };
+    private List<int> IntList_DataOfBlock5 = new List<int> { 10 ,11 ,12, 22 };
+    private List<int> IntList_DataOfBlock6 = new List<int> { 10, 11, 12, 20 };
+    private List<int> IntList_DataOfBlock7 = new List<int> { };
+    private List<int> IntList_DataOfBlock8 = new List<int> { };
+
+    private List<List<int>> IntList_SideLengthOfBlocks = new List<List<int>> { };
+    private List<int> IntList_SideLengthOfCurrentBlock = new List<int> { };
+    private List<int> IntList_SideLengthOfBlock1 = new List<int> { 2, 2, 2, 2 };
+    private List<int> IntList_SideLengthOfBlock2 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock3 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock4 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock5 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock6 = new List<int> { 3, 2, 3, 2 };
+    private List<int> IntList_SideLengthOfBlock7 = new List<int> { };
+    private List<int> IntList_SideLengthOfBlock8 = new List<int> { };
+
+    private List<List<int>> IntList_StartCoordinateOfBlocks = new List<List<int>> { };
+    private List<int> IntList_StartCoordinate1 = new List<int> { 250, 251, 252, 253, 254, 255, 256, 257, 258, 259 };
+    private List<int> IntList_StartCoordinate2 = new List<int> { 250, 251, 252, 253, 254, 255, 256, 257, 258 };
+    private List<int> IntList_StartCoordinate3 = new List<int> { 250, 251, 252, 253, 254, 255, 256, 257 };
+    private List<int> IntList_StartCoordinate4 = new List<int> { 250, 251, 252, 253, 254, 255, 256 };
+
+    private List<float> FloatList_RateOfFreeFall = new List<float> { 0.65f,0.60f.0.55f,0.50f,0.45f,0.40f,0.35f,0.30f,0.25f,0.20f,0.15f,0.10f,0.09f,0.08f,0.07f,0.06f,0.05f,0.04f,0.03f,0.02f,0.01f };
+
+    private Color Albedo_Red = new Color(1, 0, 0, 1);
+    private Color Emission_Red = new Color(1, 0, 0.5f, 10);
+
+    private Color Albedo_Green = new Color(0, 1, 0, 1);
+    private Color Emission_Green = new Color(0, 1, 0.25f, 10);
+
+    private Color Albedo_Blue = new Color(0, 0, 1, 1);
+    private Color Emission_Blue = new Color(0, 0.5f, 1, 10);
+
+    private Color Albedo_Yellow = new Color(1, 1, 0, 1);
+    private Color Emission_Yellow = new Color(1, 1, 0, 10);
+
+    private Color Albedo_White = new Color(1, 1, 1, 1);
+    private Color Emission_White = new Color(1, 1, 1, 10);
+
+    private Color Albedo_Default = new Color(1, 1, 1, 1);
+    private Color Emission_Default = new Color(0, 0, 0, 0);
+
+    private int ScoreSinglePlay = 0;
+    private int NumberOfCombos = 0;
+    private int NumberOfRens = 2;
+
+    private int BlockType_CurrentBlock;
+    private int DirectionType_CurrentBlock;
+    private int Coordinate_CurrentBlock;
+    private int ColorType_CurrentBlock;
+
+    private int CanDownMovement_CurrentBlock = 0;
+    private int CanRightMovement_CurrentBlock = 0;
+    private int CanLeftMovement_CurrentBlock = 0;
+    private int CanRightRoll_CurrentBlock = 0;
+    private int CanLeftRoll_CurrentBlock = 0;
+
+    private float RateOfFreeFall;
+
+    private bool QU = false;
+    private bool WU = false;
+    private bool EU = false;
+    private bool RU = false;
+    private bool TU = false;
+    private bool YU = false;
+    private bool UU = false;
+    private bool IU = false;
+    private bool OU = false;
+    private bool PU = false;
+    private bool AU = false;
+    private bool SU = false;
+    private bool DU = false;
+    private bool FU = false;
+    private bool GU = false;
+    private bool HU = false;
+    private bool JU = false;
+    private bool KU = false;
+    private bool LU = false;
+    private bool ZU = false;
+    private bool XU = false;
+    private bool CU = false;
+    private bool VU = false;
+    private bool BU = false;
+    private bool NU = false;
+    private bool MU = false;
+    private bool Alpha0U = false;
+    private bool Alpha1U = false;
+    private bool Alpha2U = false;
+    private bool Alpha3U = false;
+    private bool Alpha4U = false;
+    private bool Alpha5U = false;
+    private bool Alpha6U = false;
+    private bool Alpha7U = false;
+    private bool Alpha8U = false;
+    private bool Alpha9U = false;
+    private bool BackSpaceU = false;
+    private bool SpaceU = false;
+    private bool RightShiftU = false;
+    private bool LeftShiftU = false;
+    private bool RightCtrlU = false;
+    private bool LeftCtrlU = false;
+    private bool TabU = false;
+    private bool EscapeU = false;
+    private bool EnterU = false;
+    private bool UpArrowU = false;
+    private bool DownArrowU = false;
+    private bool RightArrowU = false;
+    private bool LeftArrowU = false;
+
+    private bool Q = false;
+    private bool W = false;
+    private bool E = false;
+    private bool R = false;
+    private bool T = false;
+    private bool Y = false;
+    private bool U = false;
+    private bool I = false;
+    private bool O = false;
+    private bool P = false;
+    private bool A = false;
+    private bool S = false;
+    private bool D = false;
+    private bool F = false;
+    private bool G = false;
+    private bool H = false;
+    private bool J = false;
+    private bool K = false;
+    private bool L = false;
+    private bool Z = false;
+    private bool X = false;
+    private bool C = false;
+    private bool V = false;
+    private bool B = false;
+    private bool N = false;
+    private bool M = false;
+    private bool Alpha0 = false;
+    private bool Alpha1 = false;
+    private bool Alpha2 = false;
+    private bool Alpha3 = false;
+    private bool Alpha4 = false;
+    private bool Alpha5 = false;
+    private bool Alpha6 = false;
+    private bool Alpha7 = false;
+    private bool Alpha8 = false;
+    private bool Alpha9 = false;
+    private bool BackSpace = false;
+    private bool Space = false;
+    private bool RightShift = false;
+    private bool LeftShift = false;
+    private bool RightCtrl = false;
+    private bool LeftCtrl = false;
+    private bool Tab = false;
+    private bool Escape = false;
+    private bool Enter = false;
+    private bool UpArrow = false;
+    private bool DownArrow = false;
+    private bool RightArrow = false;
+    private bool LeftArrow = false;
+
+    private bool QD = false;
+    private bool WD = false;
+    private bool ED = false;
+    private bool RD = false;
+    private bool TD = false;
+    private bool YD = false;
+    private bool UD = false;
+    private bool ID = false;
+    private bool OD = false;
+    private bool PD = false;
+    private bool AD = false;
+    private bool SD = false;
+    private bool DD = false;
+    private bool FD = false;
+    private bool GD = false;
+    private bool HD = false;
+    private bool JD = false;
+    private bool KD = false;
+    private bool LD = false;
+    private bool ZD = false;
+    private bool XD = false;
+    private bool CD = false;
+    private bool VD = false;
+    private bool BD = false;
+    private bool ND = false;
+    private bool MD = false;
+    private bool Alpha0D = false;
+    private bool Alpha1D = false;
+    private bool Alpha2D = false;
+    private bool Alpha3D = false;
+    private bool Alpha4D = false;
+    private bool Alpha5D = false;
+    private bool Alpha6D = false;
+    private bool Alpha7D = false;
+    private bool Alpha8D = false;
+    private bool Alpha9D = false;
+    private bool BackSpaceD = false;
+    private bool SpaceD = false;
+    private bool RightShiftD = false;
+    private bool LeftShiftD = false;
+    private bool RightCtrlD = false;
+    private bool LeftCtrlD = false;
+    private bool TabD = false;
+    private bool EscapeD = false;
+    private bool EnterD = false;
+    private bool UpArrowD = false;
+    private bool DownArrowD = false;
+    private bool RightArrowD = false;
+    private bool LeftArrowD = false;
+
+    private bool CanUseShortCutKey = true;
+    private bool CanInvokeIntermittentRightMovement_CurrentBlock = true;
+    private bool CanInvokeIntermittentLeftMovement_CurrentBlock = true;
+    private bool CanInvokeDisassembly_CurrentBlock = true;
+
+    private bool IsInitialStart = true;
+
+    private bool FrameMode = false;
+
+
+
+
+    void Start()
+    {
+        Cube = (GameObject)Resources.Load("Object/Cube");
+
+        for (int i = 0; i < 250; i ++)
+        {
+            GameObject GameObject_Cube = Instantiate(Cube) as GameObject;
+            GameObject_Cube.name = "Cube_" + i;
+            GameObject_Cube.transform.position = new Vector3(i % 10 + 1, Mathf.FloorToInt(i / 10) + 1, 0);
+            GameObjectList_Cube.Add(GameObject_Cube);
+        }
+
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock1);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock2);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock3);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock4);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock5);
+        IntList_DataOfBlocks.Add(IntList_DataOfBlock6);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock1);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock2);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock3);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock4);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock5);
+        IntList_SideLengthOfBlocks.Add(IntList_SideLengthOfBlock6);
+        IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate1);
+        IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate2);
+        IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate3);
+        IntList_StartCoordinateOfBlocks.Add(IntList_StartCoordinate4);
+
+
+
+
+        //CurrentBlockの初期設定
+        if (IsInitialStart == true)
+        {
+            //CurrentBlockの種類決め
+            BlockType_CurrentBlock = IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
+            //IntList_BlockType.Remove(BlockType_CurrentBlock);
+            IntList_DataOfCurrentBlock = IntList_DataOfBlocks[BlockType_CurrentBlock - 1];
+            IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfBlocks[BlockType_CurrentBlock - 1];
+
+    
+            //CurrentBlockの向き決め
+            DirectionType_CurrentBlock = IntList_DirectionType[Mathf.FloorToInt(Random.Range(1, IntList_DirectionType.Count + 1)) - 1];
+            //IntList_DirectionType.Remove(DirectionType_CurrentBlock);
+
+
+            //CurrentBlockの初期座標決め
+            Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+            //IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Remove(Coordinate_CurrentBlock);
+
+
+            //CurrentBlockの色決め
+            ColorType_CurrentBlock = IntList_ColorType[Mathf.FloorToInt(Random.Range(1, IntList_ColorType.Count + 1)) - 1];
+            //IntList_ColorType.Remove(ColorType_CurrentBlock);
+
+            Invoke("Summoning_CurrentBlock", 0);
+            Invoke("FreeFall_CurrentBlock", 0);
+        }
+        else
+        {
+
+        }
+    }
+
+ 
+    void Update()
+    {
+        //ShortCutKey
+        if (CanUseShortCutKey == true)
+        {
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                QU = true;
+            }
+            else
+            {
+                QU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.W))
+            {
+                WU = true;
+            }
+            else
+            {
+                WU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                EU = true;
+            }
+            else
+            {
+                EU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                RU = true;
+            }
+            else
+            {
+                RU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.T))
+            {
+                TU = true;
+            }
+            else
+            {
+                TU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Y))
+            {
+                YU = true;
+            }
+            else
+            {
+                YU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.U))
+            {
+                UU = true;
+            }
+            else
+            {
+                UU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.I))
+            {
+                IU = true;
+            }
+            else
+            {
+                IU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.O))
+            {
+                OU = true;
+            }
+            else
+            {
+                OU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                PU = true;
+            }
+            else
+            {
+                PU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                AU = true;
+            }
+            else
+            {
+                AU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                SU = true;
+            }
+            else
+            {
+                SU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                DU = true;
+            }
+            else
+            {
+                DU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                FU = true;
+            }
+            else
+            {
+                FU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                GU = true;
+            }
+            else
+            {
+                GU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.H))
+            {
+                HU = true;
+            }
+            else
+            {
+                HU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.J))
+            {
+                JU = true;
+            }
+            else
+            {
+                JU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.K))
+            {
+                KU = true;
+            }
+            else
+            {
+                KU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.L))
+            {
+                LU = true;
+            }
+            else
+            {
+                LU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Z))
+            {
+                ZU = true;
+            }
+            else
+            {
+                ZU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.X))
+            {
+                XU = true;
+            }
+            else
+            {
+                XU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                CU = true;
+            }
+            else
+            {
+                CU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.V))
+            {
+                VU = true;
+            }
+            else
+            {
+                VU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.B))
+            {
+                BU = true;
+            }
+            else
+            {
+                BU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.N))
+            {
+                NU = true;
+            }
+            else
+            {
+                NU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.M))
+            {
+                MU = true;
+            }
+            else
+            {
+                MU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha0))
+            {
+                Alpha0U = true;
+            }
+            else
+            {
+                Alpha0U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha1))
+            {
+                Alpha1U = true;
+            }
+            else
+            {
+                Alpha1U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha2))
+            {
+                Alpha2U = true;
+            }
+            else
+            {
+                Alpha2U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha3))
+            {
+                Alpha3U = true;
+            }
+            else
+            {
+                Alpha3U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha4))
+            {
+                Alpha4U = true;
+            }
+            else
+            {
+                Alpha4U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha5))
+            {
+                Alpha5U = true;
+            }
+            else
+            {
+                Alpha5U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha6))
+            {
+                Alpha6U = true;
+            }
+            else
+            {
+                Alpha6U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha7))
+            {
+                Alpha7U = true;
+            }
+            else
+            {
+                Alpha7U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha8))
+            {
+                Alpha8U = true;
+            }
+            else
+            {
+                Alpha8U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Alpha9))
+            {
+                Alpha9U = true;
+            }
+            else
+            {
+                Alpha9U = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Backspace))
+            {
+                BackSpaceU = true;
+            }
+            else
+            {
+                BackSpaceU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                SpaceU = true;
+            }
+            else
+            {
+                SpaceU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.RightShift))
+            {
+                RightShiftU = true;
+            }
+            else
+            {
+                RightShiftU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                LeftShiftU = true;
+            }
+            else
+            {
+                LeftShiftU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.RightControl))
+            {
+                RightCtrlU = true;
+            }
+            else
+            {
+                RightCtrlU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                LeftCtrlU = true;
+            }
+            else
+            {
+                LeftCtrlU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                TabU = true;
+            }
+            else
+            {
+                TabU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                EscapeU = true;
+            }
+            else
+            {
+                EscapeU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Return))
+            {
+                EnterU = true;
+            }
+            else
+            {
+                EnterU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.UpArrow))
+            {
+                UpArrowU = true;
+            }
+            else
+            {
+                UpArrowU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                DownArrowU = true;
+            }
+            else
+            {
+                DownArrowU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                RightArrowU = true;
+            }
+            else
+            {
+                RightArrowU = false;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                LeftArrowU = true;
+            }
+            else
+            {
+                LeftArrowU = false;
+            }
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                Q = true;
+            }
+            else
+            {
+                Q = false;
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                W = true;
+            }
+            else
+            {
+                W = false;
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                E = true;
+            }
+            else
+            {
+                E = false;
+            }
+            if (Input.GetKey(KeyCode.R))
+            {
+                R = true;
+            }
+            else
+            {
+                R = false;
+            }
+            if (Input.GetKey(KeyCode.T))
+            {
+                T = true;
+            }
+            else
+            {
+                T = false;
+            }
+            if (Input.GetKey(KeyCode.Y))
+            {
+                Y = true;
+            }
+            else
+            {
+                Y = false;
+            }
+            if (Input.GetKey(KeyCode.U))
+            {
+                U = true;
+            }
+            else
+            {
+                U = false;
+            }
+            if (Input.GetKey(KeyCode.I))
+            {
+                I = true;
+            }
+            else
+            {
+                I = false;
+            }
+            if (Input.GetKey(KeyCode.O))
+            {
+                O = true;
+            }
+            else
+            {
+                O = false;
+            }
+            if (Input.GetKey(KeyCode.P))
+            {
+                P = true;
+            }
+            else
+            {
+                P = false;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                A = true;
+            }
+            else
+            {
+                A = false;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                S = true;
+            }
+            else
+            {
+                S = false;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                D = true;
+            }
+            else
+            {
+                D = false;
+            }
+            if (Input.GetKey(KeyCode.F))
+            {
+                F = true;
+            }
+            else
+            {
+                F = false;
+            }
+            if (Input.GetKey(KeyCode.G))
+            {
+                G = true;
+            }
+            else
+            {
+                G = false;
+            }
+            if (Input.GetKey(KeyCode.H))
+            {
+                H = true;
+            }
+            else
+            {
+                H = false;
+            }
+            if (Input.GetKey(KeyCode.J))
+            {
+                J = true;
+            }
+            else
+            {
+                J = false;
+            }
+            if (Input.GetKey(KeyCode.K))
+            {
+                K = true;
+            }
+            else
+            {
+                K = false;
+            }
+            if (Input.GetKey(KeyCode.L))
+            {
+                L = true;
+            }
+            else
+            {
+                L = false;
+            }
+            if (Input.GetKey(KeyCode.Z))
+            {
+                Z = true;
+            }
+            else
+            {
+                Z = false;
+            }
+            if (Input.GetKey(KeyCode.X))
+            {
+                X = true;
+            }
+            else
+            {
+                X = false;
+            }
+            if (Input.GetKey(KeyCode.C))
+            {
+                C = true;
+            }
+            else
+            {
+                C = false;
+            }
+            if (Input.GetKey(KeyCode.V))
+            {
+                V = true;
+            }
+            else
+            {
+                V = false;
+            }
+            if (Input.GetKey(KeyCode.B))
+            {
+                B = true;
+            }
+            else
+            {
+                B = false;
+            }
+            if (Input.GetKey(KeyCode.N))
+            {
+                N = true;
+            }
+            else
+            {
+                N = false;
+            }
+            if (Input.GetKey(KeyCode.M))
+            {
+                M = true;
+            }
+            else
+            {
+                M = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha0))
+            {
+                Alpha0 = true;
+            }
+            else
+            {
+                Alpha0 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                Alpha1 = true;
+            }
+            else
+            {
+                Alpha1 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                Alpha2 = true;
+            }
+            else
+            {
+                Alpha2 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha3))
+            {
+                Alpha3 = true;
+            }
+            else
+            {
+                Alpha3 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha4))
+            {
+                Alpha4 = true;
+            }
+            else
+            {
+                Alpha4 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha5))
+            {
+                Alpha5 = true;
+            }
+            else
+            {
+                Alpha5 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha6))
+            {
+                Alpha6 = true;
+            }
+            else
+            {
+                Alpha6 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha7))
+            {
+                Alpha7 = true;
+            }
+            else
+            {
+                Alpha7 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha8))
+            {
+                Alpha8 = true;
+            }
+            else
+            {
+                Alpha8 = false;
+            }
+            if (Input.GetKey(KeyCode.Alpha9))
+            {
+                Alpha9 = true;
+            }
+            else
+            {
+                Alpha9 = false;
+            }
+            if (Input.GetKey(KeyCode.Backspace))
+            {
+                BackSpace = true;
+            }
+            else
+            {
+                BackSpace = false;
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Space = true;
+            }
+            else
+            {
+                Space = false;
+            }
+            if (Input.GetKey(KeyCode.RightShift))
+            {
+                RightShift = true;
+            }
+            else
+            {
+                RightShift = false;
+            }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                LeftShift = true;
+            }
+            else
+            {
+                LeftShift = false;
+            }
+            if (Input.GetKey(KeyCode.RightControl))
+            {
+                RightCtrl = true;
+            }
+            else
+            {
+                RightCtrl = false;
+            }
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                LeftCtrl = true;
+            }
+            else
+            {
+                LeftCtrl = false;
+            }
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                Tab = true;
+            }
+            else
+            {
+                Tab = false;
+            }
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Escape = true;
+            }
+            else
+            {
+                Escape = false;
+            }
+            if (Input.GetKey(KeyCode.Return))
+            {
+                Enter = true;
+            }
+            else
+            {
+                Enter = false;
+            }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                UpArrow = true;
+            }
+            else
+            {
+                UpArrow = false;
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                DownArrow = true;
+            }
+            else
+            {
+                DownArrow = false;
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                RightArrow = true;
+            }
+            else
+            {
+                RightArrow = false;
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                LeftArrow = true;
+            }
+            else
+            {
+                LeftArrow = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                QD = true;
+            }
+            else
+            {
+                QD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                WD = true;
+            }
+            else
+            {
+                WD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                ED = true;
+            }
+            else
+            {
+                ED = false;
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RD = true;
+            }
+            else
+            {
+                RD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                TD = true;
+            }
+            else
+            {
+                TD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                YD = true;
+            }
+            else
+            {
+                YD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                UD = true;
+            }
+            else
+            {
+                UD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                ID = true;
+            }
+            else
+            {
+                ID = false;
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                OD = true;
+            }
+            else
+            {
+                OD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                PD = true;
+            }
+            else
+            {
+                PD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                AD = true;
+            }
+            else
+            {
+                AD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                SD = true;
+            }
+            else
+            {
+                SD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                DD = true;
+            }
+            else
+            {
+                DD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                FD = true;
+            }
+            else
+            {
+                FD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                GD = true;
+            }
+            else
+            {
+                GD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                HD = true;
+            }
+            else
+            {
+                HD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                JD = true;
+            }
+            else
+            {
+                JD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                KD = true;
+            }
+            else
+            {
+                KD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                LD = true;
+            }
+            else
+            {
+                LD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                ZD = true;
+            }
+            else
+            {
+                ZD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                XD = true;
+            }
+            else
+            {
+                XD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                CD = true;
+            }
+            else
+            {
+                CD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                VD = true;
+            }
+            else
+            {
+                VD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                BD = true;
+            }
+            else
+            {
+                BD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                ND = true;
+            }
+            else
+            {
+                ND = false;
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                MD = true;
+            }
+            else
+            {
+                MD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                Alpha0D = true;
+            }
+            else
+            {
+                Alpha0D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Alpha1D = true;
+            }
+            else
+            {
+                Alpha1D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Alpha2D = true;
+            }
+            else
+            {
+                Alpha2D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Alpha3D = true;
+            }
+            else
+            {
+                Alpha3D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                Alpha4D = true;
+            }
+            else
+            {
+                Alpha4D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                Alpha5D = true;
+            }
+            else
+            {
+                Alpha5D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                Alpha6D = true;
+            }
+            else
+            {
+                Alpha6D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                Alpha7D = true;
+            }
+            else
+            {
+                Alpha7D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                Alpha8D = true;
+            }
+            else
+            {
+                Alpha8D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                Alpha9D = true;
+            }
+            else
+            {
+                Alpha9D = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                BackSpaceD = true;
+            }
+            else
+            {
+                BackSpaceD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SpaceD = true;
+            }
+            else
+            {
+                SpaceD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.RightShift))
+            {
+                RightShiftD = true;
+            }
+            else
+            {
+                RightShiftD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                LeftShiftD = true;
+            }
+            else
+            {
+                LeftShiftD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.RightControl))
+            {
+                RightCtrlD = true;
+            }
+            else
+            {
+                RightCtrlD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                LeftCtrlD = true;
+            }
+            else
+            {
+                LeftCtrlD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                TabD = true;
+            }
+            else
+            {
+                TabD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                EscapeD = true;
+            }
+            else
+            {
+                EscapeD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                EnterD = true;
+            }
+            else
+            {
+                EnterD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                UpArrowD = true;
+            }
+            else
+            {
+                UpArrowD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                DownArrowD = true;
+            }
+            else
+            {
+                DownArrowD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                RightArrowD = true;
+            }
+            else
+            {
+                RightArrowD = false;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                LeftArrowD = true;
+            }
+            else
+            {
+                LeftArrowD = false;
+            }
+        }
+
+
+
+        //CurrentBlockのRateOfFreeFall
+        RateOfFreeFall = FloatList_RateOfFreeFall[Mathf.FloorToInt(ScoreSinglePlay / 10000)];
+
+        
+
+
+        //CurrentBlockの操作
+        if (IntList_TableOfCube.Contains(1) == true)
+        {
+            //CurrentBlockの下移動
+            if (S & !D & !A & !E & !Q)
+            {
+                Invoke("ContinuousDownMovement_CurrentBlock", 0);
+            }
+            //CurrentBlockの右移動
+            if (D & !S & !A & !E & !Q)
+            {
+                if (CanInvokeIntermittentRightMovement_CurrentBlock == true)
+                {
+                    CanInvokeIntermittentRightMovement_CurrentBlock = false;
+
+                    Invoke("IntermittentRightMovement_CurrentBlock", 0);
+                    Invoke("ContinuousRightMovement_CurrentBlock", 0.25f);
+                }
+
+                CancelInvoke("Disassembly_CurrentBlock");
+                CanInvokeDisassembly_CurrentBlock = true;
+            }
+            if (DU)
+            {
+                CanInvokeIntermittentRightMovement_CurrentBlock = true;
+
+                CancelInvoke("ContinuousRightMovement_CurrentBlock");
+            }
+            //CurrentBlockの左移動
+            if (A & !S & !D & !E & !Q)
+            {
+                if (CanInvokeIntermittentLeftMovement_CurrentBlock == true)
+                {
+                    CanInvokeIntermittentLeftMovement_CurrentBlock = false;
+
+                    Invoke("IntermittentLeftMovement_CurrentBlock", 0);
+                    Invoke("ContinuousLeftMovement_CurrentBlock", 0.25f);
+                }
+
+                CancelInvoke("Disassembly_CurrentBlock");
+                CanInvokeDisassembly_CurrentBlock = true;
+            }
+            if (AU)
+            {
+                CanInvokeIntermittentLeftMovement_CurrentBlock = true;
+
+                CancelInvoke("ContinuousLeftMovement_CurrentBlock");
+            }
+            //CurrentBlockの右回転
+            if (ED & !S & !D & !A & !Q)
+            {
+                Invoke("RightRoll_CurrentBlock", 0);
+
+                CancelInvoke("Disassembly_CurrentBlock");
+                CanInvokeDisassembly_CurrentBlock = true;
+            }
+            //CurrentBlockの左回転
+            if (QD & !S & !D & !A & !E)
+            {
+                Invoke("LeftRoll_CurrentBlock", 0);
+
+                CancelInvoke("Disassembly_CurrentBlock");
+                CanInvokeDisassembly_CurrentBlock = true;
+            }
+
+
+            //CurrentBlockのホールド
+            if (WD & !S & !D & !A & !E & !Q)
+            {
+
+            }
+
+        }
+
+
+
+        //FrameModeの切り替え
+        if (FD)
+        {
+            if (FrameMode == true)
+            {
+                FrameMode = false;
+
+                Invoke("Painting_Cube", 0);
+            }
+            else
+            {
+                FrameMode = true;
+
+                Invoke("Painting_Cube", 0);
+            }
+        }
+
+
+
+
+
+        if (Alpha0D)
+        {
+            Debug.Log(IntList_TableOfCube[20] + " , " + IntList_TableOfCube[21] + " , " + IntList_TableOfCube[22] + " , " + IntList_TableOfCube[23] + " , " + IntList_TableOfCube[24] + " , " + IntList_TableOfCube[25] + " , " + IntList_TableOfCube[26] + " , " + IntList_TableOfCube[27] + " , " + IntList_TableOfCube[28] + " , " + IntList_TableOfCube[29]);
+            Debug.Log(IntList_TableOfCube[10] + " , " + IntList_TableOfCube[11] + " , " + IntList_TableOfCube[12] + " , " + IntList_TableOfCube[13] + " , " + IntList_TableOfCube[14] + " , " + IntList_TableOfCube[15] + " , " + IntList_TableOfCube[16] + " , " + IntList_TableOfCube[17] + " , " + IntList_TableOfCube[18] + " , " + IntList_TableOfCube[19]);
+            Debug.Log(IntList_TableOfCube[0] + " , " + IntList_TableOfCube[1] + " , " + IntList_TableOfCube[2] + " , " + IntList_TableOfCube[3] + " , " + IntList_TableOfCube[4] + " , " + IntList_TableOfCube[5] + " , " + IntList_TableOfCube[6] + " , " + IntList_TableOfCube[7] + " , " + IntList_TableOfCube[8] + " , " + IntList_TableOfCube[9]);
+        }
+        if (Alpha1D)
+        {
+            for (int i = 0; i < IntList_TableOfCube.Count; i++)
+            {
+                Debug.Log(i + "  :  " + IntList_TableOfCube[i]);
+            }
+        }
+        if (Alpha2D)
+        {
+            IntList_TableOfCube[5] = 5;
+            IntList_TableOfColor[5] = 1;
+            Invoke("Painting_Cube", 0);
+
+            IntList_TableOfCube[101] = 5;
+            IntList_TableOfColor[101] = 2;
+            Invoke("Painting_Cube", 0);
+
+            IntList_TableOfCube[58] = 5;
+            IntList_TableOfColor[58] = 3;
+            Invoke("Painting_Cube", 0);
+        }
+        if (Alpha3D)
+        {
+
+        }
+        if (Alpha4D)
+        {
+            ScoreSinglePlay += 10000;
+        }
+        if (Alpha5D)
+        {
+
+        }
+        if (Alpha6D)
+        {
+
+        }
+        Debug.Log(ScoreSinglePlay);
+    }
+
+
+
+    //CurrentBlockの再設定
+    void Reset_SinglePlay()
+    {
+        NumberOfCombos = 0;
+        CanInvokeDisassembly_CurrentBlock = true;
+
+        //CurrentBlockの種類決め
+        BlockType_CurrentBlock = IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
+        //IntList_BlockType.Remove(BlockType_CurrentBlock);
+        IntList_DataOfCurrentBlock = IntList_DataOfBlocks[BlockType_CurrentBlock - 1];
+        IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfBlocks[BlockType_CurrentBlock - 1];
+
+
+        //CurrentBlockの向き決め
+        DirectionType_CurrentBlock = IntList_DirectionType[Mathf.FloorToInt(Random.Range(1, IntList_DirectionType.Count + 1)) - 1];
+        //IntList_DirectionType.Remove(DirectionType_CurrentBlock);
+
+
+        //CurrentBlockの初期座標決め
+        Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+        //IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Remove(Coordinate_CurrentBlock);
+
+
+        //CurrentBlockの色決め
+        ColorType_CurrentBlock = IntList_ColorType[Mathf.FloorToInt(Random.Range(1, IntList_ColorType.Count + 1)) - 1];
+        //IntList_ColorType.Remove(ColorType_CurrentBlock);
+
+        Invoke("Summoning_CurrentBlock", 0);
+    }
+
+
+
+
+    //CurrentBlockの召喚
+    void Summoning_CurrentBlock()
+    {
+        for (int a = 1; a < DirectionType_CurrentBlock; a++)
+        {
+            IntList_DataOfTemporaryBlock = new List<int> { };
+
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                IntList_DataOfTemporaryBlock.Add((IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1));
+            }
+
+            IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
+        }
+        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        {
+            IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+            IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+        }
+
+        ScoreSinglePlay += 30;
+        NumberOfRens += 1;
+
+        Invoke("Painting_Cube", 0);
+    }
+
+
+
+
+    //CurrentBlockの自由落下
+    void FreeFall_CurrentBlock()
+    {
+        Invoke("ContinuousDownMovement_CurrentBlock", 0);
+        Invoke("FreeFall_CurrentBlock", RateOfFreeFall);
+    }
+
+
+
+
+
+    //CurrentBlockの下移動(F)
+    void ContinuousDownMovement_CurrentBlock()
+    {
+        if(IntList_TableOfCube.Contains(1) == true)
+        {
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                if (Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] >= 10)
+                {
+                    if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 10] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 10] == 1)
+                    {
+                        CanDownMovement_CurrentBlock += 1;
+                    }
+                }
+            }
+
+            if (IntList_DataOfCurrentBlock.Count == CanDownMovement_CurrentBlock)
+            {
+                //CurrentBlockの下移動が可能な時
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                Coordinate_CurrentBlock -= 10;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
+            }
+            else
+            {
+                //CurrentBlockの下移動が不可能な時
+
+
+                if (CanInvokeDisassembly_CurrentBlock == true)
+                {
+                    CanInvokeDisassembly_CurrentBlock = false;
+
+                    Invoke("Disassembly_CurrentBlock", 0.5f);
+                }
+
+
+
+
+
+            }
+
+            CanDownMovement_CurrentBlock = 0;
+        }
+    }
+    //CurrentBlockの右移動(S)
+    void IntermittentRightMovement_CurrentBlock()
+    {
+        if(IntList_TableOfCube.Contains(1) == true)
+        {
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                if ((Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 9) % 10 != 0)
+                {
+                    if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] + 1] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] + 1] == 1)
+                    {
+                        CanRightMovement_CurrentBlock += 1;
+                    }
+                }
+            }
+
+            if (IntList_DataOfCurrentBlock.Count == CanRightMovement_CurrentBlock)
+            {
+                //CurrentBlockの右移動が可能な時
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                Coordinate_CurrentBlock += 1;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
+            }
+
+            CanRightMovement_CurrentBlock = 0;
+        }
+    }
+    //CurrentBlockの右移動(F)
+    void ContinuousRightMovement_CurrentBlock()
+    {
+        if (D & !S & !A & !E & !Q)
+        {
+            Invoke("ContinuousRightMovement_CurrentBlock", 0.03f);
+            Invoke("IntermittentRightMovement_CurrentBlock", 0);
+        }
+    }
+    //CurrentBlockの左移動(S)
+    void IntermittentLeftMovement_CurrentBlock()
+    {
+        if (IntList_TableOfCube.Contains(1) == true)
+        {
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                if ((Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]) % 10 != 0)
+                {
+                    if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 1] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 1] == 1)
+                    {
+                        CanLeftMovement_CurrentBlock += 1;
+                    }
+                }
+            }
+
+            if (IntList_DataOfCurrentBlock.Count == CanLeftMovement_CurrentBlock)
+            {
+                //CurrentBlockの左移動が可能な時
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                Coordinate_CurrentBlock -= 1;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
+            }
+
+            CanLeftMovement_CurrentBlock = 0;
+        }
+    }
+    //CurrentBlockの左移動(F)
+    void ContinuousLeftMovement_CurrentBlock()
+    {
+        if (A & !S & !D & !E & !Q)
+        {
+            Invoke("ContinuousLeftMovement_CurrentBlock", 0.03f);
+            Invoke("IntermittentLeftMovement_CurrentBlock", 0);
+        }   
+    }
+    //CurrentBlockの右回転
+    void RightRoll_CurrentBlock()
+    {
+        if (IntList_TableOfCube.Contains(1) == true)
+        {
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                if (IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1)] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1)] == 1)
+                {
+                    CanRightRoll_CurrentBlock += 1;
+                }
+
+            }
+            if (IntList_DataOfCurrentBlock.Count == CanRightRoll_CurrentBlock)
+            {
+                //CurrentBlockの右回転が可能な時
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                IntList_DataOfTemporaryBlock = new List<int> { };
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_DataOfTemporaryBlock.Add((IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1));
+                }
+
+                IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
+            }
+
+            CanRightRoll_CurrentBlock = 0;
+        }
+    }
+    //CurrentBlockの左回転
+    void LeftRoll_CurrentBlock()
+    {
+        if (IntList_TableOfCube.Contains(1) == true)
+        {
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                if (IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1))] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1))] == 1)
+                {
+                    CanLeftRoll_CurrentBlock += 1;
+                }
+            }
+            if (IntList_DataOfCurrentBlock.Count == CanLeftRoll_CurrentBlock)
+            {
+                //CurrentBlockの左回転が可能な時
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
+                }
+
+                IntList_DataOfTemporaryBlock = new List<int> { };
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_DataOfTemporaryBlock.Add((IntList_DataOfCurrentBlock[i] % 10 + 1 - 1) * 10 + (IntList_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1)));
+                }
+
+                IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
+
+                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                {
+                    IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
+                    IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                }
+
+                Invoke("Painting_Cube", 0);
+            }
+
+            CanLeftRoll_CurrentBlock = 0;
+        }
+    }
+
+
+    //Cubeの染色
+    void Painting_Cube()
+    {
+        for (int i = 0; i < 250; i++)
+        {
+            switch (IntList_TableOfColor[i])
+            {
+                case 0:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    if(FrameMode == true)
+                    {
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(false);
+                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(false);
+                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(false);
+                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(false);
+                    }
+                    break;
+                case 1:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    break;
+                case 2:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    break;
+                case 3:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    break;
+            }
+
+            if (Mathf.FloorToInt(i / 10) + 1 == 25)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+            }
+            if (Mathf.FloorToInt(i / 10) + 1 == 1)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+            }
+            if (i % 10 + 1 == 10)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+            }
+            if (i % 10 + 1 == 1)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+            }
+        }
+    }
+
+
+    //CurrentBlockの分解
+    void Disassembly_CurrentBlock()
+    {
+        if (IntList_TableOfCube.Contains(1) == true)
+        {
+            for (int i = 0; i < IntList_TableOfCube.Count; i++)
+            {
+                if (IntList_TableOfCube[i] == 1)
+                {
+                    IntList_TableOfCube[i] = 2;
+                }
+            }
+        }
+
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (IntList_TableOfCube[i] == 2)
+            {
+                if (i >= 10)
+                {
+                    //PartOfCurrentBlockが最下行ではない時
+                    if (IntList_TableOfCube[i - 10] == 0)
+                    {
+                        //PartOfCurrentBlockの下の座標に何もなかった時
+                        IntList_TableOfColor[i - 10] = ColorType_CurrentBlock;
+                        IntList_TableOfColor[i] = 0;
+
+                        IntList_TableOfCube[i - 10] = 2;
+                        IntList_TableOfCube[i] = 0;
+                    }
+                    if (IntList_TableOfCube[i - 10] != 0 & IntList_TableOfCube[i - 10] != 1 & IntList_TableOfCube[i - 10] != 2)
+                    {
+                        //PartOfCurrentBlockの下の座標に何かあった時
+                        IntList_TableOfCube [i] = 3;
+                    }
+                }
+                if (i < 10)
+                {
+                    //PartOfCurrentBlockが最下行の時
+                    IntList_TableOfCube[i] = 3;
+                }
+            }
+        }
+
+        if(IntList_TableOfCube.Contains(2) == true)
+        {
+            Invoke("Disassembly_CurrentBlock", 0.15f);
+        }
+
+        if (IntList_TableOfCube.Contains(1) == false & IntList_TableOfCube.Contains(2) == false)
+        {
+            Invoke("Sorting_PartOfCurrentBlock", 0);
+        }
+
+        Invoke("Painting_Cube", 0);
+    }
+
+
+    //PartOfCurrentBlockの仕分け
+    void Sorting_PartOfCurrentBlock()
+    {
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (i % 10 + 1 == 1)
+            {
+                if (IntList_TableOfCube[i] == 3)
+                {
+                    switch (IntList_TableOfColor[i])
+                    {
+                        case 1:
+                            IntList_TableOfCube[i] = 4;
+                            break;
+                        case 2:
+                            IntList_TableOfCube[i] = 6;
+                            break;
+                        case 3:
+                            IntList_TableOfCube[i] = 8;
+                            break;
+                    }
+                }
+            }
+        }
+
+        bool a = false;
+        while (a == false)
+        {
+            a = true;
+
+            for (int i = 0; i < IntList_TableOfCube.Count; i++)
+            {
+                if (IntList_TableOfCube[i] == 3)
+                {
+                    switch (IntList_TableOfColor[i])
+                    {
+                        case 1:
+                            //上調査
+                            if (i <= 289)
+                            {
+                                if (IntList_TableOfCube[i + 10] == 4)
+                                {
+                                    IntList_TableOfCube[i] = 4;
+                                    a = false;
+                                }
+                            }
+                            //下調査
+                            if (i >= 10)
+                            {
+                                if (IntList_TableOfCube[i - 10] == 4)
+                                {
+                                    IntList_TableOfCube[i] = 4;
+                                    a = false;
+                                }
+                            }
+                            //右調査
+                            if (i % 10 + 1 <= 9)
+                            {
+                                if (IntList_TableOfCube[i + 1] == 4)
+                                {
+                                    IntList_TableOfCube[i] = 4;
+                                    a = false;
+                                }
+                            }
+                            //左調査
+                            if (i % 10 + 1 >= 2)
+                            {
+                                if (IntList_TableOfCube[i - 1] == 4)
+                                {
+                                    IntList_TableOfCube[i] = 4;
+                                    a = false;
+                                }
+                            }
+                            break;
+                        case 2:
+                            //上調査
+                            if (i <= 289)
+                            {
+                                if (IntList_TableOfCube[i + 10] == 6)
+                                {
+                                    IntList_TableOfCube[i] = 6;
+                                    a = false;
+                                }
+                            }
+                            //下調査
+                            if (i >= 10)
+                            {
+                                if (IntList_TableOfCube[i - 10] == 6)
+                                {
+                                    IntList_TableOfCube[i] = 6;
+                                    a = false;
+                                }
+                            }
+                            //右調査
+                            if (i % 10 + 1 <= 9)
+                            {
+                                if (IntList_TableOfCube[i + 1] == 6)
+                                {
+                                    IntList_TableOfCube[i] = 6;
+                                    a = false;
+                                }
+                            }
+                            //左調査
+                            if (i % 10 + 1 >= 2)
+                            {
+                                if (IntList_TableOfCube[i - 1] == 6)
+                                {
+                                    IntList_TableOfCube[i] = 6;
+                                    a = false;
+                                }
+                            }
+                            break;
+                        case 3:
+                            //上調査
+                            if (i <= 289)
+                            {
+                                if (IntList_TableOfCube[i + 10] == 8)
+                                {
+                                    IntList_TableOfCube[i] = 8;
+                                    a = false;
+                                }
+                            }
+                            //下調査
+                            if (i >= 10)
+                            {
+                                if (IntList_TableOfCube[i - 10] == 8)
+                                {
+                                    IntList_TableOfCube[i] = 8;
+                                    a = false;
+                                }
+                            }
+                            //右調査
+                            if (i % 10 + 1 <= 9)
+                            {
+                                if (IntList_TableOfCube[i + 1] == 8)
+                                {
+                                    IntList_TableOfCube[i] = 8;
+                                    a = false;
+                                }
+                            }
+                            //左調査
+                            if (i % 10 + 1 >= 2)
+                            {
+                                if (IntList_TableOfCube[i - 1] == 8)
+                                {
+                                    IntList_TableOfCube[i] = 8;
+                                    a = false;
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (i % 10 + 1 == 10)
+            {
+                if (IntList_TableOfCube[i] == 4 | IntList_TableOfCube[i] == 6 | IntList_TableOfCube[i] == 8)
+                {
+                    switch (IntList_TableOfCube[i])
+                    {
+                        case 4:
+                            IntList_TableOfCube[i] = 5;
+                            break;
+                        case 6:
+                            IntList_TableOfCube[i] = 7;
+                            break;
+                        case 8:
+                            IntList_TableOfCube[i] = 9;
+                            break;
+                    }
+                }
+            }
+        }
+
+        bool b = false;
+        while (b == false)
+        {
+            b = true;
+
+            for (int i = 0; i < IntList_TableOfCube.Count; i++)
+            {
+                if (IntList_TableOfCube[i] == 4 | IntList_TableOfCube[i] == 6 | IntList_TableOfCube[i] == 8)
+                {
+                    switch (IntList_TableOfCube[i])
+                    {
+                        case 4:
+                            //上調査
+                            if (i <= 289)
+                            {
+                                if (IntList_TableOfCube[i + 10] == 5)
+                                {
+                                    IntList_TableOfCube[i] = 5;
+                                    b = false;
+                                }
+                            }
+                            //下調査
+                            if (i >= 10)
+                            {
+                                if (IntList_TableOfCube[i - 10] == 5)
+                                {
+                                    IntList_TableOfCube[i] = 5;
+                                    b = false;
+                                }
+                            }
+                            //右調査
+                            if (i % 10 + 1 <= 9)
+                            {
+                                if (IntList_TableOfCube[i + 1] == 5)
+                                {
+                                    IntList_TableOfCube[i] = 5;
+                                    b = false;
+                                }
+                            }
+                            //左調査
+                            if (i % 10 + 1 >= 2)
+                            {
+                                if (IntList_TableOfCube[i - 1] == 5)
+                                {
+                                    IntList_TableOfCube[i] = 5;
+                                    b = false;
+                                }
+                            }
+                            break;
+                        case 6:
+                            //上調査
+                            if (i <= 289)
+                            {
+                                if (IntList_TableOfCube[i + 10] == 7)
+                                {
+                                    IntList_TableOfCube[i] = 7;
+                                    b = false;
+                                }
+                            }
+                            //下調査
+                            if (i >= 10)
+                            {
+                                if (IntList_TableOfCube[i - 10] == 7)
+                                {
+                                    IntList_TableOfCube[i] = 7;
+                                    b = false;
+                                }
+                            }
+                            //右調査
+                            if (i % 10 + 1 <= 9)
+                            {
+                                if (IntList_TableOfCube[i + 1] == 7)
+                                {
+                                    IntList_TableOfCube[i] = 7;
+                                    b = false;
+                                }
+                            }
+                            //左調査
+                            if (i % 10 + 1 >= 2)
+                            {
+                                if (IntList_TableOfCube[i - 1] == 7)
+                                {
+                                    IntList_TableOfCube[i] = 7;
+                                    b = false;
+                                }
+                            }
+                            break;
+                        case 8:
+                            //上調査
+                            if (i <= 289)
+                            {
+                                if (IntList_TableOfCube[i + 10] == 9)
+                                {
+                                    IntList_TableOfCube[i] = 9;
+                                    b = false;
+                                }
+                            }
+                            //下調査
+                            if (i >= 10)
+                            {
+                                if (IntList_TableOfCube[i - 10] == 9)
+                                {
+                                    IntList_TableOfCube[i] = 9;
+                                    b = false;
+                                }
+                            }
+                            //右調査
+                            if (i % 10 + 1 <= 9)
+                            {
+                                if (IntList_TableOfCube[i + 1] == 9)
+                                {
+                                    IntList_TableOfCube[i] = 9;
+                                    b = false;
+                                }
+                            }
+                            //左調査
+                            if (i % 10 + 1 >= 2)
+                            {
+                                if (IntList_TableOfCube[i - 1] == 9)
+                                {
+                                    IntList_TableOfCube[i] = 9;
+                                    b = false;
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        if (IntList_TableOfCube.Contains(5) == true | IntList_TableOfCube.Contains(7) == true | IntList_TableOfCube.Contains(9) == true)
+        {
+            Invoke("Calculation_ScoreSinglePlay", 0);
+        }
+        else
+        {
+            Invoke("Reset_SinglePlay", 0);
+        }
+    }
+
+
+    //ScoreSinglePlayの換算
+    void Calculation_ScoreSinglePlay()
+    {
+        NumberOfCombos += 1;
+
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (IntList_TableOfCube[i] == 5 | IntList_TableOfCube[i] == 7 | IntList_TableOfCube[i] == 9)
+            {
+                //通常換算
+                ScoreSinglePlay += 50;
+            }
+        }
+        if (IntList_TableOfCube.Contains(3) == false & IntList_TableOfCube.Contains(4) == false & IntList_TableOfCube.Contains(6) == false & IntList_TableOfCube.Contains(8) == false)
+        {
+            //ALLCLEAR換算
+            ScoreSinglePlay += 500;
+        }
+        if (NumberOfCombos >= 2)
+        {
+            //COMBO換算
+            ScoreSinglePlay += 1000;
+        }
+        if (NumberOfRens == 1)
+        {
+            //REN換算
+            ScoreSinglePlay += 300;
+        }
+        if (IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == false & IntList_TableOfCube.Contains(9) == false |
+            IntList_TableOfCube.Contains(5) == false & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == false |
+            IntList_TableOfCube.Contains(5) == false & IntList_TableOfCube.Contains(7) == false & IntList_TableOfCube.Contains(9) == true)
+        {
+            //SINGLE換算
+            ScoreSinglePlay += 0;
+        }
+        if (IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == false |
+            IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == false & IntList_TableOfCube.Contains(9) == true |
+            IntList_TableOfCube.Contains(5) == false & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == true)
+        {
+            //DOUBLE換算
+            ScoreSinglePlay += 2000;
+        }
+        if (IntList_TableOfCube.Contains(5) == true & IntList_TableOfCube.Contains(7) == true & IntList_TableOfCube.Contains(9) == true)
+        {
+            //TRIPLE換算
+            ScoreSinglePlay += 3000;
+        }
+
+        NumberOfRens = 0;
+
+        Invoke("Destruction_PartOfCurrentBlock", 0);
+    }
+
+
+    //PartOfCurrentBlockの消去
+    void Destruction_PartOfCurrentBlock()
+    {
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (IntList_TableOfCube[i] == 5 | IntList_TableOfCube[i] == 7 | IntList_TableOfCube[i] == 9)
+            {
+                IntList_TableOfCube[i] = 0;
+                IntList_TableOfColor[i] = 0;
+            }
+        }
+
+        Invoke("Painting_Cube", 0);
+        Invoke("FreeFall_PartOfCurrentBlock", 0);
+    }
+
+
+    //PartOfCurrentBlockの自由落下
+    void FreeFall_PartOfCurrentBlock()
+    {
+        if (IntList_TableOfCube.Contains(3) == true | IntList_TableOfCube.Contains(4) == true | IntList_TableOfCube.Contains(6) == true | IntList_TableOfCube.Contains(8) == true)
+        {
+            for (int i = 0; i < IntList_TableOfCube.Count; i++)
+            {
+                if (IntList_TableOfCube[i] == 3 | IntList_TableOfCube[i] == 4 | IntList_TableOfCube[i] == 6 | IntList_TableOfCube[i] == 8)
+                {
+                    IntList_TableOfCube[i] = 2;
+                }
+            }
+        }
+
+        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+        {
+            if (IntList_TableOfCube[i] == 2)
+            {
+                if (i >= 10)
+                {
+                    if (IntList_TableOfCube[i - 10] == 0)
+                    {
+                        IntList_TableOfColor[i - 10] = IntList_TableOfColor[i];
+                        IntList_TableOfColor[i] = 0;
+
+                        IntList_TableOfCube[i - 10] = 2;
+                        IntList_TableOfCube[i] = 0;
+                    }
+                    if (IntList_TableOfCube[i - 10] != 0 & IntList_TableOfCube[i - 10] != 1 & IntList_TableOfCube[i - 10] != 2)
+                    {
+                        IntList_TableOfCube[i] = 3;
+                    }
+                }
+                if (i < 10)
+                {
+                    IntList_TableOfCube[i] = 3;
+                }
+            }
+        }
+
+        if (IntList_TableOfCube.Contains(2) == true)
+        {
+            Invoke("FreeFall_PartOfCurrentBlock", 0.15f);
+        }
+
+        if (IntList_TableOfCube.Contains(2) == false)
+        {
+            Invoke("Sorting_PartOfCurrentBlock", 0.5f);
+        }
+
+        Invoke("Painting_Cube", 0);
+    }
+   
+
+
+
+
+
+
+
+
+}
