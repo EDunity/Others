@@ -77,17 +77,20 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private List<List<int>> IntList_DataOfBlocks = new List<List<int>> { };
     private List<int> IntList_DataOfCurrentBlock = new List<int> { };
     private List<int> IntList_DataOfTemporaryBlock = new List<int> { };
+    private List<int> IntList_DataOfHoldBlock = new List<int> { };
     private List<int> IntList_DataOfBlock1 = new List<int> { 0, 1, 10, 11 };
     private List<int> IntList_DataOfBlock2 = new List<int> { 10, 11, 12, 21 };
     private List<int> IntList_DataOfBlock3 = new List<int> { 10, 11, 21, 22 };
     private List<int> IntList_DataOfBlock4 = new List<int> { 11, 12, 20, 21 };
-    private List<int> IntList_DataOfBlock5 = new List<int> { 10 ,11 ,12, 22 };
+    private List<int> IntList_DataOfBlock5 = new List<int> { 10, 11, 12, 22 };
     private List<int> IntList_DataOfBlock6 = new List<int> { 10, 11, 12, 20 };
     private List<int> IntList_DataOfBlock7 = new List<int> { };
     private List<int> IntList_DataOfBlock8 = new List<int> { };
 
     private List<List<int>> IntList_SideLengthOfBlocks = new List<List<int>> { };
     private List<int> IntList_SideLengthOfCurrentBlock = new List<int> { };
+    private List<int> IntList_SideLengthOfTemporaryBlock = new List<int> { };
+    private List<int> IntList_SideLengthOfHoldBlock = new List<int> { };
     private List<int> IntList_SideLengthOfBlock1 = new List<int> { 2, 2, 2, 2 };
     private List<int> IntList_SideLengthOfBlock2 = new List<int> { 3, 2, 3, 2 };
     private List<int> IntList_SideLengthOfBlock3 = new List<int> { 3, 2, 3, 2 };
@@ -103,7 +106,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private List<int> IntList_StartCoordinate3 = new List<int> { 250, 251, 252, 253, 254, 255, 256, 257 };
     private List<int> IntList_StartCoordinate4 = new List<int> { 250, 251, 252, 253, 254, 255, 256 };
 
-    private List<float> FloatList_RateOfFreeFall = new List<float> { 0.65f,0.60f.0.55f,0.50f,0.45f,0.40f,0.35f,0.30f,0.25f,0.20f,0.15f,0.10f,0.09f,0.08f,0.07f,0.06f,0.05f,0.04f,0.03f,0.02f,0.01f };
+    private List<float> FloatList_RateOfFreeFall = new List<float> { 0.65f, 0.60f, 0.55f, 0.50f, 0.45f, 0.40f, 0.35f, 0.30f, 0.25f, 0.20f, 0.15f, 0.10f, 0.09f, 0.08f, 0.07f, 0.06f, 0.05f, 0.04f, 0.03f, 0.02f, 0.01f };
 
     private Color Albedo_Red = new Color(1, 0, 0, 1);
     private Color Emission_Red = new Color(1, 0, 0.5f, 10);
@@ -131,6 +134,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private int DirectionType_CurrentBlock;
     private int Coordinate_CurrentBlock;
     private int ColorType_CurrentBlock;
+
+    private int BlockType_TemporaryBlock;
+    private int DirectionType_TemporaryBlock;
+    private int ColorType_TemporaryBlock;
+
+    private int BlockType_HoldBlock;
+    private int DirectionType_HoldBlock;
+    private int ColorType_HoldBlock;
 
     private int CanDownMovement_CurrentBlock = 0;
     private int CanRightMovement_CurrentBlock = 0;
@@ -291,6 +302,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private bool LeftArrowD = false;
 
     private bool CanUseShortCutKey = true;
+    private bool CanHoldCurrentBlock = true;
     private bool CanInvokeIntermittentRightMovement_CurrentBlock = true;
     private bool CanInvokeIntermittentLeftMovement_CurrentBlock = true;
     private bool CanInvokeDisassembly_CurrentBlock = true;
@@ -306,7 +318,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     {
         Cube = (GameObject)Resources.Load("Object/Cube");
 
-        for (int i = 0; i < 250; i ++)
+        for (int i = 0; i < 250; i++)
         {
             GameObject GameObject_Cube = Instantiate(Cube) as GameObject;
             GameObject_Cube.name = "Cube_" + i;
@@ -337,28 +349,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CurrentBlockの初期設定
         if (IsInitialStart == true)
         {
-            //CurrentBlockの種類決め
-            BlockType_CurrentBlock = IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
-            //IntList_BlockType.Remove(BlockType_CurrentBlock);
-            IntList_DataOfCurrentBlock = IntList_DataOfBlocks[BlockType_CurrentBlock - 1];
-            IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfBlocks[BlockType_CurrentBlock - 1];
-
-    
-            //CurrentBlockの向き決め
-            DirectionType_CurrentBlock = IntList_DirectionType[Mathf.FloorToInt(Random.Range(1, IntList_DirectionType.Count + 1)) - 1];
-            //IntList_DirectionType.Remove(DirectionType_CurrentBlock);
-
-
-            //CurrentBlockの初期座標決め
-            Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
-            //IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Remove(Coordinate_CurrentBlock);
-
-
-            //CurrentBlockの色決め
-            ColorType_CurrentBlock = IntList_ColorType[Mathf.FloorToInt(Random.Range(1, IntList_ColorType.Count + 1)) - 1];
-            //IntList_ColorType.Remove(ColorType_CurrentBlock);
-
-            Invoke("Summoning_CurrentBlock", 0);
+            Invoke("Reset_SinglePlay", 0);
             Invoke("FreeFall_CurrentBlock", 0);
         }
         else
@@ -367,7 +358,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
     }
 
- 
+
     void Update()
     {
         //ShortCutKey
@@ -1556,15 +1547,15 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
 
         //CurrentBlockのRateOfFreeFall
-        if(Mathf.FloorToInt(ScoreSinglePlay / 10000) <= 19)
+        if (Mathf.FloorToInt(ScoreSinglePlay / 10000) <= 19)
         {
             RateOfFreeFall = FloatList_RateOfFreeFall[Mathf.FloorToInt(ScoreSinglePlay / 10000)];
         }
         else
         {
-             RateOfFreeFall = FloatList_RateOfFreeFall[20];
+            RateOfFreeFall = FloatList_RateOfFreeFall[20];
         }
-        
+
 
 
         //CurrentBlockの操作
@@ -1632,13 +1623,74 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 CanInvokeDisassembly_CurrentBlock = true;
             }
 
-
             //CurrentBlockのホールド
             if (WD & !S & !D & !A & !E & !Q)
             {
+                if(CanHoldCurrentBlock == true)
+                {
+                    CancelInvoke("Disassembly_CurrentBlock");
 
+                    if (IntList_DataOfHoldBlock.Count == 0)
+                    {
+                        IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
+                        IntList_SideLengthOfHoldBlock = IntList_SideLengthOfCurrentBlock;
+                        BlockType_HoldBlock = BlockType_CurrentBlock;
+                        DirectionType_HoldBlock = DirectionType_CurrentBlock;
+                        ColorType_HoldBlock = ColorType_CurrentBlock;
+
+                        for (int i = 0; i < IntList_TableOfCube.Count;i++)
+                        {
+                            if(IntList_TableOfCube[i] == 1)
+                            {
+                                IntList_TableOfCube[i] = 0;
+                                IntList_TableOfColor[i] = 0;
+                            }
+                        }
+
+                        Invoke("Painting_Cube", 0);
+                        Invoke("Reset_SinglePlay", 0);
+                    }
+                    else
+                    {
+                        CanHoldCurrentBlock = false;
+
+                        IntList_DataOfTemporaryBlock = IntList_DataOfCurrentBlock;
+                        IntList_SideLengthOfTemporaryBlock = IntList_SideLengthOfCurrentBlock;
+                        BlockType_TemporaryBlock = BlockType_CurrentBlock;
+                        DirectionType_TemporaryBlock = DirectionType_CurrentBlock;
+                        ColorType_TemporaryBlock = ColorType_CurrentBlock;
+
+                        IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
+                        IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfHoldBlock;
+                        BlockType_CurrentBlock = BlockType_HoldBlock;
+                        DirectionType_CurrentBlock = DirectionType_HoldBlock;
+                        ColorType_CurrentBlock = ColorType_HoldBlock;
+
+                        IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock;
+                        IntList_SideLengthOfHoldBlock = IntList_SideLengthOfTemporaryBlock;
+                        BlockType_HoldBlock = BlockType_TemporaryBlock;
+                        DirectionType_HoldBlock = DirectionType_TemporaryBlock;
+                        ColorType_HoldBlock = ColorType_TemporaryBlock;
+
+                        //CurrentBlockの初期座標決め
+                        Coordinate_CurrentBlock = IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+                        //IntList_StartCoordinateOfBlocks[IntList_SideLengthOfCurrentBlock.Max() - 1].Remove(Coordinate_CurrentBlock);
+
+                        for (int i = 0; i < IntList_TableOfCube.Count; i++)
+                        {
+                            if (IntList_TableOfCube[i] == 1)
+                            {
+                                IntList_TableOfCube[i] = 0;
+                                IntList_TableOfColor[i] = 0;
+                            }
+                        }
+
+                        Invoke("Painting_Cube", 0);
+
+                        Invoke("Summoning_CurrentBlock", 0);
+                    }
+                }
             }
-
         }
 
 
@@ -1707,19 +1759,28 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         {
 
         }
-        Debug.Log(ScoreSinglePlay);
+        //Debug.Log(ScoreSinglePlay);
+        Debug.Log(Coordinate_CurrentBlock);
     }
 
 
 
-    //CurrentBlockの再設定
+    //SinglePlayのリセット
     void Reset_SinglePlay()
     {
         NumberOfCombos = 0;
         CanInvokeDisassembly_CurrentBlock = true;
 
+        Invoke("Setting_CurrentBlock", 0);
+    }
+
+
+
+    //CurrentBlockの設定
+    void Setting_CurrentBlock()
+    {
         //CurrentBlockの種類決め
-        BlockType_CurrentBlock = IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
+        BlockType_CurrentBlock = 2;// IntList_BlockType[Mathf.FloorToInt(Random.Range(1, IntList_BlockType.Count + 1)) - 1];
         //IntList_BlockType.Remove(BlockType_CurrentBlock);
         IntList_DataOfCurrentBlock = IntList_DataOfBlocks[BlockType_CurrentBlock - 1];
         IntList_SideLengthOfCurrentBlock = IntList_SideLengthOfBlocks[BlockType_CurrentBlock - 1];
@@ -1728,6 +1789,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CurrentBlockの向き決め
         DirectionType_CurrentBlock = IntList_DirectionType[Mathf.FloorToInt(Random.Range(1, IntList_DirectionType.Count + 1)) - 1];
         //IntList_DirectionType.Remove(DirectionType_CurrentBlock);
+        for (int a = 1; a < DirectionType_CurrentBlock; a++)
+        {
+            IntList_DataOfTemporaryBlock = new List<int> { };
+            Debug.Log("回転");
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                IntList_DataOfTemporaryBlock.Add((IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1));
+            }
+
+            IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
+        }
 
 
         //CurrentBlockの初期座標決め
@@ -1741,24 +1813,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
         Invoke("Summoning_CurrentBlock", 0);
     }
-
-
-
-
     //CurrentBlockの召喚
     void Summoning_CurrentBlock()
     {
-        for (int a = 1; a < DirectionType_CurrentBlock; a++)
-        {
-            IntList_DataOfTemporaryBlock = new List<int> { };
-
-            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-            {
-                IntList_DataOfTemporaryBlock.Add((IntList_SideLengthOfCurrentBlock.Max() - 1) * 10 + (Mathf.FloorToInt(IntList_DataOfCurrentBlock[i] / 10) + 1 - 1) - 1 * 10 * (IntList_DataOfCurrentBlock[i] % 10 + 1 - 1));
-            }
-
-            IntList_DataOfCurrentBlock = IntList_DataOfTemporaryBlock;
-        }
         for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
         {
             IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorType_CurrentBlock;
@@ -1780,15 +1837,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         Invoke("ContinuousDownMovement_CurrentBlock", 0);
         Invoke("FreeFall_CurrentBlock", RateOfFreeFall);
     }
-
-
-
-
-
     //CurrentBlockの下移動(F)
     void ContinuousDownMovement_CurrentBlock()
     {
-        if(IntList_TableOfCube.Contains(1) == true)
+        if (IntList_TableOfCube.Contains(1) == true)
         {
             for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
             {
@@ -1844,7 +1896,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     //CurrentBlockの右移動(S)
     void IntermittentRightMovement_CurrentBlock()
     {
-        if(IntList_TableOfCube.Contains(1) == true)
+        if (IntList_TableOfCube.Contains(1) == true)
         {
             for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
             {
@@ -1935,7 +1987,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         {
             Invoke("ContinuousLeftMovement_CurrentBlock", 0.03f);
             Invoke("IntermittentLeftMovement_CurrentBlock", 0);
-        }   
+        }
     }
     //CurrentBlockの右回転
     void RightRoll_CurrentBlock()
@@ -1948,11 +2000,19 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 {
                     CanRightRoll_CurrentBlock += 1;
                 }
-
             }
             if (IntList_DataOfCurrentBlock.Count == CanRightRoll_CurrentBlock)
             {
                 //CurrentBlockの右回転が可能な時
+                if(DirectionType_CurrentBlock < 4)
+                {
+                    DirectionType_CurrentBlock += 1;
+                }
+                else
+                {
+                    DirectionType_CurrentBlock = 1;
+                }
+
                 for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
                 {
                     IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
@@ -1995,6 +2055,15 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (IntList_DataOfCurrentBlock.Count == CanLeftRoll_CurrentBlock)
             {
                 //CurrentBlockの左回転が可能な時
+                if (DirectionType_CurrentBlock > 1)
+                {
+                    DirectionType_CurrentBlock -= 1;
+                }
+                else
+                {
+                    DirectionType_CurrentBlock = 4;
+                }
+
                 for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
                 {
                     IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
@@ -2024,82 +2093,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     }
 
 
-    //Cubeの染色
-    void Painting_Cube()
-    {
-        for (int i = 0; i < 250; i++)
-        {
-            switch (IntList_TableOfColor[i])
-            {
-                case 0:
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
-                    if(FrameMode == true)
-                    {
-                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
-                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
-                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
-                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(false);
-                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(false);
-                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(false);
-                         GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(false);
-                    }
-                    break;
-                case 1:
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
 
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
-                    break;
-                case 2:
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
-
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
-                    break;
-                case 3:
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
-                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
-
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
-                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
-                    break;
-            }
-
-            if (Mathf.FloorToInt(i / 10) + 1 == 25)
-            {
-                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
-            }
-            if (Mathf.FloorToInt(i / 10) + 1 == 1)
-            {
-                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
-            }
-            if (i % 10 + 1 == 10)
-            {
-                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
-            }
-            if (i % 10 + 1 == 1)
-            {
-                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
-            }
-        }
-    }
 
 
     //CurrentBlockの分解
@@ -2135,7 +2129,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     if (IntList_TableOfCube[i - 10] != 0 & IntList_TableOfCube[i - 10] != 1 & IntList_TableOfCube[i - 10] != 2)
                     {
                         //PartOfCurrentBlockの下の座標に何かあった時
-                        IntList_TableOfCube [i] = 3;
+                        IntList_TableOfCube[i] = 3;
                     }
                 }
                 if (i < 10)
@@ -2146,7 +2140,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             }
         }
 
-        if(IntList_TableOfCube.Contains(2) == true)
+        if (IntList_TableOfCube.Contains(2) == true)
         {
             Invoke("Disassembly_CurrentBlock", 0.15f);
         }
@@ -2158,8 +2152,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
         Invoke("Painting_Cube", 0);
     }
-
-
     //PartOfCurrentBlockの仕分け
     void Sorting_PartOfCurrentBlock()
     {
@@ -2473,11 +2465,11 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
         else
         {
+            CanHoldCurrentBlock = true;
+
             Invoke("Reset_SinglePlay", 0);
         }
     }
-
-
     //ScoreSinglePlayの換算
     void Calculation_ScoreSinglePlay()
     {
@@ -2530,8 +2522,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
         Invoke("Destruction_PartOfCurrentBlock", 0);
     }
-
-
     //PartOfCurrentBlockの消去
     void Destruction_PartOfCurrentBlock()
     {
@@ -2547,8 +2537,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         Invoke("Painting_Cube", 0);
         Invoke("FreeFall_PartOfCurrentBlock", 0);
     }
-
-
     //PartOfCurrentBlockの自由落下
     void FreeFall_PartOfCurrentBlock()
     {
@@ -2601,9 +2589,84 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
         Invoke("Painting_Cube", 0);
     }
-   
 
 
+    //Cubeの染色
+    void Painting_Cube()
+    {
+        for (int i = 0; i < 250; i++)
+        {
+            switch (IntList_TableOfColor[i])
+            {
+                case 0:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    if (FrameMode == true)
+                    {
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(false);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(false);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(false);
+                        GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(false);
+                    }
+                    break;
+                case 1:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    break;
+                case 2:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    break;
+                case 3:
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_Cube[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+                    GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+                    break;
+            }
+
+            if (Mathf.FloorToInt(i / 10) + 1 == 25)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_1").gameObject.SetActive(true);
+            }
+            if (Mathf.FloorToInt(i / 10) + 1 == 1)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_2").gameObject.SetActive(true);
+            }
+            if (i % 10 + 1 == 10)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_3").gameObject.SetActive(true);
+            }
+            if (i % 10 + 1 == 1)
+            {
+                GameObjectList_Cube[i].transform.Find("Frames").gameObject.transform.Find("Frame_4").gameObject.SetActive(true);
+            }
+        }
+    }
 
 
 
