@@ -7,6 +7,19 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 {
     private GameObject Cube;
 
+    private GameObject AudioSources;
+
+    private AudioSource AudioSource_AudioSource_1;
+    private AudioSource AudioSource_AudioSource_2;
+    private AudioSource AudioSource_AudioSource_3;
+    private AudioSource AudioSource_AudioSource_4;
+    private AudioSource AudioSource_AudioSource_5;
+    private AudioSource AudioSource_AudioSource_6;
+    private AudioSource AudioSource_AudioSource_7;
+    private AudioSource AudioSource_AudioSource_8;
+    private AudioSource AudioSource_AudioSource_9;
+    private AudioSource AudioSource_AudioSource_10;
+
     private List<GameObject> GameObjectList_Cube = new List<GameObject> { };
 
     private List<int> IntList_TableOfColor = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -307,6 +320,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private bool LeftArrowD = false;
 
     private bool CanUseShortCutKey = true;
+    private bool CanPlayFallingSound = true;
     private bool CanHoldCurrentBlock = true;
     private bool CanInvokeIntermittentRightMovement_CurrentBlock = true;
     private bool CanInvokeIntermittentLeftMovement_CurrentBlock = true;
@@ -322,6 +336,19 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     void Start()
     {
         Cube = (GameObject)Resources.Load("Object/Cube");
+
+        AudioSources = GameObject.Find("AudioSources").gameObject;
+
+        AudioSource_AudioSource_1 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_1").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_2 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_2").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_3 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_3").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_4 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_4").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_5 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_5").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_6 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_6").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_7 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_7").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_8 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_8").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_9 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_9").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource_10 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_10").gameObject.transform.GetComponent<AudioSource>();
 
         for (int i = 0; i < IntList_TableOfColor.Count; i++)
         {
@@ -1644,6 +1671,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 if (CanHoldCurrentBlock == true)
                 {
+                    AudioSource_AudioSource_10.Play();
+
                     CancelInvoke("Disassembly_CurrentBlock");
 
                     if (IntList_DataOfHoldBlock.Count == 0)
@@ -1664,7 +1693,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         }
 
                         Invoke("Painting_Cube", 0);
-                        Invoke("Reset_SinglePlay", 0);
+                        Invoke("Reset_SinglePlay", 0.5f);
                     }
                     else
                     {
@@ -1703,11 +1732,40 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
                         Invoke("Painting_Cube", 0);
 
-                        Invoke("Summoning_CurrentBlock", 0);
+                        Invoke("Summoning_CurrentBlock", 0.5f);
                     }
                 }
             }
         }
+
+
+
+
+
+        //落下音リセット
+        if (SD | DD | AD | ED | QD)
+        {
+            int a = 0;
+            for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+            {
+                if (IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 14] == 0 | IntList_TableOfCube[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i] - 14] == 1)
+                {
+                    a += 1;
+                }
+            }
+
+            if(IntList_DataOfCurrentBlock.Count == a)
+            {
+                CanPlayFallingSound = true;
+            }
+        }
+
+
+
+
+        
+
+
 
 
 
@@ -1782,6 +1840,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     {
         NumberOfCombos = 0;
         CanInvokeDisassembly_CurrentBlock = true;
+        CanPlayFallingSound = true;
 
         Invoke("Setting_CurrentBlock", 0);
     }
@@ -1827,6 +1886,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     //CurrentBlockの召喚
     void Summoning_CurrentBlock()
     {
+        AudioSource_AudioSource_2.Play();
+
         for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
         {
             //Debug.Log(Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]);
@@ -1885,6 +1946,13 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             else
             {
                 //CurrentBlockの下移動が不可能な時
+                if (CanPlayFallingSound == true)
+                {
+                    CanPlayFallingSound = false;
+
+                    AudioSource_AudioSource_7.Play();
+                }
+
                 if (CanInvokeDisassembly_CurrentBlock == true)
                 {
                     CanInvokeDisassembly_CurrentBlock = false;
@@ -1918,6 +1986,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (IntList_DataOfCurrentBlock.Count == CanRightMovement_CurrentBlock)
             {
                 //CurrentBlockの右移動が可能な時
+                AudioSource_AudioSource_3.Play();
+
                 for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
                 {
                     IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
@@ -1942,7 +2012,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     {
         if (D & !S & !A & !E & !Q)
         {
-            Invoke("ContinuousRightMovement_CurrentBlock", 0.03f);
+            Invoke("ContinuousRightMovement_CurrentBlock", 0.05f);
             Invoke("IntermittentRightMovement_CurrentBlock", 0);
         }
     }
@@ -1969,6 +2039,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (IntList_DataOfCurrentBlock.Count == CanLeftMovement_CurrentBlock)
             {
                 //CurrentBlockの左移動が可能な時
+                AudioSource_AudioSource_4.Play();
+
                 for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
                 {
                     IntList_TableOfColor[Coordinate_CurrentBlock + IntList_DataOfCurrentBlock[i]] = 0;
@@ -1993,7 +2065,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     {
         if (A & !S & !D & !E & !Q)
         {
-            Invoke("ContinuousLeftMovement_CurrentBlock", 0.03f);
+            Invoke("ContinuousLeftMovement_CurrentBlock", 0.05f);
             Invoke("IntermittentLeftMovement_CurrentBlock", 0);
         }
     }
@@ -2025,6 +2097,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (IntList_DataOfCurrentBlock.Count == CanRightRoll_CurrentBlock)
             {
                 //CurrentBlockの右回転が可能な時
+                AudioSource_AudioSource_5.Play();
+
                 if (DirectionType_CurrentBlock < 4)
                 {
                     DirectionType_CurrentBlock += 1;
@@ -2057,7 +2131,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 {
                     case 2:
                         //上+1
-                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true | IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
+                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true | 
+                            IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2078,6 +2153,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2106,7 +2183,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(0) == true | IntList_OverlapCubes.Contains(15) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(0) == true | 
+                            IntList_OverlapCubes.Contains(15) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2127,6 +2205,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2155,7 +2235,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(1) == true | IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
+                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(1) == true | 
+                            IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2176,6 +2257,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2206,7 +2289,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         break;
                     case 3:
                         //上+1
-                        if (IntList_OverlapCubes.Contains(1) == true)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(14) == false & IntList_DataOfTemporaryBlock1.Contains(28) == false |
+                            IntList_OverlapCubes.Contains(2) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(14) == false & IntList_DataOfTemporaryBlock1.Contains(28) == false |
+                            IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(2) == false & IntList_DataOfTemporaryBlock1.Contains(16) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false |
+                            IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(2) == false & IntList_DataOfTemporaryBlock1.Contains(16) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2227,6 +2313,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2255,7 +2343,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (IntList_OverlapCubes.Contains(16) == true)
+                        if (IntList_OverlapCubes.Contains(16) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(30) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(16) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false |
+                            IntList_OverlapCubes.Contains(2) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2276,6 +2367,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2304,7 +2397,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (IntList_OverlapCubes.Contains(14) == true)
+                        if (IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(28) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false |
+                            IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2325,6 +2421,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2355,7 +2453,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         break;
                     case 4:
                         //上+1
-                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == false | IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == false)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == false | 
+                            IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2376,6 +2475,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2404,7 +2505,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == false | IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == false)
+                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == false | 
+                            IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2425,6 +2527,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2453,7 +2557,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == false | IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == false)
+                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == false | 
+                            IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2474,6 +2579,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2502,7 +2609,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //上+2
-                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == true | IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == true)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == true | 
+                            IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2523,6 +2631,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2551,7 +2661,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+2
-                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == true | IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == true)
+                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == true | 
+                            IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2572,6 +2683,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2600,7 +2713,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+2
-                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == true | IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == true)
+                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == true | 
+                            IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2621,6 +2735,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの右回転が可能な時
+                                AudioSource_AudioSource_5.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2682,6 +2798,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (IntList_DataOfCurrentBlock.Count == CanLeftRoll_CurrentBlock)
             {
                 //CurrentBlockの左回転が可能な時
+                AudioSource_AudioSource_6.Play();
+
                 if (DirectionType_CurrentBlock > 1)
                 {
                     DirectionType_CurrentBlock -= 1;
@@ -2714,7 +2832,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 {
                     case 2:
                         //上+1
-                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true | IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
+                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true |
+                            IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2735,6 +2854,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2763,7 +2884,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(0) == true | IntList_OverlapCubes.Contains(15) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(0) == true |
+                            IntList_OverlapCubes.Contains(15) == true & IntList_DataOfTemporaryBlock1.Contains(14) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2784,6 +2906,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2812,7 +2936,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(1) == true | IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
+                        if (IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(1) == true |
+                            IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(15) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2833,6 +2958,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2863,7 +2990,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         break;
                     case 3:
                         //上+1
-                        if (IntList_OverlapCubes.Contains(1) == true)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(14) == false & IntList_DataOfTemporaryBlock1.Contains(28) == false |
+                            IntList_OverlapCubes.Contains(2) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(14) == false & IntList_DataOfTemporaryBlock1.Contains(28) == false |
+                            IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(2) == false & IntList_DataOfTemporaryBlock1.Contains(16) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false |
+                            IntList_OverlapCubes.Contains(1) == true & IntList_DataOfTemporaryBlock1.Contains(2) == false & IntList_DataOfTemporaryBlock1.Contains(16) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2884,6 +3014,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2912,7 +3044,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (IntList_OverlapCubes.Contains(16) == true)
+                        if (IntList_OverlapCubes.Contains(16) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(30) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(16) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false |
+                            IntList_OverlapCubes.Contains(2) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2933,6 +3068,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -2961,7 +3098,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (IntList_OverlapCubes.Contains(14) == true)
+                        if (IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(28) == true & IntList_DataOfTemporaryBlock1.Contains(0) == false & IntList_DataOfTemporaryBlock1.Contains(1) == false & IntList_DataOfTemporaryBlock1.Contains(2) == false |
+                            IntList_OverlapCubes.Contains(14) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false |
+                            IntList_OverlapCubes.Contains(0) == true & IntList_DataOfTemporaryBlock1.Contains(28) == false & IntList_DataOfTemporaryBlock1.Contains(29) == false & IntList_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -2982,6 +3122,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3012,7 +3154,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         break;
                     case 4:
                         //上+1
-                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == false | IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == false)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == false |
+                            IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -3033,6 +3176,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3061,7 +3206,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == false | IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == false)
+                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == false |
+                            IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -3082,6 +3228,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3110,7 +3258,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == false | IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == false)
+                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == false |
+                            IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == false)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -3131,6 +3280,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3159,7 +3310,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //上+2
-                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == true | IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == true)
+                        if (IntList_OverlapCubes.Contains(1) == true & IntList_OverlapCubes.Contains(15) == true |
+                            IntList_OverlapCubes.Contains(2) == true & IntList_OverlapCubes.Contains(16) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -3180,6 +3332,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3208,7 +3362,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //左+2
-                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == true | IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == true)
+                        if (IntList_OverlapCubes.Contains(17) == true & IntList_OverlapCubes.Contains(16) == true |
+                            IntList_OverlapCubes.Contains(31) == true & IntList_OverlapCubes.Contains(30) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -3229,6 +3384,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3257,7 +3414,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             }
                         }
                         //右+2
-                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == true | IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == true)
+                        if (IntList_OverlapCubes.Contains(14) == true & IntList_OverlapCubes.Contains(15) == true |
+                            IntList_OverlapCubes.Contains(28) == true & IntList_OverlapCubes.Contains(29) == true)
                         {
                             IntList_DataOfTemporaryBlock2 = new List<int> { };
                             CanRightRoll_CurrentBlock = 0;
@@ -3278,6 +3436,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                             if (IntList_DataOfTemporaryBlock1.Count == CanRightRoll_CurrentBlock)
                             {
                                 //CurrentBlockの左回転が可能な時
+                                AudioSource_AudioSource_6.Play();
+
                                 if (DirectionType_CurrentBlock < 4)
                                 {
                                     DirectionType_CurrentBlock += 1;
@@ -3742,6 +3902,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     //PartOfCurrentBlockの消去
     void Destruction_PartOfCurrentBlock()
     {
+        AudioSource_AudioSource_8.Play();
+
         for (int i = 0; i < IntList_TableOfCube.Count; i++)
         {
             if (IntList_TableOfCube[i] == 5 | IntList_TableOfCube[i] == 7 | IntList_TableOfCube[i] == 9)
