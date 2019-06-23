@@ -34,6 +34,11 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
     private List<GameObject> GameObjectList_CubeG = new List<GameObject> { };
     private List<GameObject> GameObjectList_CubeH = new List<GameObject> { };
+    private List<GameObject> GameObjectList_CubeN1 = new List<GameObject> { };
+    private List<GameObject> GameObjectList_CubeN2 = new List<GameObject> { };
+    private List<GameObject> GameObjectList_CubeN3 = new List<GameObject> { };
+    private List<GameObject> GameObjectList_CubeN4 = new List<GameObject> { };
+    private List<GameObject> GameObjectList_CubeN5 = new List<GameObject> { };
 
     private List<int> IntList_ColorOfCubeG = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                             0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -99,7 +104,11 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                            0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
     private List<int> IntList_ColorOfCubeH = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private List<int> IntList_TypeOfCubeH = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> IntList_ColorOfCubeN1 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> IntList_ColorOfCubeN2 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> IntList_ColorOfCubeN3 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> IntList_ColorOfCubeN4 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> IntList_ColorOfCubeN5 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     private List<List<int>> IntListList_DataOfBlock = new List<List<int>> { new List<int> { 0 },
                                                                             new List<int> { 14, 15 },
@@ -456,7 +465,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         AudioSource_AudioSource_9 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_9").gameObject.transform.GetComponent<AudioSource>();
         AudioSource_AudioSource_10 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource_10").gameObject.transform.GetComponent<AudioSource>();
 
-        //
+        //CubeG召喚
         for (int i = 0; i < IntList_ColorOfCubeG.Count; i++)
         {
             if (i % 14 + 1 >= 3 & i % 14 + 1 <= 12 & Mathf.FloorToInt(i / 14) + 1 >= 3 & Mathf.FloorToInt(i / 14) + 1 <= 28)
@@ -472,7 +481,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 IntList_TypeOfCubeG[i] = 10;
             }
         }
-        //
+        //CubeH召喚
         for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
         {
             if (i == 0)
@@ -516,10 +525,226 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObjectList_CubeH.Add(GameObject_CubeH);
             }
         }
-        //
-
-
-
+        //CubeN1召喚
+        for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
+        {
+            if (i == 0)
+            {
+                GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN1.name = "CubeN1_" + i;
+                GameObject_CubeN1.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0) - new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0) + new Vector3(12, 23.5f, 0) + new Vector3(0, 0, 0);
+                GameObject_CubeN1.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN1.transform.parent = Cubes_CubeN1.transform;
+                GameObject_CubeN1.SetActive(false);
+                GameObjectList_CubeN1.Add(GameObject_CubeN1);
+            }
+            if (i >= 1 & i <= 4)
+            {
+                GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN1.name = "CubeN1_" + i;
+                GameObject_CubeN1.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0) - new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0) + new Vector3(12, 23.5f, 0) + new Vector3(-0.25f, -0.25f, 0);
+                GameObject_CubeN1.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN1.transform.parent = Cubes_CubeN1.transform;
+                GameObject_CubeN1.SetActive(false);
+                GameObjectList_CubeN1.Add(GameObject_CubeN1);
+            }
+            if (i >= 5 & i <= 13)
+            {
+                GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN1.name = "CubeN1_" + i;
+                GameObject_CubeN1.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0) - new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0) + new Vector3(12, 23.5f, 0) + new Vector3(-0.5f, -0.5f, 0);
+                GameObject_CubeN1.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN1.transform.parent = Cubes_CubeN1.transform;
+                GameObject_CubeN1.SetActive(false);
+                GameObjectList_CubeN1.Add(GameObject_CubeN1);
+            }
+            if (i >= 14)
+            {
+                GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN1.name = "CubeN1_" + i;
+                GameObject_CubeN1.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0) - new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0) + new Vector3(12, 23.5f, 0) + new Vector3(-0.75f, -0.75f, 0);
+                GameObject_CubeN1.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN1.transform.parent = Cubes_CubeN1.transform;
+                GameObject_CubeN1.SetActive(false);
+                GameObjectList_CubeN1.Add(GameObject_CubeN1);
+            }
+        }
+        //CubeN2召喚
+        for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
+        {
+            if (i == 0)
+            {
+                GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN2.name = "CubeN2_" + i;
+                GameObject_CubeN2.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0) - new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0) + new Vector3(12, 19.5f, 0) + new Vector3(0, 0, 0);
+                GameObject_CubeN2.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN2.transform.parent = Cubes_CubeN2.transform;
+                GameObject_CubeN2.SetActive(false);
+                GameObjectList_CubeN2.Add(GameObject_CubeN2);
+            }
+            if (i >= 1 & i <= 4)
+            {
+                GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN2.name = "CubeN2_" + i;
+                GameObject_CubeN2.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0) - new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0) + new Vector3(12, 19.5f, 0) + new Vector3(-0.25f, -0.25f, 0);
+                GameObject_CubeN2.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN2.transform.parent = Cubes_CubeN2.transform;
+                GameObject_CubeN2.SetActive(false);
+                GameObjectList_CubeN2.Add(GameObject_CubeN2);
+            }
+            if (i >= 5 & i <= 13)
+            {
+                GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN2.name = "CubeN2_" + i;
+                GameObject_CubeN2.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0) - new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0) + new Vector3(12, 19.5f, 0) + new Vector3(-0.5f, -0.5f, 0);
+                GameObject_CubeN2.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN2.transform.parent = Cubes_CubeN2.transform;
+                GameObject_CubeN2.SetActive(false);
+                GameObjectList_CubeN2.Add(GameObject_CubeN2);
+            }
+            if (i >= 14)
+            {
+                GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN2.name = "CubeN2_" + i;
+                GameObject_CubeN2.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0) - new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0) + new Vector3(12, 19.5f, 0) + new Vector3(-0.75f, -0.75f, 0);
+                GameObject_CubeN2.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN2.transform.parent = Cubes_CubeN2.transform;
+                GameObject_CubeN2.SetActive(false);
+                GameObjectList_CubeN2.Add(GameObject_CubeN2);
+            }
+        }
+        //CubeN3召喚
+        for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
+        {
+            if (i == 0)
+            {
+                GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN3.name = "CubeN3_" + i;
+                GameObject_CubeN3.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0) - new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0) + new Vector3(12, 15.5f, 0) + new Vector3(0, 0, 0);
+                GameObject_CubeN3.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN3.transform.parent = Cubes_CubeN3.transform;
+                GameObject_CubeN3.SetActive(false);
+                GameObjectList_CubeN3.Add(GameObject_CubeN3);
+            }
+            if (i >= 1 & i <= 4)
+            {
+                GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN3.name = "CubeN3_" + i;
+                GameObject_CubeN3.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0) - new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0) + new Vector3(12, 15.5f, 0) + new Vector3(-0.25f, -0.25f, 0);
+                GameObject_CubeN3.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN3.transform.parent = Cubes_CubeN3.transform;
+                GameObject_CubeN3.SetActive(false);
+                GameObjectList_CubeN3.Add(GameObject_CubeN3);
+            }
+            if (i >= 5 & i <= 13)
+            {
+                GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN3.name = "CubeN3_" + i;
+                GameObject_CubeN3.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0) - new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0) + new Vector3(12, 15.5f, 0) + new Vector3(-0.5f, -0.5f, 0);
+                GameObject_CubeN3.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN3.transform.parent = Cubes_CubeN3.transform;
+                GameObject_CubeN3.SetActive(false);
+                GameObjectList_CubeN3.Add(GameObject_CubeN3);
+            }
+            if (i >= 14)
+            {
+                GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN3.name = "CubeN3_" + i;
+                GameObject_CubeN3.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0) - new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0) + new Vector3(12, 15.5f, 0) + new Vector3(-0.75f, -0.75f, 0);
+                GameObject_CubeN3.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN3.transform.parent = Cubes_CubeN3.transform;
+                GameObject_CubeN3.SetActive(false);
+                GameObjectList_CubeN3.Add(GameObject_CubeN3);
+            }
+        }
+        //CubeN4召喚
+        for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
+        {
+            if (i == 0)
+            {
+                GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN4.name = "CubeN4_" + i;
+                GameObject_CubeN4.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0) - new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0) + new Vector3(12, 11.5f, 0) + new Vector3(0, 0, 0);
+                GameObject_CubeN4.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN4.transform.parent = Cubes_CubeN4.transform;
+                GameObject_CubeN4.SetActive(false);
+                GameObjectList_CubeN4.Add(GameObject_CubeN4);
+            }
+            if (i >= 1 & i <= 4)
+            {
+                GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN4.name = "CubeN4_" + i;
+                GameObject_CubeN4.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0) - new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0) + new Vector3(12, 11.5f, 0) + new Vector3(-0.25f, -0.25f, 0);
+                GameObject_CubeN4.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN4.transform.parent = Cubes_CubeN4.transform;
+                GameObject_CubeN4.SetActive(false);
+                GameObjectList_CubeN4.Add(GameObject_CubeN4);
+            }
+            if (i >= 5 & i <= 13)
+            {
+                GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN4.name = "CubeN4_" + i;
+                GameObject_CubeN4.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0) - new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0) + new Vector3(12, 11.5f, 0) + new Vector3(-0.5f, -0.5f, 0);
+                GameObject_CubeN4.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN4.transform.parent = Cubes_CubeN4.transform;
+                GameObject_CubeN4.SetActive(false);
+                GameObjectList_CubeN4.Add(GameObject_CubeN4);
+            }
+            if (i >= 14)
+            {
+                GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN4.name = "CubeN4_" + i;
+                GameObject_CubeN4.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0) - new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0) + new Vector3(12, 11.5f, 0) + new Vector3(-0.75f, -0.75f, 0);
+                GameObject_CubeN4.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN4.transform.parent = Cubes_CubeN4.transform;
+                GameObject_CubeN4.SetActive(false);
+                GameObjectList_CubeN4.Add(GameObject_CubeN4);
+            }
+        }
+        //CubeN5召喚
+        for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
+        {
+            if (i == 0)
+            {
+                GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN5.name = "CubeN5_" + i;
+                GameObject_CubeN5.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0) - new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0) + new Vector3(12, 7.5f, 0) + new Vector3(0, 0, 0);
+                GameObject_CubeN5.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN5.transform.parent = Cubes_CubeN5.transform;
+                GameObject_CubeN5.SetActive(false);
+                GameObjectList_CubeN5.Add(GameObject_CubeN5);
+            }
+            if (i >= 1 & i <= 4)
+            {
+                GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN5.name = "CubeN5_" + i;
+                GameObject_CubeN5.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0) - new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0) + new Vector3(12, 7.5f, 0) + new Vector3(-0.25f, -0.25f, 0);
+                GameObject_CubeN5.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN5.transform.parent = Cubes_CubeN5.transform;
+                GameObject_CubeN5.SetActive(false);
+                GameObjectList_CubeN5.Add(GameObject_CubeN5);
+            }
+            if (i >= 5 & i <= 13)
+            {
+                GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN5.name = "CubeN5_" + i;
+                GameObject_CubeN5.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0) - new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0) + new Vector3(12, 7.5f, 0) + new Vector3(-0.5f, -0.5f, 0);
+                GameObject_CubeN5.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN5.transform.parent = Cubes_CubeN5.transform;
+                GameObject_CubeN5.SetActive(false);
+                GameObjectList_CubeN5.Add(GameObject_CubeN5);
+            }
+            if (i >= 14)
+            {
+                GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
+                GameObject_CubeN5.name = "CubeN5_" + i;
+                GameObject_CubeN5.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0) - new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0) + new Vector3(12, 7.5f, 0) + new Vector3(-0.75f, -0.75f, 0);
+                GameObject_CubeN5.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+                GameObject_CubeN5.transform.parent = Cubes_CubeN5.transform;
+                GameObject_CubeN5.SetActive(false);
+                GameObjectList_CubeN5.Add(GameObject_CubeN5);
+            }
+        }
 
 
 
@@ -581,6 +806,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock1 = IntListList_DataOfBlock[IntList_NextBlock[l] - 1];
             IntList_LowerSideLengthOfNextBlock1 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[l] - 1];
             DirectionOfNextBlock1 = IntList_DirectionOfNextBlock[l];
+            for (int ll = 1; ll < DirectionOfNextBlock1; ll++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int lll = 0; lll < IntList_DataOfNextBlock1.Count; lll++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock1.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock1[lll] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock1[lll] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock1 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock1 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock1.Count - 1];
             IntList_NextBlock.Remove(NextBlock1);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock1);
@@ -590,6 +826,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock2 = IntListList_DataOfBlock[IntList_NextBlock[m] - 1];
             IntList_LowerSideLengthOfNextBlock2 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[m] - 1];
             DirectionOfNextBlock2 = IntList_DirectionOfNextBlock[m];
+            for (int mm = 1; mm < DirectionOfNextBlock2; mm++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int mmm = 0; mmm < IntList_DataOfNextBlock2.Count; mmm++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock2.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock2[mmm] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock2[mmm] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock2 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock2 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock2.Count - 1];
             IntList_NextBlock.Remove(NextBlock2);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock2);
@@ -599,6 +846,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock3 = IntListList_DataOfBlock[IntList_NextBlock[n] - 1];
             IntList_LowerSideLengthOfNextBlock3 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[n] - 1];
             DirectionOfNextBlock3 = IntList_DirectionOfNextBlock[n];
+            for (int nn = 1; nn < DirectionOfNextBlock3; nn++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int nnn = 0; nnn < IntList_DataOfNextBlock3.Count; nnn++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock3.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock3[nnn] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock3[nnn] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock3 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock3 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock3.Count - 1];
             IntList_NextBlock.Remove(NextBlock3);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock3);
@@ -608,6 +866,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock4 = IntListList_DataOfBlock[IntList_NextBlock[o] - 1];
             IntList_LowerSideLengthOfNextBlock4 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[o] - 1];
             DirectionOfNextBlock4 = IntList_DirectionOfNextBlock[o];
+            for (int oo = 1; oo < DirectionOfNextBlock4; oo++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int ooo = 0; ooo < IntList_DataOfNextBlock4.Count; ooo++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock4.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock4[ooo] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock4[ooo] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock4 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock4 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock4.Count - 1];
             IntList_NextBlock.Remove(NextBlock4);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock4);
@@ -617,6 +886,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock5 = IntListList_DataOfBlock[IntList_NextBlock[p] - 1];
             IntList_LowerSideLengthOfNextBlock5 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[p] - 1];
             DirectionOfNextBlock5 = IntList_DirectionOfNextBlock[p];
+            for (int pp = 1; pp < DirectionOfNextBlock5; pp++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int ppp = 0; ppp < IntList_DataOfNextBlock5.Count; ppp++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock5.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock5[ppp] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock5[ppp] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock5 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock5 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock5.Count - 1];
             IntList_NextBlock.Remove(NextBlock5);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock5);
@@ -626,6 +906,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock6 = IntListList_DataOfBlock[IntList_NextBlock[q] - 1];
             IntList_LowerSideLengthOfNextBlock6 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[q] - 1];
             DirectionOfNextBlock6 = IntList_DirectionOfNextBlock[q];
+            for (int qq = 1; qq < DirectionOfNextBlock6; qq++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int qqq = 0; qqq < IntList_DataOfNextBlock6.Count; qqq++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock6.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock6[qqq] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock6[qqq] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock6 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock6 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock6.Count - 1];
             IntList_NextBlock.Remove(NextBlock6);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock6);
@@ -635,6 +926,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock7 = IntListList_DataOfBlock[IntList_NextBlock[r] - 1];
             IntList_LowerSideLengthOfNextBlock7 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[r] - 1];
             DirectionOfNextBlock7 = IntList_DirectionOfNextBlock[r];
+            for (int rr = 1; rr < DirectionOfNextBlock7; rr++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int rrr = 0; rrr < IntList_DataOfNextBlock7.Count; rrr++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock7.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock7[rrr] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock7[rrr] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock7 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock7 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock7.Count - 1];
             IntList_NextBlock.Remove(NextBlock7);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock7);
@@ -644,6 +946,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock8 = IntListList_DataOfBlock[IntList_NextBlock[s] - 1];
             IntList_LowerSideLengthOfNextBlock8 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[s] - 1];
             DirectionOfNextBlock8 = IntList_DirectionOfNextBlock[s];
+            for (int ss = 1; ss < DirectionOfNextBlock8; ss++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int sss = 0; sss < IntList_DataOfNextBlock8.Count; sss++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock8.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock8[sss] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock8[sss] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock8 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock8 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock8.Count - 1];
             IntList_NextBlock.Remove(NextBlock8);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock8);
@@ -653,6 +966,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_DataOfNextBlock9 = IntListList_DataOfBlock[IntList_NextBlock[t] - 1];
             IntList_LowerSideLengthOfNextBlock9 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[t] - 1];
             DirectionOfNextBlock9 = IntList_DirectionOfNextBlock[t];
+            for (int tt = 1; tt < DirectionOfNextBlock9; tt++)
+            {
+                IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+                for (int ttt = 0; ttt < IntList_DataOfNextBlock9.Count; ttt++)
+                {
+                    IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock9.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock9[ttt] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock9[ttt] % 14 + 1 - 1));
+                }
+
+                IntList_DataOfNextBlock9 = IntList_DataOfTemporaryBlock1;
+            }
             ColorOfNextBlock9 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock9.Count - 1];
             IntList_NextBlock.Remove(NextBlock9);
             IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock9);
@@ -2024,6 +2348,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 Frames_FrameMode.SetActive(true);
             }
         }
+
+        Debug.Log("C : " + DirectionOfCurrentBlock + " N1 : " + DirectionOfNextBlock1 + " N2 : " + DirectionOfNextBlock2 + " N3 : " + DirectionOfNextBlock3 + " N4 : " + DirectionOfNextBlock4 + " N5 : " + DirectionOfNextBlock6 + " N7 : " + DirectionOfNextBlock7 + " N8 : " + DirectionOfNextBlock8 + " N9: " + DirectionOfNextBlock9);
     }
 
 
@@ -2179,6 +2505,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         IntList_DataOfNextBlock9 = IntListList_DataOfBlock[IntList_NextBlock[l] - 1];
         IntList_LowerSideLengthOfNextBlock9 = IntListList_LowerSideLengthOfBlock[IntList_NextBlock[l] - 1];
         DirectionOfNextBlock9 = IntList_DirectionOfNextBlock[l];
+        for (int ii = 1; ii < DirectionOfNextBlock9; ii++)
+        {
+            IntList_DataOfTemporaryBlock1 = new List<int> { };
+
+            for (int iii = 0; iii < IntList_DataOfNextBlock9.Count; iii++)
+            {
+                IntList_DataOfTemporaryBlock1.Add((IntList_LowerSideLengthOfNextBlock9.Max() - 1) * 14 + (Mathf.FloorToInt(IntList_DataOfNextBlock9[iii] / 14) + 1 - 1) - 1 * 14 * (IntList_DataOfNextBlock9[iii] % 14 + 1 - 1));
+            }
+
+            IntList_DataOfNextBlock9 = IntList_DataOfTemporaryBlock1;
+        }
         ColorOfNextBlock9 = IntList_ColorOfNextBlock[IntList_DataOfNextBlock9.Count - 1];
         IntList_NextBlock.Remove(NextBlock9);
         IntList_DirectionOfNextBlock.Remove(DirectionOfNextBlock9);
@@ -2202,6 +2539,11 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         NumberOfRens += 1;
 
         Invoke("Painting_CubeG", 0);
+        Invoke("Painting_CubeN1", 0);
+        Invoke("Painting_CubeN2", 0);
+        Invoke("Painting_CubeN3", 0);
+        Invoke("Painting_CubeN4", 0);
+        Invoke("Painting_CubeN5", 0);
     }
 
 
@@ -4582,6 +4924,916 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     GameObjectList_CubeH[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                     GameObjectList_CubeH[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                     GameObjectList_CubeH[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+    //CubeN1の染色
+    void Painting_CubeN1()
+    {
+        for (int i = 0; i < IntList_ColorOfCubeN1.Count; i++)
+        {
+            IntList_ColorOfCubeN1[i] = 0;
+            GameObjectList_CubeN1[i].SetActive(false);
+        }
+
+        switch (IntList_LowerSideLengthOfNextBlock1.Max())
+        {
+            case 1:
+                for (int i = 0; i < IntList_DataOfNextBlock1.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock1[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN1[0] = ColorOfNextBlock1;
+                            break;
+                    }
+                }
+                for (int i = 0; i < 1; i++)
+                {
+                    GameObjectList_CubeN1[i].SetActive(true);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < IntList_DataOfNextBlock1.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock1[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN1[1] = ColorOfNextBlock1;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN1[2] = ColorOfNextBlock1;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN1[3] = ColorOfNextBlock1;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN1[4] = ColorOfNextBlock1;
+                            break;
+                    }
+                }
+                for (int i = 1; i < 5; i++)
+                {
+                    GameObjectList_CubeN1[i].SetActive(true);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < IntList_DataOfNextBlock1.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock1[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN1[5] = ColorOfNextBlock1;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN1[6] = ColorOfNextBlock1;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN1[7] = ColorOfNextBlock1;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN1[8] = ColorOfNextBlock1;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN1[9] = ColorOfNextBlock1;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN1[10] = ColorOfNextBlock1;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN1[11] = ColorOfNextBlock1;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN1[12] = ColorOfNextBlock1;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN1[13] = ColorOfNextBlock1;
+                            break;
+                    }
+                }
+                for (int i = 5; i < 14; i++)
+                {
+                    GameObjectList_CubeN1[i].SetActive(true);
+                }
+                break;
+            case 4:
+                for (int i = 0; i < IntList_DataOfNextBlock1.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock1[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN1[14] = ColorOfNextBlock1;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN1[15] = ColorOfNextBlock1;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN1[16] = ColorOfNextBlock1;
+                            break;
+                        case 3:
+                            IntList_ColorOfCubeN1[17] = ColorOfNextBlock1;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN1[18] = ColorOfNextBlock1;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN1[19] = ColorOfNextBlock1;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN1[20] = ColorOfNextBlock1;
+                            break;
+                        case 17:
+                            IntList_ColorOfCubeN1[21] = ColorOfNextBlock1;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN1[22] = ColorOfNextBlock1;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN1[23] = ColorOfNextBlock1;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN1[24] = ColorOfNextBlock1;
+                            break;
+                        case 31:
+                            IntList_ColorOfCubeN1[25] = ColorOfNextBlock1;
+                            break;
+                        case 42:
+                            IntList_ColorOfCubeN1[26] = ColorOfNextBlock1;
+                            break;
+                        case 43:
+                            IntList_ColorOfCubeN1[27] = ColorOfNextBlock1;
+                            break;
+                        case 44:
+                            IntList_ColorOfCubeN1[28] = ColorOfNextBlock1;
+                            break;
+                        case 45:
+                            IntList_ColorOfCubeN1[29] = ColorOfNextBlock1;
+                            break;
+                    }
+                }
+                for (int i = 14; i < 29; i++)
+                {
+                    GameObjectList_CubeN1[i].SetActive(true);
+                }
+                break;
+        }
+
+        for (int i = 0; i < IntList_ColorOfCubeN1.Count; i++)
+        {
+            switch (IntList_ColorOfCubeN1[i])
+            {
+                case 0:
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    GameObjectList_CubeN1[i].transform.Find("Frames").gameObject.SetActive(true);
+                    break;
+                case 1:
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+                    GameObjectList_CubeN1[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 2:
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+                    GameObjectList_CubeN1[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 3:
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+                    GameObjectList_CubeN1[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+    //CubeN2の染色
+    void Painting_CubeN2()
+    {
+        for (int i = 0; i < IntList_ColorOfCubeN2.Count; i++)
+        {
+            IntList_ColorOfCubeN2[i] = 0;
+            GameObjectList_CubeN2[i].SetActive(false);
+        }
+
+        switch (IntList_LowerSideLengthOfNextBlock2.Max())
+        {
+            case 1:
+                for (int i = 0; i < IntList_DataOfNextBlock2.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock2[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN2[0] = ColorOfNextBlock2;
+                            break;
+                    }
+                }
+                for (int i = 0; i < 1; i++)
+                {
+                    GameObjectList_CubeN2[i].SetActive(true);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < IntList_DataOfNextBlock2.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock2[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN2[1] = ColorOfNextBlock2;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN2[2] = ColorOfNextBlock2;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN2[3] = ColorOfNextBlock2;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN2[4] = ColorOfNextBlock2;
+                            break;
+                    }
+                }
+                for (int i = 1; i < 5; i++)
+                {
+                    GameObjectList_CubeN2[i].SetActive(true);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < IntList_DataOfNextBlock2.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock2[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN2[5] = ColorOfNextBlock2;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN2[6] = ColorOfNextBlock2;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN2[7] = ColorOfNextBlock2;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN2[8] = ColorOfNextBlock2;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN2[9] = ColorOfNextBlock2;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN2[10] = ColorOfNextBlock2;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN2[11] = ColorOfNextBlock2;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN2[12] = ColorOfNextBlock2;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN2[13] = ColorOfNextBlock2;
+                            break;
+                    }
+                }
+                for (int i = 5; i < 14; i++)
+                {
+                    GameObjectList_CubeN2[i].SetActive(true);
+                }
+                break;
+            case 4:
+                for (int i = 0; i < IntList_DataOfNextBlock2.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock2[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN2[14] = ColorOfNextBlock2;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN2[15] = ColorOfNextBlock2;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN2[16] = ColorOfNextBlock2;
+                            break;
+                        case 3:
+                            IntList_ColorOfCubeN2[17] = ColorOfNextBlock2;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN2[18] = ColorOfNextBlock2;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN2[19] = ColorOfNextBlock2;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN2[20] = ColorOfNextBlock2;
+                            break;
+                        case 17:
+                            IntList_ColorOfCubeN2[21] = ColorOfNextBlock2;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN2[22] = ColorOfNextBlock2;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN2[23] = ColorOfNextBlock2;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN2[24] = ColorOfNextBlock2;
+                            break;
+                        case 31:
+                            IntList_ColorOfCubeN2[25] = ColorOfNextBlock2;
+                            break;
+                        case 42:
+                            IntList_ColorOfCubeN2[26] = ColorOfNextBlock2;
+                            break;
+                        case 43:
+                            IntList_ColorOfCubeN2[27] = ColorOfNextBlock2;
+                            break;
+                        case 44:
+                            IntList_ColorOfCubeN2[28] = ColorOfNextBlock2;
+                            break;
+                        case 45:
+                            IntList_ColorOfCubeN2[29] = ColorOfNextBlock2;
+                            break;
+                    }
+                }
+                for (int i = 14; i < 29; i++)
+                {
+                    GameObjectList_CubeN2[i].SetActive(true);
+                }
+                break;
+        }
+
+        for (int i = 0; i < IntList_ColorOfCubeN2.Count; i++)
+        {
+            switch (IntList_ColorOfCubeN2[i])
+            {
+                case 0:
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    GameObjectList_CubeN2[i].transform.Find("Frames").gameObject.SetActive(true);
+                    break;
+                case 1:
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+                    GameObjectList_CubeN2[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 2:
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+                    GameObjectList_CubeN2[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 3:
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+                    GameObjectList_CubeN2[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+    //CubeN3の染色
+    void Painting_CubeN3()
+    {
+        for (int i = 0; i < IntList_ColorOfCubeN3.Count; i++)
+        {
+            IntList_ColorOfCubeN3[i] = 0;
+            GameObjectList_CubeN3[i].SetActive(false);
+        }
+
+        switch (IntList_LowerSideLengthOfNextBlock3.Max())
+        {
+            case 1:
+                for (int i = 0; i < IntList_DataOfNextBlock3.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock3[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN3[0] = ColorOfNextBlock3;
+                            break;
+                    }
+                }
+                for (int i = 0; i < 1; i++)
+                {
+                    GameObjectList_CubeN3[i].SetActive(true);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < IntList_DataOfNextBlock3.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock3[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN3[1] = ColorOfNextBlock3;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN3[2] = ColorOfNextBlock3;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN3[3] = ColorOfNextBlock3;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN3[4] = ColorOfNextBlock3;
+                            break;
+                    }
+                }
+                for (int i = 1; i < 5; i++)
+                {
+                    GameObjectList_CubeN3[i].SetActive(true);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < IntList_DataOfNextBlock3.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock3[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN3[5] = ColorOfNextBlock3;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN3[6] = ColorOfNextBlock3;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN3[7] = ColorOfNextBlock3;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN3[8] = ColorOfNextBlock3;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN3[9] = ColorOfNextBlock3;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN3[10] = ColorOfNextBlock3;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN3[11] = ColorOfNextBlock3;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN3[12] = ColorOfNextBlock3;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN3[13] = ColorOfNextBlock3;
+                            break;
+                    }
+                }
+                for (int i = 5; i < 14; i++)
+                {
+                    GameObjectList_CubeN3[i].SetActive(true);
+                }
+                break;
+            case 4:
+                for (int i = 0; i < IntList_DataOfNextBlock3.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock3[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN3[14] = ColorOfNextBlock3;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN3[15] = ColorOfNextBlock3;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN3[16] = ColorOfNextBlock3;
+                            break;
+                        case 3:
+                            IntList_ColorOfCubeN3[17] = ColorOfNextBlock3;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN3[18] = ColorOfNextBlock3;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN3[19] = ColorOfNextBlock3;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN3[20] = ColorOfNextBlock3;
+                            break;
+                        case 17:
+                            IntList_ColorOfCubeN3[21] = ColorOfNextBlock3;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN3[22] = ColorOfNextBlock3;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN3[23] = ColorOfNextBlock3;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN3[24] = ColorOfNextBlock3;
+                            break;
+                        case 31:
+                            IntList_ColorOfCubeN3[25] = ColorOfNextBlock3;
+                            break;
+                        case 42:
+                            IntList_ColorOfCubeN3[26] = ColorOfNextBlock3;
+                            break;
+                        case 43:
+                            IntList_ColorOfCubeN3[27] = ColorOfNextBlock3;
+                            break;
+                        case 44:
+                            IntList_ColorOfCubeN3[28] = ColorOfNextBlock3;
+                            break;
+                        case 45:
+                            IntList_ColorOfCubeN3[29] = ColorOfNextBlock3;
+                            break;
+                    }
+                }
+                for (int i = 14; i < 29; i++)
+                {
+                    GameObjectList_CubeN3[i].SetActive(true);
+                }
+                break;
+        }
+
+        for (int i = 0; i < IntList_ColorOfCubeN3.Count; i++)
+        {
+            switch (IntList_ColorOfCubeN3[i])
+            {
+                case 0:
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    GameObjectList_CubeN3[i].transform.Find("Frames").gameObject.SetActive(true);
+                    break;
+                case 1:
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+                    GameObjectList_CubeN3[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 2:
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+                    GameObjectList_CubeN3[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 3:
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+                    GameObjectList_CubeN3[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+    //CubeN4の染色
+    void Painting_CubeN4()
+    {
+        for (int i = 0; i < IntList_ColorOfCubeN4.Count; i++)
+        {
+            IntList_ColorOfCubeN4[i] = 0;
+            GameObjectList_CubeN4[i].SetActive(false);
+        }
+
+        switch (IntList_LowerSideLengthOfNextBlock4.Max())
+        {
+            case 1:
+                for (int i = 0; i < IntList_DataOfNextBlock4.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock4[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN4[0] = ColorOfNextBlock4;
+                            break;
+                    }
+                }
+                for (int i = 0; i < 1; i++)
+                {
+                    GameObjectList_CubeN4[i].SetActive(true);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < IntList_DataOfNextBlock4.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock4[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN4[1] = ColorOfNextBlock4;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN4[2] = ColorOfNextBlock4;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN4[3] = ColorOfNextBlock4;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN4[4] = ColorOfNextBlock4;
+                            break;
+                    }
+                }
+                for (int i = 1; i < 5; i++)
+                {
+                    GameObjectList_CubeN4[i].SetActive(true);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < IntList_DataOfNextBlock4.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock4[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN4[5] = ColorOfNextBlock4;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN4[6] = ColorOfNextBlock4;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN4[7] = ColorOfNextBlock4;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN4[8] = ColorOfNextBlock4;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN4[9] = ColorOfNextBlock4;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN4[10] = ColorOfNextBlock4;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN4[11] = ColorOfNextBlock4;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN4[12] = ColorOfNextBlock4;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN4[13] = ColorOfNextBlock4;
+                            break;
+                    }
+                }
+                for (int i = 5; i < 14; i++)
+                {
+                    GameObjectList_CubeN4[i].SetActive(true);
+                }
+                break;
+            case 4:
+                for (int i = 0; i < IntList_DataOfNextBlock4.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock4[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN4[14] = ColorOfNextBlock4;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN4[15] = ColorOfNextBlock4;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN4[16] = ColorOfNextBlock4;
+                            break;
+                        case 3:
+                            IntList_ColorOfCubeN4[17] = ColorOfNextBlock4;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN4[18] = ColorOfNextBlock4;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN4[19] = ColorOfNextBlock4;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN4[20] = ColorOfNextBlock4;
+                            break;
+                        case 17:
+                            IntList_ColorOfCubeN4[21] = ColorOfNextBlock4;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN4[22] = ColorOfNextBlock4;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN4[23] = ColorOfNextBlock4;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN4[24] = ColorOfNextBlock4;
+                            break;
+                        case 31:
+                            IntList_ColorOfCubeN4[25] = ColorOfNextBlock4;
+                            break;
+                        case 42:
+                            IntList_ColorOfCubeN4[26] = ColorOfNextBlock4;
+                            break;
+                        case 43:
+                            IntList_ColorOfCubeN4[27] = ColorOfNextBlock4;
+                            break;
+                        case 44:
+                            IntList_ColorOfCubeN4[28] = ColorOfNextBlock4;
+                            break;
+                        case 45:
+                            IntList_ColorOfCubeN4[29] = ColorOfNextBlock4;
+                            break;
+                    }
+                }
+                for (int i = 14; i < 29; i++)
+                {
+                    GameObjectList_CubeN4[i].SetActive(true);
+                }
+                break;
+        }
+
+        for (int i = 0; i < IntList_ColorOfCubeN4.Count; i++)
+        {
+            switch (IntList_ColorOfCubeN4[i])
+            {
+                case 0:
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    GameObjectList_CubeN4[i].transform.Find("Frames").gameObject.SetActive(true);
+                    break;
+                case 1:
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+                    GameObjectList_CubeN4[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 2:
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+                    GameObjectList_CubeN4[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 3:
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+                    GameObjectList_CubeN4[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+    //CubeN5の染色
+    void Painting_CubeN5()
+    {
+        for (int i = 0; i < IntList_ColorOfCubeN5.Count; i++)
+        {
+            IntList_ColorOfCubeN5[i] = 0;
+            GameObjectList_CubeN5[i].SetActive(false);
+        }
+
+        switch (IntList_LowerSideLengthOfNextBlock5.Max())
+        {
+            case 1:
+                for (int i = 0; i < IntList_DataOfNextBlock5.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock5[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN5[0] = ColorOfNextBlock5;
+                            break;
+                    }
+                }
+                for (int i = 0; i < 1; i++)
+                {
+                    GameObjectList_CubeN5[i].SetActive(true);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < IntList_DataOfNextBlock5.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock5[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN5[1] = ColorOfNextBlock5;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN5[2] = ColorOfNextBlock5;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN5[3] = ColorOfNextBlock5;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN5[4] = ColorOfNextBlock5;
+                            break;
+                    }
+                }
+                for (int i = 1; i < 5; i++)
+                {
+                    GameObjectList_CubeN5[i].SetActive(true);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < IntList_DataOfNextBlock5.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock5[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN5[5] = ColorOfNextBlock5;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN5[6] = ColorOfNextBlock5;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN5[7] = ColorOfNextBlock5;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN5[8] = ColorOfNextBlock5;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN5[9] = ColorOfNextBlock5;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN5[10] = ColorOfNextBlock5;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN5[11] = ColorOfNextBlock5;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN5[12] = ColorOfNextBlock5;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN5[13] = ColorOfNextBlock5;
+                            break;
+                    }
+                }
+                for (int i = 5; i < 14; i++)
+                {
+                    GameObjectList_CubeN5[i].SetActive(true);
+                }
+                break;
+            case 4:
+                for (int i = 0; i < IntList_DataOfNextBlock5.Count; i++)
+                {
+                    switch (IntList_DataOfNextBlock5[i])
+                    {
+                        case 0:
+                            IntList_ColorOfCubeN5[14] = ColorOfNextBlock5;
+                            break;
+                        case 1:
+                            IntList_ColorOfCubeN5[15] = ColorOfNextBlock5;
+                            break;
+                        case 2:
+                            IntList_ColorOfCubeN5[16] = ColorOfNextBlock5;
+                            break;
+                        case 3:
+                            IntList_ColorOfCubeN5[17] = ColorOfNextBlock5;
+                            break;
+                        case 14:
+                            IntList_ColorOfCubeN5[18] = ColorOfNextBlock5;
+                            break;
+                        case 15:
+                            IntList_ColorOfCubeN5[19] = ColorOfNextBlock5;
+                            break;
+                        case 16:
+                            IntList_ColorOfCubeN5[20] = ColorOfNextBlock5;
+                            break;
+                        case 17:
+                            IntList_ColorOfCubeN5[21] = ColorOfNextBlock5;
+                            break;
+                        case 28:
+                            IntList_ColorOfCubeN5[22] = ColorOfNextBlock5;
+                            break;
+                        case 29:
+                            IntList_ColorOfCubeN5[23] = ColorOfNextBlock5;
+                            break;
+                        case 30:
+                            IntList_ColorOfCubeN5[24] = ColorOfNextBlock5;
+                            break;
+                        case 31:
+                            IntList_ColorOfCubeN5[25] = ColorOfNextBlock5;
+                            break;
+                        case 42:
+                            IntList_ColorOfCubeN5[26] = ColorOfNextBlock5;
+                            break;
+                        case 43:
+                            IntList_ColorOfCubeN5[27] = ColorOfNextBlock5;
+                            break;
+                        case 44:
+                            IntList_ColorOfCubeN5[28] = ColorOfNextBlock5;
+                            break;
+                        case 45:
+                            IntList_ColorOfCubeN5[29] = ColorOfNextBlock5;
+                            break;
+                    }
+                }
+                for (int i = 14; i < 29; i++)
+                {
+                    GameObjectList_CubeN5[i].SetActive(true);
+                }
+                break;
+        }
+
+        for (int i = 0; i < IntList_ColorOfCubeN5.Count; i++)
+        {
+            switch (IntList_ColorOfCubeN5[i])
+            {
+                case 0:
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
+                    GameObjectList_CubeN5[i].transform.Find("Frames").gameObject.SetActive(true);
+                    break;
+                case 1:
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
+                    GameObjectList_CubeN5[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 2:
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
+                    GameObjectList_CubeN5[i].transform.Find("Frames").gameObject.SetActive(false);
+                    break;
+                case 3:
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
+                    GameObjectList_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
+                    GameObjectList_CubeN5[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
             }
         }
