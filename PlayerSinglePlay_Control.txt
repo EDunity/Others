@@ -5,6 +5,8 @@ using System.Linq;
 
 public class PlayerSinglePlay_Control : MonoBehaviour
 {
+    private GameObject MainCamera;
+
     private GameObject Cubes_CubeG;
     private GameObject Cubes_CubeH;
     private GameObject Cubes_CubeN1;
@@ -256,6 +258,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
     private float RateOfFreeFall;
 
+    private float CameraAngleX;
+    private float CameraAngleY;
+
     private Color Albedo_Red = new Color(1, 0, 0, 1);
     private Color Emission_Red = new Color(1, 0, 0.5f, 10);
 
@@ -438,6 +443,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
     void Start()
     {
+        MainCamera = GameObject.Find("MainCamera").gameObject;
+
         Cubes_CubeG = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeG").gameObject;
         Cubes_CubeH = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeH").gameObject;
         Cubes_CubeN1 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN1").gameObject;
@@ -2176,7 +2183,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             }
         }
 
-
         //CurrentBlockのRateOfFreeFall
         if (Mathf.FloorToInt(ScoreSinglePlay / 10000) <= 19)
         {
@@ -2269,7 +2275,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
                         Invoke("Painting_CubeG", 0);
                         Invoke("Painting_CubeH", 0);
-                        Invoke("Resetting_SinglePlay", 0.5f);
+                        Invoke("Resetting_SinglePlay", 0.25f);
                     }
                     else
                     {
@@ -2306,12 +2312,11 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
                         Invoke("Painting_CubeG", 0);
                         Invoke("Painting_CubeH", 0);
-                        Invoke("Summoning_CurrentBlock", 0.5f);
+                        Invoke("Summoning_CurrentBlock", 0.25f);
                     }
                 }
             }
         }
-
 
         //落下音リセット
         if (SD | DD | AD | ED | QD)
@@ -2331,7 +2336,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             }
         }
 
-
         //FrameModeの切り替え
         if (FD)
         {
@@ -2348,8 +2352,46 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 Frames_FrameMode.SetActive(true);
             }
         }
+    }
 
-        Debug.Log("C : " + DirectionOfCurrentBlock + " N1 : " + DirectionOfNextBlock1 + " N2 : " + DirectionOfNextBlock2 + " N3 : " + DirectionOfNextBlock3 + " N4 : " + DirectionOfNextBlock4 + " N5 : " + DirectionOfNextBlock6 + " N7 : " + DirectionOfNextBlock7 + " N8 : " + DirectionOfNextBlock8 + " N9: " + DirectionOfNextBlock9);
+
+    private void FixedUpdate()
+    {
+        //MainCameraの操作
+        if (UpArrow)
+        {
+            if (CameraAngleX >= -20)
+            {
+                CameraAngleX += -0.3f;
+            }
+        }
+        if (DownArrow)
+        {
+            if (CameraAngleX <= 20)
+            {
+                CameraAngleX += 0.3f;
+            }
+        }
+        if (RightArrow)
+        {
+            if (CameraAngleY <= 20)
+            {
+                CameraAngleY += 0.3f;
+            }
+        }
+        if (LeftArrow)
+        {
+            if (CameraAngleY >= -20)
+            {
+                CameraAngleY += -0.3f;
+            }
+        }
+        if (RD)
+        {
+            CameraAngleX = 0;
+            CameraAngleY = 0;
+        }
+        MainCamera.transform.eulerAngles = new Vector3(CameraAngleX, CameraAngleY, 0);
     }
 
 
