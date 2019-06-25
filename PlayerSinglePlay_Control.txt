@@ -270,6 +270,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     private Color Albedo_White = new Color(1, 1, 1, 1);
     private Color Emission_White = new Color(1, 1, 1, 10);
 
+    private Color Albedo_Gray = new Color(0.2f, 0.2f, 0.2f, 1);
+    private Color Emission_Gray = new Color(0.2f, 0.2f, 0.2f, 0);
+
     private Color Albedo_Default = new Color(1, 1, 1, 1);
     private Color Emission_Default = new Color(0, 0, 0, 0);
 
@@ -2244,72 +2247,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             //CurrentBlockのホールド
             if (WD & !S & !D & !A & !E & !Q)
             {
-                if (CanHoldCurrentBlock == true)
-                {
-                    AudioSource_AudioSource_10.Play();
-
-                    CancelInvoke("Disassembly_CurrentBlock");
-                    CanInvokeDisassembly_CurrentBlock = true;
-
-                    if (IntList_DataOfHoldBlock.Count == 0)
-                    {
-                        IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
-                        IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfCurrentBlock;
-                        HoldBlock = CurrentBlock;
-                        DirectionOfHoldBlock = DirectionOfCurrentBlock;
-                        ColorOfHoldBlock = ColorOfCurrentBlock;
-
-                        for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
-                        {
-                            if (IntList_TypeOfCubeG[i] == 1)
-                            {
-                                IntList_TypeOfCubeG[i] = 0;
-                                IntList_ColorOfCubeG[i] = 0;
-                            }
-                        }
-
-                        Invoke("Painting_CubeG", 0);
-                        Invoke("Painting_CubeH", 0);
-                        Invoke("Resetting_SinglePlay", 0.25f);
-                    }
-                    else
-                    {
-                        CanHoldCurrentBlock = false;
-
-                        IntList_DataOfTemporaryBlock1 = IntList_DataOfCurrentBlock;
-                        IntList_LowerSideLengthOfTemporaryBlock1 = IntList_LowerSideLengthOfCurrentBlock;
-                        TemporaryBlock1 = CurrentBlock;
-                        DirectionOfTemporaryBlock1 = DirectionOfCurrentBlock;
-                        ColorOfTemporaryBlock1 = ColorOfCurrentBlock;
-
-                        IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
-                        IntList_LowerSideLengthOfCurrentBlock = IntList_LowerSideLengthOfHoldBlock;
-                        CurrentBlock = HoldBlock;
-                        DirectionOfCurrentBlock = DirectionOfHoldBlock;
-                        ColorOfCurrentBlock = ColorOfHoldBlock;
-
-                        IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock1;
-                        IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfTemporaryBlock1;
-                        HoldBlock = TemporaryBlock1;
-                        DirectionOfHoldBlock = DirectionOfTemporaryBlock1;
-                        ColorOfHoldBlock = ColorOfTemporaryBlock1;
-
-                        CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
-
-                        for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
-                        {
-                            if (IntList_TypeOfCubeG[i] == 1)
-                            {
-                                IntList_TypeOfCubeG[i] = 0;
-                                IntList_ColorOfCubeG[i] = 0;
-                            }
-                        }
-
-                        Invoke("Painting_CubeG", 0);
-                        Invoke("Painting_CubeH", 0);
-                        Invoke("Summoning_CurrentBlock", 0.25f);
-                    }
-                }
+                Invoke("Summoning_HoldBlock", 0);
             }
         }
 
@@ -2334,17 +2272,17 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //FrameModeの切り替え
         if (FD)
         {
-            if (FrameMode == true)
+            if(FrameMode == true)
             {
                 FrameMode = false;
 
-                Frames_FrameMode.SetActive(false);
+                Invoke("Switching_Frame", 0);
             }
             else
             {
                 FrameMode = true;
 
-                Frames_FrameMode.SetActive(true);
+                Invoke("Switching_Frame", 0);
             }
         }
 
@@ -2354,104 +2292,16 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (GhostMode == true)
             {
                 GhostMode = false;
+
+                Invoke("Switching_GhostBlock", 0);
             }
             else
             {
                 GhostMode = true;
+
+                Invoke("Switching_GhostBlock", 0);
             }
         }
-        if (GhostMode == true)
-        {
-            int a = 0;
-            int b = 0;
-            int c = 0;
-            int d = 0;
-            int e = 0;
-            int f = 0;
-            int g = 0;
-            int h = 0;
-            int i = 0;
-            int j = 0;
-            for (int z = 0; z < IntList_TypeOfCubeG.Count; z++)
-            {
-                switch(z % 14 + 1)
-                {
-                    case 3:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            a += 1;
-                        }
-                        break;
-                    case 4:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            b += 1;
-                        }
-                        break;
-                    case 5:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            c += 1;
-                        }
-                        break;
-                    case 6:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            d += 1;
-                        }
-                        break;
-                    case 7:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            e += 1;
-                        }
-                        break;
-                    case 8:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            f += 1;
-                        }
-                        break;
-                    case 9:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            g += 1;
-                        }
-                        break;
-                    case 10:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            h += 1;
-                        }
-                        break;
-                    case 11:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            i += 1;
-                        }
-                        break;
-                    case 12:
-                        if (IntList_TypeOfCubeG[z] == 3 | IntList_TypeOfCubeG[z] == 4 | IntList_TypeOfCubeG[z] == 6 | IntList_TypeOfCubeG[z] == 8)
-                        {
-                            j += 1;
-                        }
-                        break;
-                }
-            }
-
-            Debug.Log(a + " : " + b + " : " + c + " : " + d + " : " + e + " : " + f + " : " + g + " : " + h + " : " + i + " : " + j);
-
-
-        }
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -2502,12 +2352,98 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         CanInvokeDisassembly_CurrentBlock = true;
         CanPlayFallingSound = true;
 
-        Invoke("Setting_CurrentBlock", 0);
+        Invoke("Summoning_NextBlock", 0);
     }
 
 
-    //CurrentBlockの設定
-    void Setting_CurrentBlock()
+    //CurrentBlockの召喚
+    void Summoning_CurrentBlock()
+    {
+        AudioSource_AudioSource_2.Play();
+
+        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        {
+            IntList_ColorOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+            IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+        }
+
+        ScoreSinglePlay += 30;
+        NumberOfRens += 1;
+
+        Invoke("Switching_GhostBlock", 0);
+    }
+    //HoldBlockの召喚
+    void Summoning_HoldBlock()
+    {
+        if (CanHoldCurrentBlock == true)
+        {
+            AudioSource_AudioSource_10.Play();
+
+            CancelInvoke("Disassembly_CurrentBlock");
+            CanInvokeDisassembly_CurrentBlock = true;
+
+            if (IntList_DataOfHoldBlock.Count == 0)
+            {
+                IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
+                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfCurrentBlock;
+                HoldBlock = CurrentBlock;
+                DirectionOfHoldBlock = DirectionOfCurrentBlock;
+                ColorOfHoldBlock = ColorOfCurrentBlock;
+
+                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
+                {
+                    if (IntList_TypeOfCubeG[i] == 1)
+                    {
+                        IntList_TypeOfCubeG[i] = 0;
+                        IntList_ColorOfCubeG[i] = 0;
+                    }
+                }
+
+                Invoke("Painting_CubeG", 0);
+                Invoke("Painting_CubeH", 0);
+                Invoke("Resetting_SinglePlay", 0.25f);
+            }
+            else
+            {
+                CanHoldCurrentBlock = false;
+
+                IntList_DataOfTemporaryBlock1 = IntList_DataOfCurrentBlock;
+                IntList_LowerSideLengthOfTemporaryBlock1 = IntList_LowerSideLengthOfCurrentBlock;
+                TemporaryBlock1 = CurrentBlock;
+                DirectionOfTemporaryBlock1 = DirectionOfCurrentBlock;
+                ColorOfTemporaryBlock1 = ColorOfCurrentBlock;
+
+                IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
+                IntList_LowerSideLengthOfCurrentBlock = IntList_LowerSideLengthOfHoldBlock;
+                CurrentBlock = HoldBlock;
+                DirectionOfCurrentBlock = DirectionOfHoldBlock;
+                ColorOfCurrentBlock = ColorOfHoldBlock;
+
+                IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock1;
+                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfTemporaryBlock1;
+                HoldBlock = TemporaryBlock1;
+                DirectionOfHoldBlock = DirectionOfTemporaryBlock1;
+                ColorOfHoldBlock = ColorOfTemporaryBlock1;
+
+                CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+
+                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
+                {
+                    if (IntList_TypeOfCubeG[i] == 1)
+                    {
+                        IntList_TypeOfCubeG[i] = 0;
+                        IntList_ColorOfCubeG[i] = 0;
+                    }
+                }
+
+                Invoke("Painting_CubeG", 0);
+                Invoke("Painting_CubeH", 0);
+                Invoke("Summoning_CurrentBlock", 0.25f);
+            }
+        }
+    }
+    //NextBlockの召喚
+    void Summoning_NextBlock()
     {
         if (IntList_NextBlock.Count == 0)
         {
@@ -2665,27 +2601,241 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
 
         Invoke("Summoning_CurrentBlock", 0);
+        Invoke("Painting_CubeN", 0);
     }
-    //CurrentBlockの召喚
-    void Summoning_CurrentBlock()
+
+
+    //GhostBlockの召喚
+    void Switching_GhostBlock()
     {
-        AudioSource_AudioSource_2.Play();
-
-        for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+        if (GhostMode == true)
         {
-            IntList_ColorOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
-            IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+            int a = 0;
+            int b = 0;
+            int c = 0;
+            int d = 0;
+            int e = 0;
+            int f = 0;
+            int g = 0;
+            int h = 0;
+            int i = 0;
+            int j = 0;
+
+            for (int z = 0; z < IntList_TypeOfCubeG.Count; z++)
+            {
+                if (IntList_TypeOfCubeG[z] == 11 | IntList_ColorOfCubeG[z] == 4)
+                {
+                    IntList_ColorOfCubeG[z] = 0;
+                    IntList_TypeOfCubeG[z] = 0;
+                }
+            }
+
+            for (int z = 0; z < IntList_TypeOfCubeG.Count; z++)
+            {
+                switch (z % 14 + 1)
+                {
+                    case 3:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            a += 1;
+                        }
+                        break;
+                    case 4:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            b += 1;
+                        }
+                        break;
+                    case 5:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            c += 1;
+                        }
+                        break;
+                    case 6:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            d += 1;
+                        }
+                        break;
+                    case 7:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            e += 1;
+                        }
+                        break;
+                    case 8:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            f += 1;
+                        }
+                        break;
+                    case 9:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            g += 1;
+                        }
+                        break;
+                    case 10:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            h += 1;
+                        }
+                        break;
+                    case 11:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            i += 1;
+                        }
+                        break;
+                    case 12:
+                        if (IntList_TypeOfCubeG[z] == 1)
+                        {
+                            j += 1;
+                        }
+                        break;
+                }
+            }
+
+            Debug.Log(a + " : " + b + " : " + c + " : " + d + " : " + e + " : " + f + " : " + g + " : " + h + " : " + i + " : " + j);
+
+            for (int z = 0; z < IntList_TypeOfCubeG.Count; z++)
+            {
+                switch (z % 14 + 1)
+                {
+                    case 3:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (a > 0)
+                            {
+                                a -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (b > 0)
+                            {
+                                b -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (c > 0)
+                            {
+                                c -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 6:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (d > 0)
+                            {
+                                d -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 7:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (e > 0)
+                            {
+                                e -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 8:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (f > 0)
+                            {
+                                f -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 9:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (g > 0)
+                            {
+                                g -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 10:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (h > 0)
+                            {
+                                h -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 11:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (i > 0)
+                            {
+                                i -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                    case 12:
+                        if (IntList_TypeOfCubeG[z] == 0)
+                        {
+                            if (j > 0)
+                            {
+                                j -= 1;
+                                IntList_ColorOfCubeG[z] = 4;
+                            }
+                        }
+                        break;
+                }
+
+                if (IntList_TypeOfCubeG[z] == 1)
+                {
+                    break;
+                }
+            }
+
         }
-
-        ScoreSinglePlay += 30;
-        NumberOfRens += 1;
-
+        else
+        {
+            for (int z = 0; z < IntList_TypeOfCubeG.Count; z++)
+            {
+                if (IntList_TypeOfCubeG[z] == 11 | IntList_ColorOfCubeG[z] == 4)
+                {
+                    IntList_ColorOfCubeG[z] = 0;
+                    IntList_TypeOfCubeG[z] = 0;
+                }
+            }
+        }
         Invoke("Painting_CubeG", 0);
-        Invoke("Painting_CubeN1", 0);
-        Invoke("Painting_CubeN2", 0);
-        Invoke("Painting_CubeN3", 0);
-        Invoke("Painting_CubeN4", 0);
-        Invoke("Painting_CubeN5", 0);
+    }
+    //Frameの召喚
+    void Switching_Frame()
+    {
+        if (FrameMode == true)
+        {
+            Frames_FrameMode.SetActive(true);
+        }
+        else
+        {
+            Frames_FrameMode.SetActive(false);
+        }
     }
 
 
@@ -2797,7 +2947,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                 }
 
-                Invoke("Painting_CubeG", 0);
+                Invoke("Switching_GhostBlock", 0);
             }
             a = 0;
         }
@@ -2854,7 +3004,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                 }
 
-                Invoke("Painting_CubeG", 0);
+                Invoke("Switching_GhostBlock", 0);
             }
             a = 0;
         }
@@ -2925,7 +3075,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                 }
 
-                Invoke("Painting_CubeG", 0);
+                Invoke("Switching_GhostBlock", 0);
             }
             else if (IntList_LowerSideLengthOfCurrentBlock.Max() != IntList_LowerSideLengthOfCurrentBlock.Min())
             {
@@ -2985,7 +3135,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+1
@@ -3040,7 +3190,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+1
@@ -3095,7 +3245,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         break;
@@ -3154,7 +3304,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+1
@@ -3211,7 +3361,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+1
@@ -3268,7 +3418,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         break;
@@ -3325,7 +3475,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+1
@@ -3380,7 +3530,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+1
@@ -3435,7 +3585,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //上+2
@@ -3490,7 +3640,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+2
@@ -3545,7 +3695,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+2
@@ -3600,7 +3750,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         break;
@@ -3666,7 +3816,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                 }
 
-                Invoke("Painting_CubeG", 0);
+                Invoke("Switching_GhostBlock", 0);
             }
             else if (IntList_LowerSideLengthOfCurrentBlock.Max() != IntList_LowerSideLengthOfCurrentBlock.Min())
             {
@@ -3726,7 +3876,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+1
@@ -3781,7 +3931,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+1
@@ -3836,7 +3986,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         break;
@@ -3895,7 +4045,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+1
@@ -3952,7 +4102,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+1
@@ -4009,7 +4159,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         break;
@@ -4066,7 +4216,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+1
@@ -4121,7 +4271,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+1
@@ -4176,7 +4326,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //上+2
@@ -4231,7 +4381,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //左+2
@@ -4286,7 +4436,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         //右+2
@@ -4341,7 +4491,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                     IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
                                 }
 
-                                Invoke("Painting_CubeG", 0);
+                                Invoke("Switching_GhostBlock", 0);
                             }
                         }
                         break;
@@ -4881,6 +5031,11 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         GameObjectList_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                         GameObjectList_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                         break;
+                    case 4:
+                        GameObjectList_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Gray;
+                        GameObjectList_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Gray);
+                        break;
                 }
 
                 a += 1;
@@ -5075,9 +5230,10 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             }
         }
     }
-    //CubeN1の染色
-    void Painting_CubeN1()
+    //CubeNの染色
+    void Painting_CubeN()
     {
+        //CubeN1
         for (int i = 0; i < IntList_ColorOfCubeN1.Count; i++)
         {
             IntList_ColorOfCubeN1[i] = 0;
@@ -5256,10 +5412,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     break;
             }
         }
-    }
-    //CubeN2の染色
-    void Painting_CubeN2()
-    {
+        //CubeN2
         for (int i = 0; i < IntList_ColorOfCubeN2.Count; i++)
         {
             IntList_ColorOfCubeN2[i] = 0;
@@ -5438,10 +5591,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     break;
             }
         }
-    }
-    //CubeN3の染色
-    void Painting_CubeN3()
-    {
+        //CubeN3
         for (int i = 0; i < IntList_ColorOfCubeN3.Count; i++)
         {
             IntList_ColorOfCubeN3[i] = 0;
@@ -5620,10 +5770,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     break;
             }
         }
-    }
-    //CubeN4の染色
-    void Painting_CubeN4()
-    {
+        //CubeN4
         for (int i = 0; i < IntList_ColorOfCubeN4.Count; i++)
         {
             IntList_ColorOfCubeN4[i] = 0;
@@ -5802,10 +5949,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     break;
             }
         }
-    }
-    //CubeN5の染色
-    void Painting_CubeN5()
-    {
+        //CubeN5
         for (int i = 0; i < IntList_ColorOfCubeN5.Count; i++)
         {
             IntList_ColorOfCubeN5[i] = 0;
