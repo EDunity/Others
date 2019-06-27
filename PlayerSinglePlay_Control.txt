@@ -76,7 +76,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                             0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                             0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                             0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    private List<int> IntList_ColorOfCubeH = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> IntList_ColorOfCubeH = new List<int>  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private List<int> IntList_ColorOfCubeN1 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private List<int> IntList_ColorOfCubeN2 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private List<int> IntList_ColorOfCubeN3 = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -121,6 +121,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                            0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                            0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
+    private List<List<int>> IntListList_DataOfFigure = new List<List<int>> { new List<int> { 0,1,2,3,5,6,8,9,11,12,13,14 }, new List<int> { 0,1,2,4,7,9,10,13 }, new List<int> { 0,1,2,3,6,7,8,11,12,13,14 }, new List<int> { 0,1,2,5,6,7,8,11,12,13,14 }, new List<int> { 2,5,6,7,8,9,11,12,14}, new List<int> { 0,1,2,5,6,7,8,9,12,13,14 }, new List<int> { 0,1,2,3,5,6,7,8,9,12,13,14 }, new List<int> { 2,5,6,8,9,11,12,13,14 }, new List<int> { 0,1,2,3,5,6,7,8,9,11,12,13,14 }, new List<int> { 0,1,2,5,6,7,8,9,11,12,13,14 } };
     private List<List<int>> IntListList_DataOfBlock = new List<List<int>> { new List<int> { 0 },
                                                                             new List<int> { 14, 15 },
                                                                             new List<int> { 0, 1, 15 }, new List<int> { 14, 15, 16 },
@@ -889,9 +890,9 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject_CubeS.name = "CubeS_" + i;
 
             GameObject_CubeS.transform.position = new Vector3(i % 3 + 1, Mathf.FloorToInt(i / 3) + 1, 0);
-            GameObject_CubeS.transform.position += new Vector3(16.25f,22.25f,0);
+            GameObject_CubeS.transform.position += new Vector3(26.25f,22.25f,0);
             GameObject_CubeS.transform.position -= new Vector3(i % 3 * 0.5f, Mathf.FloorToInt(i / 3) * 0.5f, 0);
-            GameObject_CubeS.transform.position += new Vector3(Mathf.FloorToInt(i / 15) * 2, -Mathf.FloorToInt(i / 15) * 2.5f, 0);
+            GameObject_CubeS.transform.position -= new Vector3(Mathf.FloorToInt(i / 15) * 2, Mathf.FloorToInt(i / 15) * 2.5f, 0);
 
             GameObject_CubeS.transform.localScale = new Vector3(0.5f, 0.5f, 1);
             GameObject_CubeS.transform.parent = Cubes_CubeS.transform;
@@ -2393,7 +2394,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             //CurrentBlockのホールド
             if (WD & !S & !D & !A & !E & !Q)
             {
-                Invoke("Summoning_HoldBlock", 0);
+                Invoke("Holding_CurrentBlock", 0);
             }
         }
 
@@ -2448,6 +2449,38 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 Invoke("Switching_GhostBlock", 0);
             }
         }
+
+
+
+
+
+
+
+
+
+        if (Alpha1D)
+        {
+            Invoke("Painting_CubeS", 0);
+        }
+        if (Alpha2D)
+        {
+            Debug.Log(ScoreSinglePlay);
+        }
+        if (Alpha3D)
+        {
+            Debug.Log(Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, 3))) / (Mathf.Pow(10, 3 - 1))));
+        }
+        if (Alpha4D)
+        {
+            for (int i = 0; i < GameObjectList_CubeH.Count; i++)
+            {
+                GameObjectList_CubeS[i].SetActive(false);
+            }
+        }
+        if (Alpha5D)
+        {
+            Debug.Log(Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, 4))) / (Mathf.Pow(10, 4 - 1))) + " : " + Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, 3))) / (Mathf.Pow(10, 3 - 1))) + " : " + Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, 2))) / (Mathf.Pow(10, 2 - 1))) + " : " + Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, 1))) / (Mathf.Pow(10, 1 - 1))));
+        }
     }
 
 
@@ -2499,6 +2532,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         CanPlayFallingSound = true;
 
         Invoke("Summoning_NextBlock", 0);
+        Invoke("Painting_CubeS", 0);
     }
 
 
@@ -2516,77 +2550,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         ScoreSinglePlay += 30;
         NumberOfRens += 1;
 
+        Invoke("Painting_CubeG", 0);
         Invoke("Switching_GhostBlock", 0);
-    }
-    //HoldBlockの召喚
-    void Summoning_HoldBlock()
-    {
-        if (CanHoldCurrentBlock == true)
-        {
-            AudioSource_AudioSource_10.Play();
-
-            CancelInvoke("Disassembly_CurrentBlock");
-            CanInvokeDisassembly_CurrentBlock = true;
-
-            if (IntList_DataOfHoldBlock.Count == 0)
-            {
-                IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
-                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfCurrentBlock;
-                HoldBlock = CurrentBlock;
-                DirectionOfHoldBlock = DirectionOfCurrentBlock;
-                ColorOfHoldBlock = ColorOfCurrentBlock;
-
-                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
-                {
-                    if (IntList_TypeOfCubeG[i] == 1)
-                    {
-                        IntList_TypeOfCubeG[i] = 0;
-                        IntList_ColorOfCubeG[i] = 0;
-                    }
-                }
-
-                Invoke("Painting_CubeG", 0);
-                Invoke("Painting_CubeH", 0);
-                Invoke("Resetting_SinglePlay", 0.25f);
-            }
-            else
-            {
-                CanHoldCurrentBlock = false;
-
-                IntList_DataOfTemporaryBlock1 = IntList_DataOfCurrentBlock;
-                IntList_LowerSideLengthOfTemporaryBlock1 = IntList_LowerSideLengthOfCurrentBlock;
-                TemporaryBlock1 = CurrentBlock;
-                DirectionOfTemporaryBlock1 = DirectionOfCurrentBlock;
-                ColorOfTemporaryBlock1 = ColorOfCurrentBlock;
-
-                IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
-                IntList_LowerSideLengthOfCurrentBlock = IntList_LowerSideLengthOfHoldBlock;
-                CurrentBlock = HoldBlock;
-                DirectionOfCurrentBlock = DirectionOfHoldBlock;
-                ColorOfCurrentBlock = ColorOfHoldBlock;
-
-                IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock1;
-                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfTemporaryBlock1;
-                HoldBlock = TemporaryBlock1;
-                DirectionOfHoldBlock = DirectionOfTemporaryBlock1;
-                ColorOfHoldBlock = ColorOfTemporaryBlock1;
-
-                CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
-
-                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
-                {
-                    if (IntList_TypeOfCubeG[i] == 1)
-                    {
-                        IntList_TypeOfCubeG[i] = 0;
-                        IntList_ColorOfCubeG[i] = 0;
-                    }
-                }
-
-                Invoke("Painting_CubeG", 0);
-                Invoke("Painting_CubeH", 0);
-                Invoke("Summoning_CurrentBlock", 0.25f);
-            }
-        }
     }
     //NextBlockの召喚
     void Summoning_NextBlock()
@@ -2843,8 +2808,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
             }
 
-            Debug.Log(a + " : " + b + " : " + c + " : " + d + " : " + e + " : " + f + " : " + g + " : " + h + " : " + i + " : " + j);
-
             for (int z = 0; z < IntList_TypeOfCubeG.Count; z++)
             {
                 switch (z % 14 + 1)
@@ -2956,7 +2919,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                     break;
                 }
             }
-
         }
         else
         {
@@ -4646,6 +4608,76 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             a = 0;
         }
     }
+    //CurrentBlockのホールド
+    void Holding_CurrentBlock()
+    {
+        if (CanHoldCurrentBlock == true)
+        {
+            AudioSource_AudioSource_10.Play();
+
+            CancelInvoke("Disassembly_CurrentBlock");
+            CanInvokeDisassembly_CurrentBlock = true;
+
+            if (IntList_DataOfHoldBlock.Count == 0)
+            {
+                IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
+                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfCurrentBlock;
+                HoldBlock = CurrentBlock;
+                DirectionOfHoldBlock = DirectionOfCurrentBlock;
+                ColorOfHoldBlock = ColorOfCurrentBlock;
+
+                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
+                {
+                    if (IntList_TypeOfCubeG[i] == 1)
+                    {
+                        IntList_TypeOfCubeG[i] = 0;
+                        IntList_ColorOfCubeG[i] = 0;
+                    }
+                }
+
+                Invoke("Painting_CubeG", 0);
+                Invoke("Painting_CubeH", 0);
+                Invoke("Resetting_SinglePlay", 0.25f);
+            }
+            else
+            {
+                CanHoldCurrentBlock = false;
+
+                IntList_DataOfTemporaryBlock1 = IntList_DataOfCurrentBlock;
+                IntList_LowerSideLengthOfTemporaryBlock1 = IntList_LowerSideLengthOfCurrentBlock;
+                TemporaryBlock1 = CurrentBlock;
+                DirectionOfTemporaryBlock1 = DirectionOfCurrentBlock;
+                ColorOfTemporaryBlock1 = ColorOfCurrentBlock;
+
+                IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
+                IntList_LowerSideLengthOfCurrentBlock = IntList_LowerSideLengthOfHoldBlock;
+                CurrentBlock = HoldBlock;
+                DirectionOfCurrentBlock = DirectionOfHoldBlock;
+                ColorOfCurrentBlock = ColorOfHoldBlock;
+
+                IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock1;
+                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfTemporaryBlock1;
+                HoldBlock = TemporaryBlock1;
+                DirectionOfHoldBlock = DirectionOfTemporaryBlock1;
+                ColorOfHoldBlock = ColorOfTemporaryBlock1;
+
+                CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+
+                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
+                {
+                    if (IntList_TypeOfCubeG[i] == 1)
+                    {
+                        IntList_TypeOfCubeG[i] = 0;
+                        IntList_ColorOfCubeG[i] = 0;
+                    }
+                }
+
+                Invoke("Painting_CubeG", 0);
+                Invoke("Painting_CubeH", 0);
+                Invoke("Summoning_CurrentBlock", 0.25f);
+            }
+        }
+    }
 
 
     //CurrentBlockの分解
@@ -5089,6 +5121,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
 
         Invoke("Painting_CubeG", 0);
+        Invoke("Painting_CubeS", 0);
         Invoke("FreeFall_PartOfCurrentBlock", 0);
     }
     //PartOfCurrentBlockの自由落下
@@ -5202,7 +5235,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_ColorOfCubeH[i] = 0;
             GameObjectList_CubeH[i].SetActive(false);
         }
-
         switch (IntList_LowerSideLengthOfHoldBlock.Max())
         {
             case 1:
@@ -5344,7 +5376,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
                 break;
         }
-
         for (int i = 0; i < IntList_ColorOfCubeH.Count; i++)
         {
             switch (IntList_ColorOfCubeH[i])
@@ -5385,7 +5416,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_ColorOfCubeN1[i] = 0;
             GameObjectList_CubeN1[i].SetActive(false);
         }
-
         switch (IntList_LowerSideLengthOfNextBlock1.Max())
         {
             case 1:
@@ -5527,7 +5557,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
                 break;
         }
-
         for (int i = 0; i < IntList_ColorOfCubeN1.Count; i++)
         {
             switch (IntList_ColorOfCubeN1[i])
@@ -5564,7 +5593,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_ColorOfCubeN2[i] = 0;
             GameObjectList_CubeN2[i].SetActive(false);
         }
-
         switch (IntList_LowerSideLengthOfNextBlock2.Max())
         {
             case 1:
@@ -5706,7 +5734,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
                 break;
         }
-
         for (int i = 0; i < IntList_ColorOfCubeN2.Count; i++)
         {
             switch (IntList_ColorOfCubeN2[i])
@@ -5743,7 +5770,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_ColorOfCubeN3[i] = 0;
             GameObjectList_CubeN3[i].SetActive(false);
         }
-
         switch (IntList_LowerSideLengthOfNextBlock3.Max())
         {
             case 1:
@@ -5885,7 +5911,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
                 break;
         }
-
         for (int i = 0; i < IntList_ColorOfCubeN3.Count; i++)
         {
             switch (IntList_ColorOfCubeN3[i])
@@ -5922,7 +5947,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_ColorOfCubeN4[i] = 0;
             GameObjectList_CubeN4[i].SetActive(false);
         }
-
         switch (IntList_LowerSideLengthOfNextBlock4.Max())
         {
             case 1:
@@ -6064,7 +6088,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
                 break;
         }
-
         for (int i = 0; i < IntList_ColorOfCubeN4.Count; i++)
         {
             switch (IntList_ColorOfCubeN4[i])
@@ -6101,7 +6124,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             IntList_ColorOfCubeN5[i] = 0;
             GameObjectList_CubeN5[i].SetActive(false);
         }
-
         switch (IntList_LowerSideLengthOfNextBlock5.Max())
         {
             case 1:
@@ -6243,7 +6265,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 }
                 break;
         }
-
         for (int i = 0; i < IntList_ColorOfCubeN5.Count; i++)
         {
             switch (IntList_ColorOfCubeN5[i])
@@ -6278,6 +6299,85 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     //CubeSの染色
     void Painting_CubeS()
     {
-
+        for (int i = 0; i < IntList_ColorOfCubeS.Count; i++)
+        {
+            IntList_ColorOfCubeS[i] = 0;
+            GameObjectList_CubeS[i].SetActive(false);
+        }
+        int a = 0;
+        if(ScoreSinglePlay == 0)
+        {
+            a = 1;
+        }
+        else
+        {
+            a = Mathf.FloorToInt(Mathf.Log10(ScoreSinglePlay)) + 1;
+        }
+        for (int b = 1; b <= a; b++)
+        {
+            for (int c = 0; c < IntListList_DataOfFigure[Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, b))) / (Mathf.Pow(10, b - 1)))].Count; c++)
+            {
+                switch (IntListList_DataOfFigure[Mathf.FloorToInt((ScoreSinglePlay % (Mathf.Pow(10, b))) / (Mathf.Pow(10, b - 1)))][c])
+                {
+                    case 0:
+                        IntList_ColorOfCubeS[0 + (b - 1) * 15] = 1;
+                        break;
+                    case 1:
+                        IntList_ColorOfCubeS[1 + (b - 1) * 15] = 1;
+                        break;
+                    case 2:
+                        IntList_ColorOfCubeS[2 + (b - 1) * 15] = 1;
+                        break;
+                    case 3:
+                        IntList_ColorOfCubeS[3 + (b - 1) * 15] = 1;
+                        break;
+                    case 4:
+                        IntList_ColorOfCubeS[4 + (b - 1) * 15] = 1;
+                        break;
+                    case 5:
+                        IntList_ColorOfCubeS[5 + (b - 1) * 15] = 1;
+                        break;
+                    case 6:
+                        IntList_ColorOfCubeS[6 + (b - 1) * 15] = 1;
+                        break;
+                    case 7:
+                        IntList_ColorOfCubeS[7 + (b - 1) * 15] = 1;
+                        break;
+                    case 8:
+                        IntList_ColorOfCubeS[8 + (b - 1) * 15] = 1;
+                        break;
+                    case 9:
+                        IntList_ColorOfCubeS[9 + (b - 1) * 15] = 1;
+                        break;
+                    case 10:
+                        IntList_ColorOfCubeS[10 + (b - 1) * 15] = 1;
+                        break;
+                    case 11:
+                        IntList_ColorOfCubeS[11 + (b - 1) * 15] = 1;
+                        break;
+                    case 12:
+                        IntList_ColorOfCubeS[12 + (b - 1) * 15] = 1;
+                        break;
+                    case 13:
+                        IntList_ColorOfCubeS[13 + (b - 1) * 15] = 1;
+                        break;
+                    case 14:
+                        IntList_ColorOfCubeS[14 + (b - 1) * 15] = 1;
+                        break;
+                }
+            }
+        }
+        for (int i = 0; i < IntList_ColorOfCubeS.Count; i++)
+        {
+            switch (IntList_ColorOfCubeS[i])
+            {
+                case 0:
+                    GameObjectList_CubeS[i].SetActive(false);
+                    break;
+                case 1:
+                    GameObjectList_CubeS[i].SetActive(true);
+                    break;
+            }
+        }
     }
 }
