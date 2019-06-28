@@ -2364,12 +2364,12 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         if (true)
         {
             //CurrentBlockの下移動
-            if (SD & !D & !A & !E & !Q)
+            if (SD)
             {
                 Invoke("IntermittentDownMovement_CurrentBlock", 0);
             }
             //CurrentBlockの右移動
-            if (D & !S & !A & !E & !Q)
+            if (D & !A)
             {
                 if (CanInvokeIntermittentRightMovement_CurrentBlock == true)
                 {
@@ -2386,7 +2386,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 CancelInvoke("ContinuousRightMovement_CurrentBlock");
             }
             //CurrentBlockの左移動
-            if (A & !S & !D & !E & !Q)
+            if (A & !D)
             {
                 if (CanInvokeIntermittentLeftMovement_CurrentBlock == true)
                 {
@@ -2403,18 +2403,18 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 CancelInvoke("ContinuousLeftMovement_CurrentBlock");
             }
             //CurrentBlockの右回転
-            if (ED & !S & !D & !A & !Q)
+            if (ED)
             {
                 Invoke("RightRoll_CurrentBlock", 0);
             }
             //CurrentBlockの左回転
-            if (QD & !S & !D & !A & !E)
+            if (QD)
             {
                 Invoke("LeftRoll_CurrentBlock", 0);
             }
 
             //CurrentBlockのホールド
-            if (WD & !S & !D & !A & !E & !Q)
+            if (WD)
             {
                 Invoke("Holding_CurrentBlock", 0);
             }
@@ -2898,11 +2898,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     //CurrentBlockの右移動(F)
     void ContinuousRightMovement_CurrentBlock()
     {
-        if (D & !S & !A & !E & !Q)
-        {
-            Invoke("ContinuousRightMovement_CurrentBlock", 0.05f);
-            Invoke("IntermittentRightMovement_CurrentBlock", 0);
-        }
+        Invoke("ContinuousRightMovement_CurrentBlock", 0.05f);
+        Invoke("IntermittentRightMovement_CurrentBlock", 0);
     }
     //CurrentBlockの左移動(S)
     void IntermittentLeftMovement_CurrentBlock()
@@ -2955,11 +2952,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     //CurrentBlockの左移動(F)
     void ContinuousLeftMovement_CurrentBlock()
     {
-        if (A & !S & !D & !E & !Q)
-        {
-            Invoke("ContinuousLeftMovement_CurrentBlock", 0.05f);
-            Invoke("IntermittentLeftMovement_CurrentBlock", 0);
-        }
+        Invoke("ContinuousLeftMovement_CurrentBlock", 0.05f);
+        Invoke("IntermittentLeftMovement_CurrentBlock", 0);
     }
     //CurrentBlockの右回転
     void RightRoll_CurrentBlock()
