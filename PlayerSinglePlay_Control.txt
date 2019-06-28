@@ -2367,11 +2367,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             if (SD & !D & !A & !E & !Q)
             {
                 Invoke("IntermittentDownMovement_CurrentBlock", 0);
-                Invoke("ContinuousDownMovement_CurrentBlock", 0.3f);
-            }
-            if (SU)
-            {
-                CancelInvoke("ContinuousDownMovement_CurrentBlock");
             }
             //CurrentBlockの右移動
             if (D & !S & !A & !E & !Q)
@@ -2714,7 +2709,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         }
         ScoreSinglePlay += 30;
 
-        CancelInvoke("ContinuousDownMovement_CurrentBlock");
         Invoke("Switching_GhostBlock", 0);
         Invoke("Painting_CubeG", 0);
         Invoke("Painting_CubeN", 0);
@@ -2850,17 +2844,6 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 
                     Invoke("Disassembly_CurrentBlock", 0);
                 }
-            }
-        }
-    }
-    //CurrentBlockの下移動(F)
-    void ContinuousDownMovement_CurrentBlock()
-    {
-        if (S & !D & !A & !E & !Q)
-        {
-            if(IntList_TypeOfCubeG.Contains(1) == true)
-            {
-                Invoke("IntermittentDownMovement_CurrentBlock", 0);
             }
         }
     }
@@ -4465,76 +4448,79 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     {
         if (CanHoldCurrentBlock == true)
         {
-            AudioSource_AudioSource_10.Play();
-
-            CancelInvoke("Disassembly_CurrentBlock");
-            CanInvokeDisassembly_CurrentBlock = true;
-
-            if (IntList_DataOfHoldBlock.Count == 0)
+            if (IntList_TypeOfCubeG.Contains(1) == true)
             {
-                IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
-                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfCurrentBlock;
-                HoldBlock = CurrentBlock;
-                DirectionOfHoldBlock = DirectionOfCurrentBlock;
-                ColorOfHoldBlock = ColorOfCurrentBlock;
+                AudioSource_AudioSource_10.Play();
 
-                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
+                CancelInvoke("Disassembly_CurrentBlock");
+                CanInvokeDisassembly_CurrentBlock = true;
+
+                if (IntList_DataOfHoldBlock.Count == 0)
                 {
-                    if (IntList_TypeOfCubeG[i] == 1)
+                    IntList_DataOfHoldBlock = IntList_DataOfCurrentBlock;
+                    IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfCurrentBlock;
+                    HoldBlock = CurrentBlock;
+                    DirectionOfHoldBlock = DirectionOfCurrentBlock;
+                    ColorOfHoldBlock = ColorOfCurrentBlock;
+
+                    for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
                     {
-                        IntList_TypeOfCubeG[i] = 0;
-                        IntList_ColorOfCubeG[i] = 0;
+                        if (IntList_TypeOfCubeG[i] == 1)
+                        {
+                            IntList_TypeOfCubeG[i] = 0;
+                            IntList_ColorOfCubeG[i] = 0;
+                        }
                     }
+
+                    Invoke("Resetting_SinglePlay", 0.25f);
+                    Invoke("Painting_CubeG", 0);
+                    Invoke("Painting_CubeH", 0);
                 }
-
-                Invoke("Resetting_SinglePlay", 0.25f);
-                Invoke("Painting_CubeG", 0);
-                Invoke("Painting_CubeH", 0);
-            }
-            else
-            {
-                CanHoldCurrentBlock = false;
-
-                IntList_DataOfTemporaryBlock1 = IntList_DataOfCurrentBlock;
-                IntList_LowerSideLengthOfTemporaryBlock1 = IntList_LowerSideLengthOfCurrentBlock;
-                TemporaryBlock1 = CurrentBlock;
-                DirectionOfTemporaryBlock1 = DirectionOfCurrentBlock;
-                ColorOfTemporaryBlock1 = ColorOfCurrentBlock;
-
-                IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
-                IntList_LowerSideLengthOfCurrentBlock = IntList_LowerSideLengthOfHoldBlock;
-                CurrentBlock = HoldBlock;
-                DirectionOfCurrentBlock = DirectionOfHoldBlock;
-                ColorOfCurrentBlock = ColorOfHoldBlock;
-
-                IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock1;
-                IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfTemporaryBlock1;
-                HoldBlock = TemporaryBlock1;
-                DirectionOfHoldBlock = DirectionOfTemporaryBlock1;
-                ColorOfHoldBlock = ColorOfTemporaryBlock1;
-
-                CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
-
-                for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
+                else
                 {
-                    if (IntList_TypeOfCubeG[i] == 1)
+                    CanHoldCurrentBlock = false;
+
+                    IntList_DataOfTemporaryBlock1 = IntList_DataOfCurrentBlock;
+                    IntList_LowerSideLengthOfTemporaryBlock1 = IntList_LowerSideLengthOfCurrentBlock;
+                    TemporaryBlock1 = CurrentBlock;
+                    DirectionOfTemporaryBlock1 = DirectionOfCurrentBlock;
+                    ColorOfTemporaryBlock1 = ColorOfCurrentBlock;
+
+                    IntList_DataOfCurrentBlock = IntList_DataOfHoldBlock;
+                    IntList_LowerSideLengthOfCurrentBlock = IntList_LowerSideLengthOfHoldBlock;
+                    CurrentBlock = HoldBlock;
+                    DirectionOfCurrentBlock = DirectionOfHoldBlock;
+                    ColorOfCurrentBlock = ColorOfHoldBlock;
+
+                    IntList_DataOfHoldBlock = IntList_DataOfTemporaryBlock1;
+                    IntList_LowerSideLengthOfHoldBlock = IntList_LowerSideLengthOfTemporaryBlock1;
+                    HoldBlock = TemporaryBlock1;
+                    DirectionOfHoldBlock = DirectionOfTemporaryBlock1;
+                    ColorOfHoldBlock = ColorOfTemporaryBlock1;
+
+                    CoordinateOfCurrentBlock = IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1][Mathf.FloorToInt(Random.Range(1, IntListList_StartCoordinateOfBlock[IntList_LowerSideLengthOfCurrentBlock.Max() - 1].Count + 1)) - 1];
+
+                    for (int i = 0; i < IntList_TypeOfCubeG.Count; i++)
                     {
-                        IntList_TypeOfCubeG[i] = 0;
-                        IntList_ColorOfCubeG[i] = 0;
+                        if (IntList_TypeOfCubeG[i] == 1)
+                        {
+                            IntList_TypeOfCubeG[i] = 0;
+                            IntList_ColorOfCubeG[i] = 0;
+                        }
                     }
+
+                    for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
+                    {
+                        IntList_ColorOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                        IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
+                    }
+
+                    Invoke("Painting_CubeG", 0);
+                    Invoke("Painting_CubeH", 0);
                 }
 
-                for (int i = 0; i < IntList_DataOfCurrentBlock.Count; i++)
-                {
-                    IntList_ColorOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
-                    IntList_TypeOfCubeG[CoordinateOfCurrentBlock + IntList_DataOfCurrentBlock[i]] = 1;
-                }
-
-                Invoke("Painting_CubeG", 0);
-                Invoke("Painting_CubeH", 0);
+                Invoke("Switching_GhostBlock", 0);
             }
-
-            Invoke("Switching_GhostBlock", 0);
         }
     }
 
