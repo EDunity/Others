@@ -7,6 +7,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
 {
     private GameObject MainCamera;
 
+    private GameObject Mark_Cube;
+
     private GameObject Cubes_CubeG;
     private GameObject Cubes_CubeH;
     private GameObject Cubes_CubeN1;
@@ -116,8 +118,12 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
     private List<int> IntList_ColorOfCubeB2 = new List<int> { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -142,6 +148,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     private List<int> IntList_ColorOfCubeB4 = new List<int> { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -155,8 +163,12 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     private List<int> IntList_ColorOfCubeB5 = new List<int> { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                                              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                               0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -545,6 +557,8 @@ public class PlayerSinglePlay_Control : MonoBehaviour
     {
         MainCamera = GameObject.Find("MainCamera").gameObject;
 
+        Mark_Cube = GameObject.Find("Mark_Cube").gameObject;
+
         Cubes_CubeG = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeG").gameObject;
         Cubes_CubeH = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeH").gameObject;
         Cubes_CubeN1 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN1").gameObject;
@@ -589,7 +603,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 GameObject GameObject_CubeG = Instantiate(CubeG) as GameObject;
                 GameObject_CubeG.name = "CubeG_" + i;
-                GameObject_CubeG.transform.position = new Vector3(i % 14 + 1, Mathf.FloorToInt(i / 14) + 1, 0);
+                GameObject_CubeG.transform.position = Mark_Cube.transform.position + new Vector3(i % 14 + 1, Mathf.FloorToInt(i / 14) + 1, 0);
                 GameObject_CubeG.transform.position += new Vector3(-2, -2, 0);
                 GameObject_CubeG.transform.parent = Cubes_CubeG.transform;
                 GameObjectList_CubeG.Add(GameObject_CubeG);
@@ -608,7 +622,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH_" + i;
 
-                GameObject_CubeH.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(0, 0, 0);
@@ -623,7 +637,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH_" + i;
 
-                GameObject_CubeH.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -638,7 +652,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH_" + i;
 
-                GameObject_CubeH.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -653,7 +667,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH_" + i;
 
-                GameObject_CubeH.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -673,7 +687,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1_" + i;
 
-                GameObject_CubeN1.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(0, 0, 0);
@@ -688,7 +702,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1_" + i;
 
-                GameObject_CubeN1.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -703,7 +717,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1_" + i;
 
-                GameObject_CubeN1.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -718,7 +732,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1_" + i;
 
-                GameObject_CubeN1.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -737,7 +751,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2_" + i;
 
-                GameObject_CubeN2.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(0, 0, 0);
@@ -752,7 +766,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2_" + i;
 
-                GameObject_CubeN2.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -767,7 +781,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2_" + i;
 
-                GameObject_CubeN2.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -782,7 +796,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2_" + i;
 
-                GameObject_CubeN2.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -801,7 +815,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3_" + i;
 
-                GameObject_CubeN3.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(0, 0, 0);
@@ -816,7 +830,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3_" + i;
 
-                GameObject_CubeN3.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -831,7 +845,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3_" + i;
 
-                GameObject_CubeN3.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -846,7 +860,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3_" + i;
 
-                GameObject_CubeN3.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -865,7 +879,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4_" + i;
 
-                GameObject_CubeN4.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(0, 0, 0);
@@ -880,7 +894,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4_" + i;
 
-                GameObject_CubeN4.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -895,7 +909,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4_" + i;
 
-                GameObject_CubeN4.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -910,7 +924,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4_" + i;
 
-                GameObject_CubeN4.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -929,7 +943,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5_" + i;
 
-                GameObject_CubeN5.transform.position = new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((i - 0) % 1 + 1, Mathf.FloorToInt((i - 0) / 1) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((i - 0) % 1 * 0.5f, Mathf.FloorToInt((i - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(0, 0, 0);
@@ -944,7 +958,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5_" + i;
 
-                GameObject_CubeN5.transform.position = new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((i - 1) % 2 + 1, Mathf.FloorToInt((i - 1) / 2) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((i - 1) % 2 * 0.5f, Mathf.FloorToInt((i - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -959,7 +973,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5_" + i;
 
-                GameObject_CubeN5.transform.position = new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((i - 5) % 3 + 1, Mathf.FloorToInt((i - 5) / 3) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((i - 5) % 3 * 0.5f, Mathf.FloorToInt((i - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -974,7 +988,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5_" + i;
 
-                GameObject_CubeN5.transform.position = new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((i - 14) % 4 + 1, Mathf.FloorToInt((i - 14) / 4) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((i - 14) % 4 * 0.5f, Mathf.FloorToInt((i - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -992,7 +1006,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject GameObject_CubeS = Instantiate(CubeS) as GameObject;
             GameObject_CubeS.name = "CubeS_" + i;
 
-            GameObject_CubeS.transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObject_CubeS.transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObject_CubeS.transform.position += new Vector3(30.25f,26.75f,0);
             GameObject_CubeS.transform.position -= new Vector3(i % 5 * 0.5f, Mathf.FloorToInt(i / 5) * 0.5f, 0);
             GameObject_CubeS.transform.position -= new Vector3(Mathf.FloorToInt(i / 25) * 2, Mathf.FloorToInt(i / 25) * 2.5f, 0);
@@ -1009,7 +1023,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject GameObject_CubeB1 = Instantiate(CubeB) as GameObject;
             GameObject_CubeB1.name = "CubeB1_" + i;
 
-            GameObject_CubeB1.transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObject_CubeB1.transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObject_CubeB1.transform.position += new Vector3(16.125f, 22.375f, 0);
             GameObject_CubeB1.transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObject_CubeB1.transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -1025,7 +1039,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject GameObject_CubeB2 = Instantiate(CubeB) as GameObject;
             GameObject_CubeB2.name = "CubeB2_" + i;
 
-            GameObject_CubeB2.transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObject_CubeB2.transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObject_CubeB2.transform.position += new Vector3(16.125f, 20.625f, 0);
             GameObject_CubeB2.transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObject_CubeB2.transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -1041,7 +1055,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject GameObject_CubeB3 = Instantiate(CubeB) as GameObject;
             GameObject_CubeB3.name = "CubeB3_" + i;
 
-            GameObject_CubeB3.transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObject_CubeB3.transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObject_CubeB3.transform.position += new Vector3(16.125f, 18.875f, 0);
             GameObject_CubeB3.transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObject_CubeB3.transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -1057,7 +1071,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject GameObject_CubeB4 = Instantiate(CubeB) as GameObject;
             GameObject_CubeB4.name = "CubeB4_" + i;
 
-            GameObject_CubeB4.transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObject_CubeB4.transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObject_CubeB4.transform.position += new Vector3(16.125f, 17.125f, 0);
             GameObject_CubeB4.transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObject_CubeB4.transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -1073,7 +1087,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             GameObject GameObject_CubeB5 = Instantiate(CubeB) as GameObject;
             GameObject_CubeB5.name = "CubeB5_" + i;
 
-            GameObject_CubeB5.transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObject_CubeB5.transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObject_CubeB5.transform.position += new Vector3(16.125f, 15.375f, 0);
             GameObject_CubeB5.transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObject_CubeB5.transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -5112,29 +5126,29 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             //ALLCLEAR換算
             ScoreSinglePlay += 500;
 
-            IntListList_DataOfSentence.Add(new List<int> { 10, 21, 21, 12, 21, 14, 10, 27, 36, 37, 5, 0, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { 10, 21, 21, 12, 21, 14, 10, 27, 36, 36, 37, 5, 0, 0 });
         }
         if (NumberOfCombos == 1)
         {
-            IntListList_DataOfSentence.Add(new List<int> { 1, 12, 24, 22, 11, 24, 36, 37, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { 1, 12, 24, 22, 11, 24, 36, 36, 36, 37, 0 });
         }
         if (NumberOfCombos >= 2 & NumberOfCombos <= 9)
         {
             //COMBO換算
             ScoreSinglePlay += 1000;
 
-            IntListList_DataOfSentence.Add(new List<int> { NumberOfCombos, 12, 24, 22, 11, 24, 36, 37, 1, 0, 0, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { NumberOfCombos, 12, 24, 22, 11, 24, 36, 36, 36, 37, 1, 0, 0, 0 });
         }
         if (NumberOfRens == 1)
         {
-            IntListList_DataOfSentence.Add(new List<int> { 1, 27, 14, 23, 36, 37, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { 1, 27, 14, 23, 36, 36, 36, 37, 0 });
         }
         if (NumberOfRens >= 2 & NumberOfRens <= 9)
         {
             //REN換算
             ScoreSinglePlay += 300;
 
-            IntListList_DataOfSentence.Add(new List<int> { NumberOfRens, 27, 14, 23, 36, 37, 3, 0, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { NumberOfRens, 27, 14, 23, 36, 36, 36, 37, 3, 0, 0 });
         }
         if (IntList_TypeOfCubeG.Contains(5) == true & IntList_TypeOfCubeG.Contains(7) == false & IntList_TypeOfCubeG.Contains(9) == false |
             IntList_TypeOfCubeG.Contains(5) == false & IntList_TypeOfCubeG.Contains(7) == true & IntList_TypeOfCubeG.Contains(9) == false |
@@ -5143,7 +5157,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             //SINGLE換算
             ScoreSinglePlay += 0;
 
-            IntListList_DataOfSentence.Add(new List<int> { 28, 18, 23, 16, 21, 14, 36, 37, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { 28, 18, 23, 16, 21, 14, 36, 36, 36, 37, 0 });
         }
         if (IntList_TypeOfCubeG.Contains(5) == true & IntList_TypeOfCubeG.Contains(7) == true & IntList_TypeOfCubeG.Contains(9) == false |
             IntList_TypeOfCubeG.Contains(5) == true & IntList_TypeOfCubeG.Contains(7) == false & IntList_TypeOfCubeG.Contains(9) == true |
@@ -5152,14 +5166,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             //DOUBLE換算
             ScoreSinglePlay += 2000;
 
-            IntListList_DataOfSentence.Add(new List<int> { 13, 24, 30, 11, 21, 14, 36, 37, 2, 0, 0, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { 13, 24, 30, 11, 21, 14, 36, 36, 36, 37, 2, 0, 0, 0 });
         }
         if (IntList_TypeOfCubeG.Contains(5) == true & IntList_TypeOfCubeG.Contains(7) == true & IntList_TypeOfCubeG.Contains(9) == true)
         {
             //TRIPLE換算
             ScoreSinglePlay += 3000;
 
-            IntListList_DataOfSentence.Add(new List<int> { 29, 27, 18, 25, 21, 14, 36, 37, 3, 0, 0, 0 });
+            IntListList_DataOfSentence.Add(new List<int> { 29, 27, 18, 25, 21, 14, 36, 36, 36, 37, 3, 0, 0, 0 });
         }
 
         Invoke("Destruction_PartOfCurrentBlock", 0.25f);
@@ -6668,7 +6682,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB1の再設置
         for (int i = 0; i < GameObjectList_CubeB1.Count; i++)
         {
-            GameObjectList_CubeB1[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB1[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB1[i].transform.position += new Vector3(16.125f, 22.375f, 0);
             GameObjectList_CubeB1[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB1[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -6676,7 +6690,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB2の再設置
         for (int i = 0; i < GameObjectList_CubeB2.Count; i++)
         {
-            GameObjectList_CubeB2[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB2[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB2[i].transform.position += new Vector3(16.125f, 20.625f, 0);
             GameObjectList_CubeB2[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB2[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -6684,7 +6698,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB3の再設置
         for (int i = 0; i < GameObjectList_CubeB3.Count; i++)
         {
-            GameObjectList_CubeB3[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB3[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB3[i].transform.position += new Vector3(16.125f, 18.875f, 0);
             GameObjectList_CubeB3[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB3[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -6692,7 +6706,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB4の再設置
         for (int i = 0; i < GameObjectList_CubeB4.Count; i++)
         {
-            GameObjectList_CubeB4[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB4[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB4[i].transform.position += new Vector3(16.125f, 17.125f, 0);
             GameObjectList_CubeB4[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB4[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -6700,7 +6714,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB5の再設置
         for (int i = 0; i < GameObjectList_CubeB5.Count; i++)
         {
-            GameObjectList_CubeB5[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB5[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB5[i].transform.position += new Vector3(16.125f, 15.375f, 0);
             GameObjectList_CubeB5[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB5[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -6719,7 +6733,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 for (int aa = 0; aa < IntListList_DataOfLetter[IntListList_DataOfSentence[0][a]].Count; aa++)
                 {
-                    IntList_ColorOfCubeB1[IntListList_DataOfLetter[IntListList_DataOfSentence[0][a]][aa] + (a * 25)] = 1;
+                    if (IntListList_DataOfSentence[0][a] <= 9 & IntListList_DataOfLetter[IntListList_DataOfSentence[0][a]][aa] + (a * 25) >= 25 | IntListList_DataOfSentence[0][a] == 37 & IntListList_DataOfLetter[IntListList_DataOfSentence[0][a]][aa] + (a * 25) >= 25)
+                    {
+                        IntList_ColorOfCubeB1[IntListList_DataOfLetter[IntListList_DataOfSentence[0][a]][aa] + (a * 25)] = 2;
+                    }
+                    else
+                    {
+                        IntList_ColorOfCubeB1[IntListList_DataOfLetter[IntListList_DataOfSentence[0][a]][aa] + (a * 25)] = 1;
+                    }
                 }
                 switch (IntList_LowerSideLengthOfLetter[IntListList_DataOfSentence[0][a]])
                 {
@@ -6775,9 +6796,21 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 switch (IntList_ColorOfCubeB1[i])
                 {
                     case 0:
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         GameObjectList_CubeB1[i].SetActive(false);
                         break;
                     case 1:
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.color = Albedo_White;
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_White);
+                        GameObjectList_CubeB1[i].SetActive(true);
+                        break;
+                    case 2:
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.color = Albedo_Yellow;
+                        GameObjectList_CubeB1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Yellow);
                         GameObjectList_CubeB1[i].SetActive(true);
                         break;
                 }
@@ -6795,7 +6828,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 for (int aa = 0; aa < IntListList_DataOfLetter[IntListList_DataOfSentence[1][a]].Count; aa++)
                 {
-                    IntList_ColorOfCubeB2[IntListList_DataOfLetter[IntListList_DataOfSentence[1][a]][aa] + (a * 25)] = 1;
+                    if (IntListList_DataOfSentence[1][a] <= 9 & IntListList_DataOfLetter[IntListList_DataOfSentence[1][a]][aa] + (a * 25) >= 25 | IntListList_DataOfSentence[1][a] == 37 & IntListList_DataOfLetter[IntListList_DataOfSentence[1][a]][aa] + (a * 25) >= 25)
+                    {
+                        IntList_ColorOfCubeB2[IntListList_DataOfLetter[IntListList_DataOfSentence[1][a]][aa] + (a * 25)] = 2;
+                    }
+                    else
+                    {
+                        IntList_ColorOfCubeB2[IntListList_DataOfLetter[IntListList_DataOfSentence[1][a]][aa] + (a * 25)] = 1;
+                    }
                 }
                 switch (IntList_LowerSideLengthOfLetter[IntListList_DataOfSentence[1][a]])
                 {
@@ -6851,9 +6891,21 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 switch (IntList_ColorOfCubeB2[i])
                 {
                     case 0:
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         GameObjectList_CubeB2[i].SetActive(false);
                         break;
                     case 1:
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.color = Albedo_White;
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_White);
+                        GameObjectList_CubeB2[i].SetActive(true);
+                        break;
+                    case 2:
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.color = Albedo_Yellow;
+                        GameObjectList_CubeB2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Yellow);
                         GameObjectList_CubeB2[i].SetActive(true);
                         break;
                 }
@@ -6871,7 +6923,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 for (int aa = 0; aa < IntListList_DataOfLetter[IntListList_DataOfSentence[2][a]].Count; aa++)
                 {
-                    IntList_ColorOfCubeB3[IntListList_DataOfLetter[IntListList_DataOfSentence[2][a]][aa] + (a * 25)] = 1;
+                    if (IntListList_DataOfSentence[2][a] <= 9 & IntListList_DataOfLetter[IntListList_DataOfSentence[2][a]][aa] + (a * 25) >= 25 | IntListList_DataOfSentence[2][a] == 37 & IntListList_DataOfLetter[IntListList_DataOfSentence[2][a]][aa] + (a * 25) >= 25)
+                    {
+                        IntList_ColorOfCubeB3[IntListList_DataOfLetter[IntListList_DataOfSentence[2][a]][aa] + (a * 25)] = 2;
+                    }
+                    else
+                    {
+                        IntList_ColorOfCubeB3[IntListList_DataOfLetter[IntListList_DataOfSentence[2][a]][aa] + (a * 25)] = 1;
+                    }
                 }
                 switch (IntList_LowerSideLengthOfLetter[IntListList_DataOfSentence[2][a]])
                 {
@@ -6927,9 +6986,21 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                 switch (IntList_ColorOfCubeB3[i])
                 {
                     case 0:
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         GameObjectList_CubeB3[i].SetActive(false);
                         break;
                     case 1:
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.color = Albedo_White;
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_White);
+                        GameObjectList_CubeB3[i].SetActive(true);
+                        break;
+                    case 2:
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.color = Albedo_Yellow;
+                        GameObjectList_CubeB3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Yellow);
                         GameObjectList_CubeB3[i].SetActive(true);
                         break;
                 }
@@ -6947,7 +7018,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 for (int aa = 0; aa < IntListList_DataOfLetter[IntListList_DataOfSentence[3][a]].Count; aa++)
                 {
-                    IntList_ColorOfCubeB4[IntListList_DataOfLetter[IntListList_DataOfSentence[3][a]][aa] + (a * 25)] = 1;
+                    if (IntListList_DataOfSentence[3][a] <= 9 & IntListList_DataOfLetter[IntListList_DataOfSentence[3][a]][aa] + (a * 25) >= 25 | IntListList_DataOfSentence[3][a] == 37 & IntListList_DataOfLetter[IntListList_DataOfSentence[3][a]][aa] + (a * 25) >= 25)
+                    {
+                        IntList_ColorOfCubeB4[IntListList_DataOfLetter[IntListList_DataOfSentence[3][a]][aa] + (a * 25)] = 2;
+                    }
+                    else
+                    {
+                        IntList_ColorOfCubeB4[IntListList_DataOfLetter[IntListList_DataOfSentence[3][a]][aa] + (a * 25)] = 1;
+                    }
                 }
                 switch (IntList_LowerSideLengthOfLetter[IntListList_DataOfSentence[3][a]])
                 {
@@ -6998,14 +7076,26 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         break;
                 }
             }
-            for (int i = 0; i < IntList_ColorOfCubeB1.Count; i++)
+            for (int i = 0; i < IntList_ColorOfCubeB4.Count; i++)
             {
                 switch (IntList_ColorOfCubeB4[i])
                 {
                     case 0:
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         GameObjectList_CubeB4[i].SetActive(false);
                         break;
                     case 1:
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.color = Albedo_White;
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_White);
+                        GameObjectList_CubeB4[i].SetActive(true);
+                        break;
+                    case 2:
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.color = Albedo_Yellow;
+                        GameObjectList_CubeB4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Yellow);
                         GameObjectList_CubeB4[i].SetActive(true);
                         break;
                 }
@@ -7023,7 +7113,14 @@ public class PlayerSinglePlay_Control : MonoBehaviour
             {
                 for (int aa = 0; aa < IntListList_DataOfLetter[IntListList_DataOfSentence[4][a]].Count; aa++)
                 {
-                    IntList_ColorOfCubeB5[IntListList_DataOfLetter[IntListList_DataOfSentence[4][a]][aa] + (a * 25)] = 1;
+                    if (IntListList_DataOfSentence[4][a] <= 9 & IntListList_DataOfLetter[IntListList_DataOfSentence[4][a]][aa] + (a * 25) >= 25 | IntListList_DataOfSentence[4][a] == 37 & IntListList_DataOfLetter[IntListList_DataOfSentence[4][a]][aa] + (a * 25) >= 25)
+                    {
+                        IntList_ColorOfCubeB5[IntListList_DataOfLetter[IntListList_DataOfSentence[4][a]][aa] + (a * 25)] = 2;
+                    }
+                    else
+                    {
+                        IntList_ColorOfCubeB5[IntListList_DataOfLetter[IntListList_DataOfSentence[4][a]][aa] + (a * 25)] = 1;
+                    }
                 }
                 switch (IntList_LowerSideLengthOfLetter[IntListList_DataOfSentence[4][a]])
                 {
@@ -7074,14 +7171,26 @@ public class PlayerSinglePlay_Control : MonoBehaviour
                         break;
                 }
             }
-            for (int i = 0; i < IntList_ColorOfCubeB1.Count; i++)
+            for (int i = 0; i < IntList_ColorOfCubeB5.Count; i++)
             {
                 switch (IntList_ColorOfCubeB5[i])
                 {
                     case 0:
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         GameObjectList_CubeB5[i].SetActive(false);
                         break;
                     case 1:
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.color = Albedo_White;
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_White);
+                        GameObjectList_CubeB5[i].SetActive(true);
+                        break;
+                    case 2:
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.color = Albedo_Yellow;
+                        GameObjectList_CubeB5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Yellow);
                         GameObjectList_CubeB5[i].SetActive(true);
                         break;
                 }
@@ -7101,7 +7210,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB1の再設置
         for (int i = 0; i < GameObjectList_CubeB1.Count; i++)
         {
-            GameObjectList_CubeB1[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB1[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB1[i].transform.position += new Vector3(16.125f, 22.375f, 0);
             GameObjectList_CubeB1[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB1[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -7109,7 +7218,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB2の再設置
         for (int i = 0; i < GameObjectList_CubeB2.Count; i++)
         {
-            GameObjectList_CubeB2[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB2[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB2[i].transform.position += new Vector3(16.125f, 20.625f, 0);
             GameObjectList_CubeB2[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB2[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -7117,7 +7226,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB3の再設置
         for (int i = 0; i < GameObjectList_CubeB3.Count; i++)
         {
-            GameObjectList_CubeB3[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB3[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB3[i].transform.position += new Vector3(16.125f, 18.875f, 0);
             GameObjectList_CubeB3[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB3[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -7125,7 +7234,7 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB4の再設置
         for (int i = 0; i < GameObjectList_CubeB4.Count; i++)
         {
-            GameObjectList_CubeB4[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB4[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB4[i].transform.position += new Vector3(16.125f, 17.125f, 0);
             GameObjectList_CubeB4[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB4[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
@@ -7133,11 +7242,12 @@ public class PlayerSinglePlay_Control : MonoBehaviour
         //CubeB5の再設置
         for (int i = 0; i < GameObjectList_CubeB5.Count; i++)
         {
-            GameObjectList_CubeB5[i].transform.position = new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            GameObjectList_CubeB5[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             GameObjectList_CubeB5[i].transform.position += new Vector3(16.125f, 15.375f, 0);
             GameObjectList_CubeB5[i].transform.position -= new Vector3(i % 5 * 0.75f, Mathf.FloorToInt(i / 5) * 0.75f, 0);
             GameObjectList_CubeB5[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 1.5f, -Mathf.FloorToInt(i / 25) * 1.25f, 0);
         }
+
 
         //CubeB1の脱色
         for (int i = 0; i < GameObjectList_CubeB1.Count; i++)
