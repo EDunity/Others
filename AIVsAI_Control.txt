@@ -1861,26 +1861,13 @@ public class AIVsAI_Control : MonoBehaviour
                     {
                         CountOfAdjacentFrom4To0 += 1;
                     }
-                    else
+                    if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
                     {
-                        if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
-                        {
-                            CountOfAdjacentFrom4To0 += 1;
-                        }
-                        else
-                        {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
-                            {
-                                CountOfAdjacentFrom4To0 += 1;
-                            }
-                            else
-                            {
-                                if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
-                                {
-                                    CountOfAdjacentFrom4To0 += 1;
-                                }
-                            }
-                        }
+                        CountOfAdjacentFrom4To0 += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                    {
+                        CountOfAdjacentFrom4To0 += 1;
                     }
                     break;
                 case 5:
@@ -1888,26 +1875,13 @@ public class AIVsAI_Control : MonoBehaviour
                     {
                         CountOfAdjacentFrom5To0 += 1;
                     }
-                    else
+                    if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
                     {
-                        if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
-                        {
-                            CountOfAdjacentFrom5To0 += 1;
-                        }
-                        else
-                        {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
-                            {
-                                CountOfAdjacentFrom5To0 += 1;
-                            }
-                            else
-                            {
-                                if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
-                                {
-                                    CountOfAdjacentFrom5To0 += 1;
-                                }
-                            }
-                        }
+                        CountOfAdjacentFrom5To0 += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                    {
+                        CountOfAdjacentFrom5To0 += 1;
                     }
                     break;
                 case 6:
@@ -1915,26 +1889,13 @@ public class AIVsAI_Control : MonoBehaviour
                     {
                         CountOfAdjacentFrom6To0 += 1;
                     }
-                    else
+                    if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
                     {
-                        if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
-                        {
-                            CountOfAdjacentFrom6To0 += 1;
-                        }
-                        else
-                        {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
-                            {
-                                CountOfAdjacentFrom6To0 += 1;
-                            }
-                            else
-                            {
-                                if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
-                                {
-                                    CountOfAdjacentFrom6To0 += 1;
-                                }
-                            }
-                        }
+                        CountOfAdjacentFrom6To0 += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                    {
+                        CountOfAdjacentFrom6To0 += 1;
                     }
                     break;
             }
