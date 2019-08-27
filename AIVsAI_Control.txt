@@ -1606,7 +1606,7 @@ public class AIVsAI_Control : MonoBehaviour
 
             PlayerVsAI_Control.Control = false;
 
-            PlayerResult_Control.Result = "Won";
+            PlayerResult_Control.Result = "Win";
 
             Invoke("Exploding_CubeG", 2);
             PlayerVsAI_Control.Invoke("FadingIn_VsAI", 3);
