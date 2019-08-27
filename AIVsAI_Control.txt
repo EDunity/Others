@@ -2371,24 +2371,7 @@ public class AIVsAI_Control : MonoBehaviour
                     //
                     if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
                     {
-                        List<int> ListInt1 = new List<int> { };
 
-                        //
-                        for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
-                        {
-                            if (ListInt_TemporaryOfCubeG1[x] == 0)
-                            {
-                                if (x % 14 + 1 == 3)
-                                {
-                                    if (x >= 30)
-                                    {
-                                        ListInt1.Add(x);
-                                    }
-                                }
-                            }
-                        }
-                        //
-                        ListInt_BestCoordinateOfFirstCandidate.Add(ListInt1.Min());
                     }
                     //
                     Debug.Log("BestCoordinateOfFirstCandidate : " + BestCoordinateOfFirstCandidate);
@@ -2675,24 +2658,7 @@ public class AIVsAI_Control : MonoBehaviour
                     //
                     if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
                     {
-                        //List<int> ListInt1 = new List<int> { };
 
-                        ////
-                        //for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
-                        //{
-                        //    if (ListInt_TemporaryOfCubeG1[x] == 0)
-                        //    {
-                        //        if (x % 14 + 1 == 12)
-                        //        {
-                        //            if (x >= 30)
-                        //            {
-                        //                ListInt1.Add(x);
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                        ////
-                        //ListInt_BestCoordinateOfSecondCandidate.Add(ListInt1.Min());
                     }
                     //
                     Debug.Log("BestCoordinateOfSecondCandidate : " + BestCoordinateOfSecondCandidate);
@@ -2986,24 +2952,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //
                                 if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
                                 {
-                                    List<int> ListInt1 = new List<int> { };
 
-                                    //
-                                    for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
-                                    {
-                                        if (ListInt_TemporaryOfCubeG1[x] == 0)
-                                        {
-                                            if (x % 14 + 1 == 3)
-                                            {
-                                                if (x >= 30)
-                                                {
-                                                    ListInt1.Add(x);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    //
-                                    BestCoordinateOfFirstCandidate = ListInt1.Min();
                                 }
                                 //
                                 //Debug.Log("BestCoordinateOfFirstCandidate : " + BestCoordinateOfFirstCandidate);
@@ -3608,7 +3557,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
-                                        //LD
+                                        //NO
                                         if (ListListInt_SideLengthOfBlock[CurrentBlock - 1][DirectionOfCurrentBlock - 1] != ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max())
                                         {
                                             int IntMax = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
@@ -3722,8 +3671,10 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
-                                        Debug.Log("LD");
-                                        BestPosXOfFirstCandidate = 3 - CorrectionValue;
+                                        Debug.Log("NO");
+                                        int IntMax = ListInt_PosXDifferenceMax.Max();
+                                        int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
+                                        BestPosXOfFirstCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
                                     }
                                     else
                                     {
@@ -4082,24 +4033,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //
                                 if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
                                 {
-                                    List<int> ListInt1 = new List<int> { };
 
-                                    //
-                                    for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
-                                    {
-                                        if (ListInt_TemporaryOfCubeG1[x] == 0)
-                                        {
-                                            if (x % 14 + 1 == 12)
-                                            {
-                                                if (x >= 30)
-                                                {
-                                                    ListInt1.Add(x);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    //
-                                    BestCoordinateOfSecondCandidate = ListInt1.Min();
                                 }
                                 //
                                 //Debug.Log("BestCoordinateOfSecondCandidate : " + BestCoordinateOfSecondCandidate);
@@ -4931,7 +4865,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
-                                        //LD
+                                        //NO
                                         int IntMax = ListInt_PosXDifferenceMax.Max();
                                         int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
 
@@ -5029,7 +4963,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
-                                        Debug.Log("LD");
+                                        Debug.Log("NO");
                                         int IntMax = ListInt_PosXDifferenceMax.Max();
                                         int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
                                         BestPosXOfSecondCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
@@ -5381,24 +5315,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //
                                 if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
                                 {
-                                    List<int> ListInt1 = new List<int> { };
 
-                                    //
-                                    for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
-                                    {
-                                        if (ListInt_TemporaryOfCubeG1[x] == 0)
-                                        {
-                                            if (x % 14 + 1 == 3)
-                                            {
-                                                if (x >= 30)
-                                                {
-                                                    ListInt1.Add(x);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    //
-                                    BestCoordinateOfThirdCandidate = ListInt1.Min();
                                 }
                                 //
                                 //Debug.Log("BestCoordinateOfThirdCandidate : " + BestCoordinateOfThirdCandidate);
@@ -6238,7 +6155,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
-                                        //LD
+                                        //NO
                                         int IntMax = ListInt_PosXDifferenceMax.Max();
                                         int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
 
@@ -6336,7 +6253,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
-                                        Debug.Log("LD");
+                                        Debug.Log("NO");
                                         int IntMax = ListInt_PosXDifferenceMax.Max();
                                         int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
                                         BestPosXOfThirdCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
