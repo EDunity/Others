@@ -1542,7 +1542,6 @@ public class AIVsAI_Control : MonoBehaviour
                 }
                 TotalNumberOfGotAttack = TotalNumberOfGotAttack_O;
 
-                Invoke("Switching_CoordinateBlock", 0);
                 Invoke("Painting_CubeG", 0);
                 Invoke("Resetting_VsAI", 1);
             }
@@ -3422,7 +3421,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             case "Right":
                                                 Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
                                                 break;
-                                            case  "Left":
+                                            case "Left":
                                                 Int2 = ListListInt_PosXDifference[x].LastIndexOf(Int1);
                                                 break;
                                         }
@@ -9321,46 +9320,43 @@ public class AIVsAI_Control : MonoBehaviour
         int a = 0;
         while (a <= 28)
         {
-            if (ListInt_ColorOfCubeG[30 + (14 * a)] == 1 & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != 1)
+            //if (ListInt_ColorOfCubeG[30 + (14 * a)] == 1 & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != 1)
+            //{
+            //    ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
+            //}
+            //if (ListInt_ColorOfCubeG[39 + (14 * a)] == 1 & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != 1)
+            //{
+            //    ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
+            //}
+
+            //if (ListInt_ColorOfCubeG[30 + (14 * a)] == 2 & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != 2)
+            //{
+            //    ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
+            //}
+            //if (ListInt_ColorOfCubeG[39 + (14 * a)] == 2 & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != 2)
+            //{
+            //    ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
+            //}
+
+            //if (ListInt_ColorOfCubeG[30 + (14 * a)] == 3 & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != 3)
+            //{
+            //    ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
+            //}
+            //if (ListInt_ColorOfCubeG[39 + (14 * a)] == 3 & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != 3)
+            //{
+            //    ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
+            //}
+
+            if (ListInt_ColorOfCubeG[30 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != ColorOfFirstCandidate)
             {
                 ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
             }
-            if (ListInt_ColorOfCubeG[39 + (14 * a)] == 1 & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != 1)
+            if (ListInt_ColorOfCubeG[39 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != ColorOfFirstCandidate)
             {
                 ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
             }
 
             a += 1;
-        }
-        //
-        int b = 0;
-        while (b <= 28)
-        {
-            if (ListInt_ColorOfCubeG[30 + (14 * b)] == 2 & ListInt_ColorOfCubeG[44 + (14 * b)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != 2)
-            {
-                ListInt_PriorityOfCubeG[30 + (14 * b)] = -1;
-            }
-            if (ListInt_ColorOfCubeG[39 + (14 * b)] == 2 & ListInt_ColorOfCubeG[53 + (14 * b)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != 2)
-            {
-                ListInt_PriorityOfCubeG[30 + (14 * b)] = -1;
-            }
-
-            b += 1;
-        }
-        //
-        int c = 0;
-        while (c <= 28)
-        {
-            if (ListInt_ColorOfCubeG[30 + (14 * c)] == 3 & ListInt_ColorOfCubeG[44 + (14 * c)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != 3)
-            {
-                ListInt_PriorityOfCubeG[30 + (14 * c)] = -1;
-            }
-            if (ListInt_ColorOfCubeG[39 + (14 * c)] == 3 & ListInt_ColorOfCubeG[53 + (14 * c)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != 3)
-            {
-                ListInt_PriorityOfCubeG[30 + (14 * c)] = -1;
-            }
-
-            c += 1;
         }
 
         Invoke("Brain", 0);
