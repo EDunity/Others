@@ -2622,7 +2622,6 @@ public class AIVsAI_Control : MonoBehaviour
                 List<int> ListInt_CorrectionValueCandidate = new List<int> { };
                 int CorrectionValue = 0;
                 int PosXDifference = 0;
-                string FromSide = "";
 
                 //
                 switch (PriorityOfCurrentBlock)
@@ -2823,8 +2822,6 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     //Debug.Log("左から計算");
 
-                                    //
-                                    FromSide = "Left";
                                     //PosXOfTipOf2に先右端のPosXを代入する
                                     PosXOfTipOf2 = ListInt_PosXOfTipOf2.Max();
                                     //ListInt_CoordinateOfTipOf2にCoordinateがPosXOfTipOf2の全Coordinateを追加する
@@ -2856,8 +2853,6 @@ public class AIVsAI_Control : MonoBehaviour
                                 {
                                     //Debug.Log("右から計算");
 
-                                    //
-                                    FromSide = "Right";
                                     //PosXOfTipOf3に先左端のPosXを代入する
                                     PosXOfTipOf3 = ListInt_PosXOfTipOf3.Min();
                                     //ListInt_CoordinateOfTipOf3にCoordinateがPosXOfTipOf3の全Coordinateを追加する
@@ -2888,8 +2883,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //
                                 if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
                                 {
-                                    //
-                                    FromSide = "Absence";
+
                                 }
                                 //
                                 //Debug.Log("BestCoordinateOfFirstCandidate : " + BestCoordinateOfFirstCandidate);
@@ -3415,16 +3409,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         ListInt_PosXDifferenceMax.Add(ListListInt_PosXDifference[x].Max());
                                         int Int1 = ListListInt_PosXDifference[x].Max();
-                                        int Int2 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
-                                                break;
-                                            case "Left":
-                                                Int2 = ListListInt_PosXDifference[x].LastIndexOf(Int1);
-                                                break;
-                                        }
+                                        int Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
                                         ListInt_BestAAAAA.Add(Int2);
                                     }
                                     //ListInt_CountOfAdjacentMaxにListInt_CountOfAdjacentの最大値を追加
@@ -3432,16 +3417,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         ListInt_CountOfAdjacentMax.Add(ListListInt_CountOfAdjacent[x].Max());
                                         int Int1 = ListListInt_CountOfAdjacent[x].Max();
-                                        int Int2 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int2 = ListListInt_CountOfAdjacent[x].IndexOf(Int1);
-                                                break;
-                                            case "Left":
-                                                Int2 = ListListInt_CountOfAdjacent[x].LastIndexOf(Int1);
-                                                break;
-                                        }
+                                        int Int2 = ListListInt_CountOfAdjacent[x].IndexOf(Int1);
                                         ListInt_BestBBBBB.Add(Int2);
                                     }
                                     //ListInt_PosYOf3MinMinにListInt_PosYOf3Minの最小値を追加
@@ -3449,48 +3425,21 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         ListInt_PosYOf3MinMin.Add(ListListInt_PosYOf3Min[x].Min());
                                         int Int1 = ListListInt_PosYOf3Min[x].Min();
-                                        int Int2 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int2 = ListListInt_PosYOf3Min[x].IndexOf(Int1);
-                                                break;
-                                            case "Left":
-                                                Int2 = ListListInt_PosYOf3Min[x].LastIndexOf(Int1);
-                                                break;
-                                        }
+                                        int Int2 = ListListInt_PosYOf3Min[x].IndexOf(Int1);
                                         ListInt_BestCCCCC.Add(Int2);
                                     }
                                     //ListInt_PosYOf4MaxMaxにListInt_PosYOf4Maxの最大値を追加
                                     if (true)
                                     {
                                         int Int1 = ListListInt_PosXDifference[x].Max();
-                                        int Int2 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
-                                                break;
-                                            case "Left":
-                                                Int2 = ListListInt_PosXDifference[x].LastIndexOf(Int1);
-                                                break;
-                                        }
+                                        int Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
                                         ListInt_PosYOf4MaxMax.Add(ListListInt_PosYOf4Max[x][Int2]);
                                     }
                                     //ListInt_BoolAtにListInt_Boolの真偽の値を追加
                                     if (true)
                                     {
                                         int Int1 = ListListInt_CountOfAdjacent[x].Max();
-                                        int Int2 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int2 = ListListInt_CountOfAdjacent[x].IndexOf(Int1);
-                                                break;
-                                            case "Left":
-                                                Int2 = ListListInt_CountOfAdjacent[x].LastIndexOf(Int1);
-                                                break;
-                                        }
+                                        int Int2 = ListListInt_CountOfAdjacent[x].IndexOf(Int1);
                                         ListInt_BoolAt.Add(ListListInt_Bool[x][Int2]);
                                     }
                                     //ListInt_CountOfOverlapedMaxにListInt_CountOfOverlapedの最大値を追加
@@ -3498,16 +3447,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         ListInt_CountOfOverlapedMax.Add(ListListInt_CountOfOverlaped[x].Max());
                                         int Int1 = ListListInt_CountOfOverlaped[x].Max();
-                                        int Int2 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int2 = ListListInt_CountOfOverlaped[x].IndexOf(Int1);
-                                                break;
-                                            case "Left":
-                                                Int2 = ListListInt_CountOfOverlaped[x].LastIndexOf(Int1);
-                                                break;
-                                        }
+                                        int Int2 = ListListInt_CountOfOverlaped[x].IndexOf(Int1);
                                         ListInt_BestFFFFF.Add(Int2);
                                     }
                                     //TemporaryBlock1の回転を初期化
@@ -3538,36 +3478,8 @@ public class AIVsAI_Control : MonoBehaviour
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
                                         Debug.Log("NO");
-                                        //int IntMax = ListInt_PosXDifferenceMax.Max();
-                                        //int Int1 = 0;
-                                        //switch (FromSide)
-                                        //{
-                                        //    case "Right":
-                                        //        Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                        //        break;
-                                        //    case "Left":
-                                        //        Int1 = ListInt_PosXDifferenceMax.LastIndexOf(IntMax);
-                                        //        break;
-                                        //}
-                                        ////
-                                        //CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                        //RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
-                                        ////
-                                        //BestPosXOfFirstCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
                                         int IntMin = ListInt_PosYOf3MinMin.Min();
-                                        int Int1 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
-                                                break;
-                                            case "Left":
-                                                Int1 = ListInt_PosYOf3MinMin.LastIndexOf(IntMin);
-                                                break;
-                                            case "Absence":
-                                                Int1 = 0;
-                                                break;
-                                        }
+                                        int Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
                                         //
                                         CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                         RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
@@ -3578,16 +3490,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         Debug.Log("B_1");
                                         int IntMax = ListInt_CountOfAdjacentMax.Max();
-                                        int Int1 = 0;
-                                        switch (FromSide)
-                                        {
-                                            case "Right":
-                                                Int1 = ListInt_CountOfAdjacentMax.IndexOf(IntMax);
-                                                break;
-                                            case "Left":
-                                                Int1 = ListInt_CountOfAdjacentMax.LastIndexOf(IntMax);
-                                                break;
-                                        }
+                                        int Int1 = ListInt_CountOfAdjacentMax.IndexOf(IntMax);
                                         //
                                         CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                         RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
@@ -3603,16 +3506,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             Debug.Log("F");
                                             int IntMax = ListInt_CountOfOverlapedMax.Max();
-                                            int Int1 = 0;
-                                            switch (FromSide)
-                                            {
-                                                case "Right":
-                                                    Int1 = ListInt_CountOfOverlapedMax.IndexOf(IntMax);
-                                                    break;
-                                                case "Left":
-                                                    Int1 = ListInt_CountOfOverlapedMax.LastIndexOf(IntMax);
-                                                    break;
-                                            }
+                                            int Int1 = ListInt_CountOfOverlapedMax.IndexOf(IntMax);
                                             //
                                             CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                             RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
@@ -3625,16 +3519,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 Debug.Log("C_1");
                                                 int IntMin = ListInt_PosYOf3MinMin.Min();
-                                                int Int1 = 0;
-                                                switch (FromSide)
-                                                {
-                                                    case "Right":
-                                                        Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
-                                                        break;
-                                                    case "Left":
-                                                        Int1 = ListInt_PosYOf3MinMin.LastIndexOf(IntMin);
-                                                        break;
-                                                }
+                                                int Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
                                                 //
                                                 CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                                 RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
@@ -3644,31 +3529,13 @@ public class AIVsAI_Control : MonoBehaviour
                                             else
                                             {
                                                 int Int2 = ListInt_CountOfAdjacentMax.Max();
-                                                int Int3 = 0;
-                                                switch (FromSide)
-                                                {
-                                                    case "Right":
-                                                        Int3 = ListInt_CountOfAdjacentMax.IndexOf(Int2);
-                                                        break;
-                                                    case "Left":
-                                                        Int3 = ListInt_CountOfAdjacentMax.LastIndexOf(Int2);
-                                                        break;
-                                                }
+                                                int Int3 = ListInt_CountOfAdjacentMax.IndexOf(Int2);
 
                                                 if (ListInt_BoolAt[Int3] == 0)
                                                 {
                                                     Debug.Log("C_2");
                                                     int IntMin = ListInt_PosYOf3MinMin.Min();
-                                                    int Int1 = 0;
-                                                    switch (FromSide)
-                                                    {
-                                                        case "Right":
-                                                            Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
-                                                            break;
-                                                        case "Left":
-                                                            Int1 = ListInt_PosYOf3MinMin.LastIndexOf(IntMin);
-                                                            break;
-                                                    }
+                                                    int Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
                                                     //
                                                     CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                                     RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
@@ -3679,16 +3546,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                 {
                                                     Debug.Log("B_2");
                                                     int IntMax = ListInt_CountOfAdjacentMax.Max();
-                                                    int Int1 = 0;
-                                                    switch (FromSide)
-                                                    {
-                                                        case "Right":
-                                                            Int1 = ListInt_CountOfAdjacentMax.IndexOf(IntMax);
-                                                            break;
-                                                        case "Left":
-                                                            Int1 = ListInt_CountOfAdjacentMax.LastIndexOf(IntMax);
-                                                            break;
-                                                    }
+                                                    int Int1 = ListInt_CountOfAdjacentMax.IndexOf(IntMax);
                                                     //
                                                     CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                                     RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
@@ -3700,48 +3558,29 @@ public class AIVsAI_Control : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (ListInt_PosXDifferenceMax[0] == ListInt_PosXDifferenceMax[1] & ListInt_PosXDifferenceMax[1] == ListInt_PosXDifferenceMax[2] & ListInt_PosXDifferenceMax[2] == ListInt_PosXDifferenceMax[3])
+                                        Debug.Log("A");
+                                        int IntMax = ListInt_PosXDifferenceMax.Max();
+                                        List<int> ListInt1 = new List<int> { };
+                                        for (int x = 0; x < 4; x++)
                                         {
-                                            Debug.Log("A_1");
-                                            //
-                                            int SideLengthMax = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
-                                            int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(SideLengthMax);
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1 + 1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1 + 1) - 1;
-                                            //
-                                            int IntMax = ListInt_PosXDifferenceMax.Max();
-                                            int Int2 = 0;
-                                            switch (FromSide)
+                                            if (ListInt_PosXDifferenceMax[x] == IntMax)
                                             {
-                                                case "Right":
-                                                    Int2 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                                    break;
-                                                case "Left":
-                                                    Int2 = ListInt_PosXDifferenceMax.LastIndexOf(IntMax);
-                                                    break;
+                                                int Int1 = ListListInt_PosXDifference[x].IndexOf(IntMax);
+
+                                                ListInt1.Add(ListListInt_CountOfAdjacent[x][Int1]);
                                             }
-                                            BestPosXOfFirstCandidate = ListInt_BestAAAAA[Int2] + 3 - CorrectionValue;
-                                        }
-                                        else
-                                        {
-                                            Debug.Log("A_2");
-                                            int IntMax = ListInt_PosXDifferenceMax.Max();
-                                            int Int1 = 0;
-                                            switch (FromSide)
+                                            else
                                             {
-                                                case "Right":
-                                                    Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                                    break;
-                                                case "Left":
-                                                    Int1 = ListInt_PosXDifferenceMax.LastIndexOf(IntMax);
-                                                    break;
+                                                ListInt1.Add(-1);
                                             }
-                                            //
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
-                                            //
-                                            BestPosXOfFirstCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
                                         }
+                                        int Int2 = ListInt1.Max();
+                                        int Int3 = ListInt1.IndexOf(Int2);
+                                        //
+                                        CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
+                                        RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int3) - 1;
+                                        //
+                                        BestPosXOfFirstCandidate = ListInt_BestAAAAA[Int3] + 3 - CorrectionValue;
                                     }
                                 }
                             }
@@ -4856,13 +4695,6 @@ public class AIVsAI_Control : MonoBehaviour
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
                                         Debug.Log("NO");
-                                        //int IntMax = ListInt_PosXDifferenceMax.Max();
-                                        //int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                        ////
-                                        //CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                        //RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
-                                        ////
-                                        //BestPosXOfSecondCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
                                         int IntMin = ListInt_PosYOf3MinMin.Min();
                                         int Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
                                         //
@@ -4929,29 +4761,29 @@ public class AIVsAI_Control : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (ListInt_PosXDifferenceMax[0] == ListInt_PosXDifferenceMax[1] & ListInt_PosXDifferenceMax[1] == ListInt_PosXDifferenceMax[2] & ListInt_PosXDifferenceMax[2] == ListInt_PosXDifferenceMax[3])
+                                        Debug.Log("A");
+                                        int IntMax = ListInt_PosXDifferenceMax.Max();
+                                        List<int> ListInt1 = new List<int> { };
+                                        for (int x = 0; x < 4; x++)
                                         {
-                                            Debug.Log("A_1");
-                                            int SideLengthMax = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
-                                            int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(SideLengthMax);
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1 + 1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1 + 1) - 1;
-                                            //
-                                            int IntMax = ListInt_PosXDifferenceMax.Max();
-                                            int Int2 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                            BestPosXOfSecondCandidate = ListInt_BestAAAAA[Int2] + 3 - CorrectionValue;
+                                            if (ListInt_PosXDifferenceMax[x] == IntMax)
+                                            {
+                                                int Int1 = ListListInt_PosXDifference[x].IndexOf(IntMax);
+
+                                                ListInt1.Add(ListListInt_CountOfAdjacent[x][Int1]);
+                                            }
+                                            else
+                                            {
+                                                ListInt1.Add(-1);
+                                            }
                                         }
-                                        else
-                                        {
-                                            Debug.Log("A_2");
-                                            int IntMax = ListInt_PosXDifferenceMax.Max();
-                                            int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                            //
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
-                                            //
-                                            BestPosXOfSecondCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
-                                        }
+                                        int Int2 = ListInt1.Max();
+                                        int Int3 = ListInt1.IndexOf(Int2);
+                                        //
+                                        CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
+                                        RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int3) - 1;
+                                        //
+                                        BestPosXOfSecondCandidate = ListInt_BestAAAAA[Int3] + 3 - CorrectionValue;
                                     }
                                 }
                             }
@@ -6074,13 +5906,6 @@ public class AIVsAI_Control : MonoBehaviour
                                     if (ListInt_CountOfAdjacentMax.All(value => value == 0) == true)
                                     {
                                         Debug.Log("NO");
-                                        //int IntMax = ListInt_PosXDifferenceMax.Max();
-                                        //int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                        ////
-                                        //CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                        //RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
-                                        ////
-                                        //BestPosXOfThirdCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
                                         int IntMin = ListInt_PosYOf3MinMin.Min();
                                         int Int1 = ListInt_PosYOf3MinMin.IndexOf(IntMin);
                                         //
@@ -6147,29 +5972,29 @@ public class AIVsAI_Control : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (ListInt_PosXDifferenceMax[0] == ListInt_PosXDifferenceMax[1] & ListInt_PosXDifferenceMax[1] == ListInt_PosXDifferenceMax[2] & ListInt_PosXDifferenceMax[2] == ListInt_PosXDifferenceMax[3])
+                                        Debug.Log("A");
+                                        int IntMax = ListInt_PosXDifferenceMax.Max();
+                                        List<int> ListInt1 = new List<int> { };
+                                        for (int x = 0; x < 4; x++)
                                         {
-                                            Debug.Log("A_1");
-                                            int SideLengthMax = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
-                                            int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(SideLengthMax);
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1 + 1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1 + 1) - 1;
-                                            //
-                                            int IntMax = ListInt_PosXDifferenceMax.Max();
-                                            int Int2 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                            BestPosXOfThirdCandidate = ListInt_BestAAAAA[Int2] + 3 - CorrectionValue;
+                                            if (ListInt_PosXDifferenceMax[x] == IntMax)
+                                            {
+                                                int Int1 = ListListInt_PosXDifference[x].IndexOf(IntMax);
+
+                                                ListInt1.Add(ListListInt_CountOfAdjacent[x][Int1]);
+                                            }
+                                            else
+                                            {
+                                                ListInt1.Add(-1);
+                                            }
                                         }
-                                        else
-                                        {
-                                            Debug.Log("A_2");
-                                            int IntMax = ListInt_PosXDifferenceMax.Max();
-                                            int Int1 = ListInt_PosXDifferenceMax.IndexOf(IntMax);
-                                            //
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
-                                            //
-                                            BestPosXOfThirdCandidate = ListInt_BestAAAAA[Int1] + 3 - CorrectionValue;
-                                        }
+                                        int Int2 = ListInt1.Max();
+                                        int Int3 = ListInt1.IndexOf(Int2);
+                                        //
+                                        CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
+                                        RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int3) - 1;
+                                        //
+                                        BestPosXOfThirdCandidate = ListInt_BestAAAAA[Int3] + 3 - CorrectionValue;
                                     }
                                 }
                             }
