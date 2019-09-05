@@ -1584,7 +1584,7 @@ public class AIVsAI_Control : MonoBehaviour
 
 
     //優先度のセット
-    void ReResetting_Priority()
+    void Resetting_Priority()
     {
         Debug.Log("///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
 
@@ -3545,6 +3545,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         }
                                         int Int2 = ListInt1.Max();
                                         int Int3 = ListInt1.IndexOf(Int2);
+                                        //Debug.Log(ListInt1[0] + " : " + ListInt1[1] + " : " + ListInt1[2] + " : " + ListInt1[3]);
                                         //
                                         CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
                                         RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int3) - 1;
