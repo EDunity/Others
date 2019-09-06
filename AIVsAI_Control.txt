@@ -1583,7 +1583,7 @@ public class AIVsAI_Control : MonoBehaviour
     }
 
 
-    //優先度のセット
+    //優先度のリセット
     void Resetting_Priority()
     {
         Debug.Log("///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
@@ -3002,6 +3002,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         bool IsChanging3To4 = true;
                                         bool IsChanging1And2And3To4 = true;
 
+                                        //-----------------------------------------------------------------
                                         //
                                         ListInt_TemporaryOfCubeG1 = new List<int>(ListInt_PriorityOfCubeG);
                                         for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
@@ -3379,6 +3380,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListListInt_Bool[x].Add(Bool);
                                         //ListInt_CountOfOverlapedに追加
                                         ListListInt_CountOfOverlaped[x].Add(CountOfOverlaped);
+                                        //-----------------------------------------------------------------
                                     }
                                     //ListInt_PosXDifferenceMaxにListInt_PosXDifferenceの最大値を追加
                                     if (true)
@@ -3474,13 +3476,45 @@ public class AIVsAI_Control : MonoBehaviour
                                         if (ListInt_PosXDifferenceMax.Max() == 10)
                                         {
                                             Debug.Log("F");
+                                            //int IntMax = ListInt_CountOfOverlapedMax.Max();
+                                            //int Int1 = ListInt_CountOfOverlapedMax.IndexOf(IntMax);
+                                            ////
+                                            //CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
+                                            //RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
+                                            ////
+                                            //BestPosXOfFirstCandidate = ListInt_BestFFFFF[Int1] + 3 - CorrectionValue;
+
                                             int IntMax = ListInt_CountOfOverlapedMax.Max();
-                                            int Int1 = ListInt_CountOfOverlapedMax.IndexOf(IntMax);
+                                            List<int> ListInt1 = new List<int> { };
+                                            for (int x = 0; x < 4; x++)
+                                            {
+                                                if (ListInt_CountOfOverlapedMax[x] == IntMax)
+                                                {
+                                                    int Int1 = ListListInt_CountOfOverlaped[x].IndexOf(IntMax);
+
+                                                    ListInt1.Add(ListListInt_CountOfAdjacent[x][Int1]);
+                                                }
+                                                else
+                                                {
+                                                    ListInt1.Add(-1);
+                                                }
+                                            }
+                                            int Int2 = ListInt1.Max();
+                                            int Int3 = ListInt1.IndexOf(Int2);
+                                            //Debug.Log(ListInt1[0] + " : " + ListInt1[1] + " : " + ListInt1[2] + " : " + ListInt1[3]);
                                             //
-                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
-                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
+                                            CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
+                                            RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int3) - 1;
                                             //
-                                            BestPosXOfFirstCandidate = ListInt_BestFFFFF[Int1] + 3 - CorrectionValue;
+                                            BestPosXOfFirstCandidate = ListInt_BestFFFFF[Int3] + 3 - CorrectionValue;
+
+
+
+
+
+
+
+
                                         }
                                         else
                                         {
@@ -5917,7 +5951,7 @@ public class AIVsAI_Control : MonoBehaviour
                 }
             }
 
-            Invoke("ContinuousRightRoll_CurrentBlock", 0.075f);
+            Invoke("ContinuousRightRoll_CurrentBlock", 0.05f);
         }
 
         Invoke("Painting_CubeS", 0);
@@ -6110,7 +6144,7 @@ public class AIVsAI_Control : MonoBehaviour
     {
         //Debug.Log((CoordinateOfCurrentBlock % 14 + 1) + " < " + PosXOfCurrentBlock);
 
-        Invoke("ContinuousRightMovement_CurrentBlock", 0.075f);
+        Invoke("ContinuousRightMovement_CurrentBlock", 0.05f);
 
         if (CoordinateOfCurrentBlock % 14 + 1 < PosXOfCurrentBlock)
         {
@@ -6175,7 +6209,7 @@ public class AIVsAI_Control : MonoBehaviour
     {
         //Debug.Log((CoordinateOfCurrentBlock % 14 + 1) + " > " + PosXOfCurrentBlock);
 
-        Invoke("ContinuousLeftMovement_CurrentBlock", 0.075f);
+        Invoke("ContinuousLeftMovement_CurrentBlock", 0.05f);
 
         if (CoordinateOfCurrentBlock % 14 + 1 > PosXOfCurrentBlock)
         {
@@ -6907,7 +6941,7 @@ public class AIVsAI_Control : MonoBehaviour
     //CurrentBlockの右回転(F)
     void ContinuousRightRoll_CurrentBlock()
     {
-        Invoke("ContinuousRightRoll_CurrentBlock", 0.075f);
+        Invoke("ContinuousRightRoll_CurrentBlock", 0.05f);
 
         if (RotationOfCurrentBlock > 0)
         {
@@ -6925,7 +6959,7 @@ public class AIVsAI_Control : MonoBehaviour
                 //T
 
                 //CurrentBlockを設置する
-                Invoke("IntermittentDownMovement_CurrentBlock", 0.075f);
+                Invoke("IntermittentDownMovement_CurrentBlock", 0.05f);
             }
             else
             {
@@ -6937,14 +6971,14 @@ public class AIVsAI_Control : MonoBehaviour
                     //T
 
                     //CurrentBlockのX座標を最善のX座標にする(右から左へ)
-                    Invoke("ContinuousLeftMovement_CurrentBlock", 0.075f);
+                    Invoke("ContinuousLeftMovement_CurrentBlock", 0.05f);
                 }
                 else
                 {
                     //F
 
                     //CurrentBlockのX座標を最善のX座標にする(左から右へ)
-                    Invoke("ContinuousRightMovement_CurrentBlock", 0.075f);
+                    Invoke("ContinuousRightMovement_CurrentBlock", 0.05f);
                 }
             }
         }
