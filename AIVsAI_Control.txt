@@ -3348,7 +3348,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    Bool = 1;
+                                                    Bool = 0;
                                                 }
                                             }
                                         }
@@ -5817,7 +5817,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    Bool = 0;
+                                                    Bool = 1;
                                                 }
                                             }
                                         }
