@@ -1707,153 +1707,153 @@ public class AIVsAI_Control : MonoBehaviour
         //}
         //else
         //{
-            //
-            ListInt_TemporaryOfCubeG1 = new List<int>(ListInt_ColorOfCubeG);
-            //
-            for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
+        //
+        ListInt_TemporaryOfCubeG1 = new List<int>(ListInt_ColorOfCubeG);
+        //
+        for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
+        {
+            if (x % 14 + 1 == 3 | x % 14 + 1 == 12)
             {
-                if (x % 14 + 1 == 3 | x % 14 + 1 == 12)
+                switch (ListInt_TemporaryOfCubeG1[x])
                 {
-                    switch (ListInt_TemporaryOfCubeG1[x])
-                    {
-                        case 1:
-                            ListInt_TemporaryOfCubeG1[x] = 4;
-                            break;
-                        case 2:
-                            ListInt_TemporaryOfCubeG1[x] = 5;
-                            break;
-                        case 3:
-                            ListInt_TemporaryOfCubeG1[x] = 6;
-                            break;
-                    }
+                    case 1:
+                        ListInt_TemporaryOfCubeG1[x] = 4;
+                        break;
+                    case 2:
+                        ListInt_TemporaryOfCubeG1[x] = 5;
+                        break;
+                    case 3:
+                        ListInt_TemporaryOfCubeG1[x] = 6;
+                        break;
                 }
             }
-            //
-            while (IsChanging == true)
-            {
-                IsChanging = false;
-                for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
-                {
-                    switch (ListInt_TemporaryOfCubeG1[x])
-                    {
-                        case 4:
-                            if (ListInt_TemporaryOfCubeG1[x + 14] == 1)
-                            {
-                                ListInt_TemporaryOfCubeG1[x + 14] = 4;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x - 14] == 1)
-                            {
-                                ListInt_TemporaryOfCubeG1[x - 14] = 4;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 1)
-                            {
-                                ListInt_TemporaryOfCubeG1[x + 1] = 4;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 1)
-                            {
-                                ListInt_TemporaryOfCubeG1[x - 1] = 4;
-                                IsChanging = true;
-                            }
-                            break;
-                        case 5:
-                            if (ListInt_TemporaryOfCubeG1[x + 14] == 2)
-                            {
-                                ListInt_TemporaryOfCubeG1[x + 14] = 5;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x - 14] == 2)
-                            {
-                                ListInt_TemporaryOfCubeG1[x - 14] = 5;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 2)
-                            {
-                                ListInt_TemporaryOfCubeG1[x + 1] = 5;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 2)
-                            {
-                                ListInt_TemporaryOfCubeG1[x - 1] = 5;
-                                IsChanging = true;
-                            }
-                            break;
-                        case 6:
-                            if (ListInt_TemporaryOfCubeG1[x + 14] == 3)
-                            {
-                                ListInt_TemporaryOfCubeG1[x + 14] = 6;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x - 14] == 3)
-                            {
-                                ListInt_TemporaryOfCubeG1[x - 14] = 6;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 3)
-                            {
-                                ListInt_TemporaryOfCubeG1[x + 1] = 6;
-                                IsChanging = true;
-                            }
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 3)
-                            {
-                                ListInt_TemporaryOfCubeG1[x - 1] = 6;
-                                IsChanging = true;
-                            }
-                            break;
-                    }
-                }
-            }
-            //
+        }
+        //
+        while (IsChanging == true)
+        {
+            IsChanging = false;
             for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
             {
                 switch (ListInt_TemporaryOfCubeG1[x])
                 {
                     case 4:
-                        if (ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x + 14] == 1)
                         {
-                            CountOfR += 1;
+                            ListInt_TemporaryOfCubeG1[x + 14] = 4;
+                            IsChanging = true;
                         }
-                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x - 14] == 1)
                         {
-                            CountOfR += 1;
+                            ListInt_TemporaryOfCubeG1[x - 14] = 4;
+                            IsChanging = true;
                         }
-                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x + 1] == 1)
                         {
-                            CountOfR += 1;
+                            ListInt_TemporaryOfCubeG1[x + 1] = 4;
+                            IsChanging = true;
+                        }
+                        if (ListInt_TemporaryOfCubeG1[x - 1] == 1)
+                        {
+                            ListInt_TemporaryOfCubeG1[x - 1] = 4;
+                            IsChanging = true;
                         }
                         break;
                     case 5:
-                        if (ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x + 14] == 2)
                         {
-                            CountOfG += 1;
+                            ListInt_TemporaryOfCubeG1[x + 14] = 5;
+                            IsChanging = true;
                         }
-                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x - 14] == 2)
                         {
-                            CountOfG += 1;
+                            ListInt_TemporaryOfCubeG1[x - 14] = 5;
+                            IsChanging = true;
                         }
-                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x + 1] == 2)
                         {
-                            CountOfG += 1;
+                            ListInt_TemporaryOfCubeG1[x + 1] = 5;
+                            IsChanging = true;
+                        }
+                        if (ListInt_TemporaryOfCubeG1[x - 1] == 2)
+                        {
+                            ListInt_TemporaryOfCubeG1[x - 1] = 5;
+                            IsChanging = true;
                         }
                         break;
                     case 6:
-                        if (ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x + 14] == 3)
                         {
-                            CountOfB += 1;
+                            ListInt_TemporaryOfCubeG1[x + 14] = 6;
+                            IsChanging = true;
                         }
-                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x - 14] == 3)
                         {
-                            CountOfB += 1;
+                            ListInt_TemporaryOfCubeG1[x - 14] = 6;
+                            IsChanging = true;
                         }
-                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                        if (ListInt_TemporaryOfCubeG1[x + 1] == 3)
                         {
-                            CountOfB += 1;
+                            ListInt_TemporaryOfCubeG1[x + 1] = 6;
+                            IsChanging = true;
+                        }
+                        if (ListInt_TemporaryOfCubeG1[x - 1] == 3)
+                        {
+                            ListInt_TemporaryOfCubeG1[x - 1] = 6;
+                            IsChanging = true;
                         }
                         break;
                 }
             }
+        }
+        //
+        for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
+        {
+            switch (ListInt_TemporaryOfCubeG1[x])
+            {
+                case 4:
+                    if (ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                    {
+                        CountOfR += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
+                    {
+                        CountOfR += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                    {
+                        CountOfR += 1;
+                    }
+                    break;
+                case 5:
+                    if (ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                    {
+                        CountOfG += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
+                    {
+                        CountOfG += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                    {
+                        CountOfG += 1;
+                    }
+                    break;
+                case 6:
+                    if (ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                    {
+                        CountOfB += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x + 1] == 0)
+                    {
+                        CountOfB += 1;
+                    }
+                    if (ListInt_TemporaryOfCubeG1[x - 1] == 0)
+                    {
+                        CountOfB += 1;
+                    }
+                    break;
+            }
+        }
         //}
         //
         if (CountOfR == 0 & CountOfG == 0 & CountOfB == 0)
@@ -2067,8 +2067,8 @@ public class AIVsAI_Control : MonoBehaviour
         {
             //AudioSource_AudioSource15.Play();
 
-            //Score_VsAI -= 3000;
-            //PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
+            Score_VsAI -= 3000;
+            PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
         }
 
         //CurrentBlockをホールドするか
@@ -10473,11 +10473,11 @@ public class AIVsAI_Control : MonoBehaviour
         int a = 0;
         while (a <= 28)
         {
-            if (ListInt_ColorOfCubeG[30 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[44 + (14 * a)] == 0  & ListInt_ColorOfCubeG[31 + (14 * a)] != ColorOfFirstCandidate)
+            if (ListInt_ColorOfCubeG[30 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != ColorOfFirstCandidate)
             {
                 ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
             }
-            if (ListInt_ColorOfCubeG[39 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[53 + (14 * a)] == 0  & ListInt_ColorOfCubeG[38 + (14 * a)] != ColorOfFirstCandidate)
+            if (ListInt_ColorOfCubeG[39 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != ColorOfFirstCandidate)
             {
                 ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
             }
