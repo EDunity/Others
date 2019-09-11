@@ -5063,7 +5063,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                             {
-                                                if (xxx % 14 + 1 == BestCoordinateOfFirstCandidate % 14 + 1)
+                                                if (xxx % 14 + 1 == BestCoordinateOfSecondCandidate % 14 + 1)
                                                 {
                                                     CountOfOverlaped += 1;
                                                 }
@@ -6528,7 +6528,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                             {
-                                                if (xxx % 14 + 1 == BestCoordinateOfFirstCandidate % 14 + 1)
+                                                if (xxx % 14 + 1 == BestCoordinateOfThirdCandidate % 14 + 1)
                                                 {
                                                     CountOfOverlaped += 1;
                                                 }
