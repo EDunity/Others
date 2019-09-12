@@ -2069,8 +2069,8 @@ public class AIVsAI_Control : MonoBehaviour
         {
             //AudioSource_AudioSource15.Play();
 
-            //Score_VsAI -= 3000;
-            //PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
+            Score_VsAI -= 3000;
+            PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
         }
 
         //CurrentBlockをホールドするか
