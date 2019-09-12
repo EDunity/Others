@@ -5605,7 +5605,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                 CorrectionValue = ListInt_CorrectionValueCandidate[Int1];
                                                 RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int1) - 1;
                                                 //
-                                                BestPosXOfSecondCandidate = 12 - (ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max() - 1) + CorrectionValue;
+                                                BestPosXOfSecondCandidate = 12 - (ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max() - 1) + (ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max() - (ListListInt_SideLengthOfBlock[CurrentBlock - 1][Int1] + CorrectionValue));
                                             }
                                             else
                                             {
@@ -7074,7 +7074,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                 CorrectionValue = ListInt_CorrectionValueCandidate[Int2];
                                                 RotationOfCurrentBlock = (((DirectionOfCurrentBlock - 4) * -1) + 2) + (Int2) - 1;
                                                 //
-                                                BestPosXOfThirdCandidate = 12 - (ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max() - 1) + CorrectionValue;
+                                                BestPosXOfThirdCandidate = 12 - (ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max() - 1) + (ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max() - (ListListInt_SideLengthOfBlock[CurrentBlock - 1][Int1] + CorrectionValue));
                                             }
                                         }
                                         else
