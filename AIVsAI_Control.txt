@@ -1986,11 +1986,11 @@ public class AIVsAI_Control : MonoBehaviour
         Debug.Log("CurrentBlockの形は" + CurrentBlock + "です");
 
         //プレイヤーに攻撃
-        if (Score_VsAI >= 3000 & Score_VsAI <= 15000)
+        if (Score_VsAI >= 5000 & Score_VsAI <= 15000)
         {
             //AudioSource_AudioSource15.Play();
 
-            Score_VsAI -= 3000;
+            Score_VsAI -= 5000;
             PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
         }
 
