@@ -1990,8 +1990,8 @@ public class AIVsAI_Control : MonoBehaviour
         {
             //AudioSource_AudioSource15.Play();
 
-            Score_VsAI -= 3000;
-            PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
+            //Score_VsAI -= 3000;
+            //PlayerVsAI_Control.TotalNumberOfGotAttack_O += 3;
         }
 
         //CurrentBlockをホールドするか
@@ -4120,16 +4120,16 @@ public class AIVsAI_Control : MonoBehaviour
                                                 {
                                                     if (ListListInt_CountOfOverlaped[x][xx] == IntMax)
                                                     {
-                                                        int Int1 = ListListInt_CountOfAdjacent[x][xx];
+                                                        int Int1 = ListListInt_PosYOf3Min[x][xx];
 
                                                         ListInt3.Add(Int1);
                                                     }
                                                     else
                                                     {
-                                                        ListInt3.Add(-1);
+                                                        ListInt3.Add(1000);
                                                     }
                                                 }
-                                                int Int2 = ListInt3.Max();
+                                                int Int2 = ListInt3.Min();
                                                 ListInt1.Add(Int2);
                                                 int Int3 = 0;
                                                 if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
@@ -4142,7 +4142,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                 }
                                                 ListInt2.Add(Int3);
                                             }
-                                            int Int4 = ListInt1.Max();
+                                            int Int4 = ListInt1.Min();
                                             int Int5 = 0;
                                             if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
                                             {
@@ -4220,16 +4220,16 @@ public class AIVsAI_Control : MonoBehaviour
                                                     {
                                                         if (ListListInt_CountOfOverlaped[x][xx] == IntMax)
                                                         {
-                                                            int Int1 = ListListInt_CountOfAdjacent[x][xx];
+                                                            int Int1 = ListListInt_PosYOf3Min[x][xx];
 
                                                             ListInt3.Add(Int1);
                                                         }
                                                         else
                                                         {
-                                                            ListInt3.Add(-1);
+                                                            ListInt3.Add(1000);
                                                         }
                                                     }
-                                                    int Int2 = ListInt3.Max();
+                                                    int Int2 = ListInt3.Min();
                                                     ListInt1.Add(Int2);
                                                     int Int3 = 0;
                                                     if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
@@ -4242,7 +4242,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                     }
                                                     ListInt2.Add(Int3);
                                                 }
-                                                int Int4 = ListInt1.Max();
+                                                int Int4 = ListInt1.Min();
                                                 int Int5 = 0;
                                                 if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
                                                 {
@@ -5015,14 +5015,6 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                             {
-                                                ListInt_PosYOf3.Add(Mathf.FloorToInt(xxx / 14) + 1);
-                                            }
-                                        }
-                                        //
-                                        for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
-                                        {
-                                            if (ListInt_TemporaryOfCubeG1[xxx] == 3)
-                                            {
                                                 if (xxx % 14 + 1 == BestCoordinateOfSecondCandidate % 14 + 1)
                                                 {
                                                     CountOfOverlaped += 1;
@@ -5298,6 +5290,14 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                         //
+                                        for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
+                                        {
+                                            if (ListInt_TemporaryOfCubeG1[xxx] == 3)
+                                            {
+                                                ListInt_PosYOf3.Add(Mathf.FloorToInt(xxx / 14) + 1);
+                                            }
+                                        }
+                                        //
                                         for (int xxx = 0; xxx < ListInt_PriorityOfCubeG.Count; xxx++)
                                         {
                                             if (ListInt_PriorityOfCubeG[xxx] == 2)
@@ -5535,7 +5535,8 @@ public class AIVsAI_Control : MonoBehaviour
                             //RotationOfCurrentBlockとBestPosXOfSecondCandidateを決定
                             if (true)
                             {
-                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 & ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max()))
+                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 //& ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max())
+                                    )
                                 {
                                     Debug.Log("D_1");
                                     int IntMax = ListInt_PosXOfLengthMaxMax.Max();
@@ -5696,17 +5697,17 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_PosXDifferenceMax.Max() == 10)
                                             {
-                                                Debug.Log("B_2");
-                                                int IntMax = ListInt_CountOfAdjacentMax.Max();
+                                                Debug.Log("F_1");
+                                                int IntMax = ListInt_CountOfOverlapedMax.Max();
                                                 List<int> ListInt1 = new List<int> { };
                                                 List<int> ListInt2 = new List<int> { };
                                                 for (int x = 0; x < 4; x++)
                                                 {
                                                     List<int> ListInt3 = new List<int> { };
 
-                                                    for (int xx = 0; xx < ListListInt_CountOfAdjacent[x].Count; xx++)
+                                                    for (int xx = 0; xx < ListListInt_CountOfOverlaped[x].Count; xx++)
                                                     {
-                                                        if (ListListInt_CountOfAdjacent[x][xx] == IntMax)
+                                                        if (ListListInt_CountOfOverlaped[x][xx] == IntMax)
                                                         {
                                                             int Int1 = ListListInt_PosYOf3Min[x][xx];
 
@@ -5796,29 +5797,28 @@ public class AIVsAI_Control : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    //UnityEditor.EditorApplication.isPaused = true;
-                                                    Debug.Log("C_T");
-                                                    int IntMin = ListInt_PosYOf3MinMin.Min();
+                                                    Debug.Log("F_2");
+                                                    int IntMax = ListInt_CountOfOverlapedMax.Max();
                                                     List<int> ListInt1 = new List<int> { };
                                                     List<int> ListInt2 = new List<int> { };
                                                     for (int x = 0; x < 4; x++)
                                                     {
                                                         List<int> ListInt3 = new List<int> { };
 
-                                                        for (int xx = 0; xx < ListListInt_PosYOf3Min[x].Count; xx++)
+                                                        for (int xx = 0; xx < ListListInt_CountOfOverlaped[x].Count; xx++)
                                                         {
-                                                            if (ListListInt_PosYOf3Min[x][xx] == IntMin)
+                                                            if (ListListInt_CountOfOverlaped[x][xx] == IntMax)
                                                             {
-                                                                int Int1 = ListListInt_CountOfAdjacent[x][xx];
+                                                                int Int1 = ListListInt_PosYOf3Min[x][xx];
 
                                                                 ListInt3.Add(Int1);
                                                             }
                                                             else
                                                             {
-                                                                ListInt3.Add(-1);
+                                                                ListInt3.Add(1000);
                                                             }
                                                         }
-                                                        int Int2 = ListInt3.Max();
+                                                        int Int2 = ListInt3.Min();
                                                         ListInt1.Add(Int2);
                                                         int Int3 = 0;
                                                         if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
@@ -5831,7 +5831,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                         }
                                                         ListInt2.Add(Int3);
                                                     }
-                                                    int Int4 = ListInt1.Max();
+                                                    int Int4 = ListInt1.Min();
                                                     int Int5 = 0;
                                                     if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
                                                     {
@@ -6605,14 +6605,6 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                             {
-                                                ListInt_PosYOf3.Add(Mathf.FloorToInt(xxx / 14) + 1);
-                                            }
-                                        }
-                                        //
-                                        for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
-                                        {
-                                            if (ListInt_TemporaryOfCubeG1[xxx] == 3)
-                                            {
                                                 if (xxx % 14 + 1 == BestCoordinateOfThirdCandidate % 14 + 1)
                                                 {
                                                     CountOfOverlaped += 1;
@@ -6888,6 +6880,14 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                         //
+                                        for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
+                                        {
+                                            if (ListInt_TemporaryOfCubeG1[xxx] == 3)
+                                            {
+                                                ListInt_PosYOf3.Add(Mathf.FloorToInt(xxx / 14) + 1);
+                                            }
+                                        }
+                                        //
                                         for (int xxx = 0; xxx < ListInt_PriorityOfCubeG.Count; xxx++)
                                         {
                                             if (ListInt_PriorityOfCubeG[xxx] == 2)
@@ -7133,7 +7133,8 @@ public class AIVsAI_Control : MonoBehaviour
                             //RotationOfCurrentBlockとBestPosXOfThirdCandidateを決定
                             if (true)
                             {
-                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 & ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max()))
+                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 //& ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max())
+                                    )
                                 {
                                     Debug.Log("D_1");
                                     int IntMax = ListInt_PosXOfLengthMaxMax.Max();
@@ -7294,17 +7295,17 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_PosXDifferenceMax.Max() == 10)
                                             {
-                                                Debug.Log("B_2");
-                                                int IntMax = ListInt_CountOfAdjacentMax.Max();
+                                                Debug.Log("F_1");
+                                                int IntMax = ListInt_CountOfOverlapedMax.Max();
                                                 List<int> ListInt1 = new List<int> { };
                                                 List<int> ListInt2 = new List<int> { };
                                                 for (int x = 0; x < 4; x++)
                                                 {
                                                     List<int> ListInt3 = new List<int> { };
 
-                                                    for (int xx = 0; xx < ListListInt_CountOfAdjacent[x].Count; xx++)
+                                                    for (int xx = 0; xx < ListListInt_CountOfOverlaped[x].Count; xx++)
                                                     {
-                                                        if (ListListInt_CountOfAdjacent[x][xx] == IntMax)
+                                                        if (ListListInt_CountOfOverlaped[x][xx] == IntMax)
                                                         {
                                                             int Int1 = ListListInt_PosYOf3Min[x][xx];
 
@@ -7394,29 +7395,28 @@ public class AIVsAI_Control : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    //UnityEditor.EditorApplication.isPaused = true;
-                                                    Debug.Log("C_T");
-                                                    int IntMin = ListInt_PosYOf3MinMin.Min();
+                                                    Debug.Log("F_2");
+                                                    int IntMax = ListInt_CountOfOverlapedMax.Max();
                                                     List<int> ListInt1 = new List<int> { };
                                                     List<int> ListInt2 = new List<int> { };
                                                     for (int x = 0; x < 4; x++)
                                                     {
                                                         List<int> ListInt3 = new List<int> { };
 
-                                                        for (int xx = 0; xx < ListListInt_PosYOf3Min[x].Count; xx++)
+                                                        for (int xx = 0; xx < ListListInt_CountOfOverlaped[x].Count; xx++)
                                                         {
-                                                            if (ListListInt_PosYOf3Min[x][xx] == IntMin)
+                                                            if (ListListInt_CountOfOverlaped[x][xx] == IntMax)
                                                             {
-                                                                int Int1 = ListListInt_CountOfAdjacent[x][xx];
+                                                                int Int1 = ListListInt_PosYOf3Min[x][xx];
 
                                                                 ListInt3.Add(Int1);
                                                             }
                                                             else
                                                             {
-                                                                ListInt3.Add(-1);
+                                                                ListInt3.Add(1000);
                                                             }
                                                         }
-                                                        int Int2 = ListInt3.Max();
+                                                        int Int2 = ListInt3.Min();
                                                         ListInt1.Add(Int2);
                                                         int Int3 = 0;
                                                         if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
@@ -7429,7 +7429,7 @@ public class AIVsAI_Control : MonoBehaviour
                                                         }
                                                         ListInt2.Add(Int3);
                                                     }
-                                                    int Int4 = ListInt1.Max();
+                                                    int Int4 = ListInt1.Min();
                                                     int Int5 = 0;
                                                     if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count)
                                                     {
