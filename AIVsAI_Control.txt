@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class AIVsAI_Control : MonoBehaviour
 {
-    private GameObject Mark_Cube_O;
+    private GameObject Mark_Cube;
 
+    private GameObject Cubes;
     private GameObject Cubes_CubeG;
     private GameObject Cubes_CubeH;
     private GameObject Cubes_CubeN1;
@@ -29,6 +30,7 @@ public class AIVsAI_Control : MonoBehaviour
 
     private PlayerVsAI_Control PlayerVsAI_Control;
 
+    private GameObject AudioSources;
     private AudioSource AudioSource_AudioSource1;
     private AudioSource AudioSource_AudioSource2;
     private AudioSource AudioSource_AudioSource3;
@@ -313,6 +315,8 @@ public class AIVsAI_Control : MonoBehaviour
 
     private float RateOfFreeFall;
 
+    #region カラー
+
     private Color Albedo_Default = new Color(1, 1, 1, 1);
     private Color Emission_Default = new Color(0, 0, 0, 0);
 
@@ -342,6 +346,8 @@ public class AIVsAI_Control : MonoBehaviour
 
     private Color Albedo_Yellow = new Color(1, 1, 0, 1);
     private Color Emission_Yellow = new Color(1, 1, 0, 10);
+
+    #endregion
 
     private string PlayersName;
     private List<int> ListInt_PlayersName = new List<int> { };
@@ -452,18 +458,19 @@ public class AIVsAI_Control : MonoBehaviour
     {
         //yield return null;
 
-        Mark_Cube_O = GameObject.Find("Mark_Cube_O").gameObject;
+        Mark_Cube = GameObject.Find("Mark_Cube_O").gameObject;
 
-        Cubes_CubeG = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeG").gameObject;
-        Cubes_CubeH = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeH").gameObject;
-        Cubes_CubeN1 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN1").gameObject;
-        Cubes_CubeN2 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN2").gameObject;
-        Cubes_CubeN3 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN3").gameObject;
-        Cubes_CubeN4 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN4").gameObject;
-        Cubes_CubeN5 = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeN5").gameObject;
-        Cubes_CubeS = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeS").gameObject;
-        Cubes_CubeP = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeP").gameObject;
-        Cubes_CubeD = GameObject.Find("Cubes").gameObject.transform.Find("Cubes_CubeD").gameObject;
+        Cubes = GameObject.Find("Cubes_O").gameObject;
+        Cubes_CubeG = Cubes.transform.Find("Cubes_CubeG_O").gameObject;
+        Cubes_CubeH = Cubes.transform.Find("Cubes_CubeH_O").gameObject;
+        Cubes_CubeN1 = Cubes.transform.Find("Cubes_CubeN1_O").gameObject;
+        Cubes_CubeN2 = Cubes.transform.Find("Cubes_CubeN2_O").gameObject;
+        Cubes_CubeN3 = Cubes.transform.Find("Cubes_CubeN3_O").gameObject;
+        Cubes_CubeN4 = Cubes.transform.Find("Cubes_CubeN4_O").gameObject;
+        Cubes_CubeN5 = Cubes.transform.Find("Cubes_CubeN5_O").gameObject;
+        Cubes_CubeS = Cubes.transform.Find("Cubes_CubeS_O").gameObject;
+        Cubes_CubeP = Cubes.transform.Find("Cubes_CubeP_O").gameObject;
+        Cubes_CubeD = Cubes.transform.Find("Cubes_CubeD_O").gameObject;
 
         CubeG = (GameObject)Resources.Load("Object/Cube/CubeG");
         CubeH = (GameObject)Resources.Load("Object/Cube/CubeH");
@@ -474,34 +481,35 @@ public class AIVsAI_Control : MonoBehaviour
 
         PlayerVsAI_Control = GameObject.Find("Player1").transform.GetComponent<PlayerVsAI_Control>();
 
-        AudioSource_AudioSource1 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource1").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource2 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource2").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource3 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource3").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource4 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource4").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource5 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource5").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource6 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource6").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource7 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource7").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource8 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource8").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource9 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource9").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource10 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource10").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource11 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource11").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource12 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource12").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource13 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource13").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource14 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource14").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource15 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource15").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource16 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource16").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource17 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource17").gameObject.transform.GetComponent<AudioSource>();
-        AudioSource_AudioSource18 = GameObject.Find("AudioSources").gameObject.transform.Find("AudioSource18").gameObject.transform.GetComponent<AudioSource>();
+        AudioSources = GameObject.Find("AudioSources").gameObject;
+        AudioSource_AudioSource1 = AudioSources.transform.Find("AudioSource1").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource2 = AudioSources.transform.Find("AudioSource2").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource3 = AudioSources.transform.Find("AudioSource3").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource4 = AudioSources.transform.Find("AudioSource4").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource5 = AudioSources.transform.Find("AudioSource5").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource6 = AudioSources.transform.Find("AudioSource6").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource7 = AudioSources.transform.Find("AudioSource7").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource8 = AudioSources.transform.Find("AudioSource8").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource9 = AudioSources.transform.Find("AudioSource9").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource10 = AudioSources.transform.Find("AudioSource10").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource11 = AudioSources.transform.Find("AudioSource11").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource12 = AudioSources.transform.Find("AudioSource12").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource13 = AudioSources.transform.Find("AudioSource13").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource14 = AudioSources.transform.Find("AudioSource14").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource15 = AudioSources.transform.Find("AudioSource15").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource16 = AudioSources.transform.Find("AudioSource16").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource17 = AudioSources.transform.Find("AudioSource17").gameObject.transform.GetComponent<AudioSource>();
+        AudioSource_AudioSource18 = AudioSources.transform.Find("AudioSource18").gameObject.transform.GetComponent<AudioSource>();
         Image_Image1 = GameObject.Find("Images").gameObject.transform.Find("Image1").gameObject.transform.GetComponent<Image>();
 
         //CubeGの召喚
         for (int z = 0; z < ListInt_ColorOfCubeG.Count; z++)
         {
-            if (z % 14 + 1 >= 3 & z % 14 + 1 <= 12 & Mathf.FloorToInt(z / 14) + 1 >= 3 & Mathf.FloorToInt(z / 14) + 1 <= 33)
+            if (z % 14 + 1 >= 3 && z % 14 + 1 <= 12 && Mathf.FloorToInt(z / 14) + 1 >= 3 && Mathf.FloorToInt(z / 14) + 1 <= 33)
             {
                 GameObject GameObject_CubeG = Instantiate(CubeG) as GameObject;
                 GameObject_CubeG.name = "CubeG" + z;
-                GameObject_CubeG.transform.position = Mark_Cube_O.transform.position + new Vector3(z % 14 + 1, Mathf.FloorToInt(z / 14) + 1, 0);
+                GameObject_CubeG.transform.position = Mark_Cube.transform.position + new Vector3(z % 14 + 1, Mathf.FloorToInt(z / 14) + 1, 0);
                 GameObject_CubeG.transform.position += new Vector3(-2, -2, 0);
                 GameObject_CubeG.transform.parent = Cubes_CubeG.transform;
                 ListGameObject_CubeG.Add(GameObject_CubeG);
@@ -516,7 +524,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH" + z;
 
-                GameObject_CubeH.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((z - 0) % 1 * 0.5f, Mathf.FloorToInt((z - 0) / 1) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(0, 0, 0);
@@ -526,12 +534,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeH.SetActive(false);
                 ListGameObject_CubeH.Add(GameObject_CubeH);
             }
-            if (z >= 1 & z <= 4)
+            if (z >= 1 && z <= 4)
             {
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH" + z;
 
-                GameObject_CubeH.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((z - 1) % 2 * 0.5f, Mathf.FloorToInt((z - 1) / 2) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -541,12 +549,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeH.SetActive(false);
                 ListGameObject_CubeH.Add(GameObject_CubeH);
             }
-            if (z >= 5 & z <= 13)
+            if (z >= 5 && z <= 13)
             {
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH" + z;
 
-                GameObject_CubeH.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((z - 5) % 3 * 0.5f, Mathf.FloorToInt((z - 5) / 3) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -561,7 +569,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeH = Instantiate(CubeH) as GameObject;
                 GameObject_CubeH.name = "CubeH" + z;
 
-                GameObject_CubeH.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
+                GameObject_CubeH.transform.position = Mark_Cube.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
                 GameObject_CubeH.transform.position += new Vector3(-3, 28, 0);
                 GameObject_CubeH.transform.position -= new Vector3((z - 14) % 4 * 0.5f, Mathf.FloorToInt((z - 14) / 4) * 0.5f, 0);
                 GameObject_CubeH.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -581,7 +589,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1" + z;
 
-                GameObject_CubeN1.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((z - 0) % 1 * 0.5f, Mathf.FloorToInt((z - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(0, 0, 0);
@@ -591,12 +599,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN1.SetActive(false);
                 ListGameObject_CubeN1.Add(GameObject_CubeN1);
             }
-            if (z >= 1 & z <= 4)
+            if (z >= 1 && z <= 4)
             {
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1" + z;
 
-                GameObject_CubeN1.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((z - 1) % 2 * 0.5f, Mathf.FloorToInt((z - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -606,12 +614,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN1.SetActive(false);
                 ListGameObject_CubeN1.Add(GameObject_CubeN1);
             }
-            if (z >= 5 & z <= 13)
+            if (z >= 5 && z <= 13)
             {
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1" + z;
 
-                GameObject_CubeN1.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((z - 5) % 3 * 0.5f, Mathf.FloorToInt((z - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -626,7 +634,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN1 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN1.name = "CubeN1" + z;
 
-                GameObject_CubeN1.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
+                GameObject_CubeN1.transform.position = Mark_Cube.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
                 GameObject_CubeN1.transform.position += new Vector3(12, 28, 0);
                 GameObject_CubeN1.transform.position -= new Vector3((z - 14) % 4 * 0.5f, Mathf.FloorToInt((z - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN1.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -645,7 +653,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2" + z;
 
-                GameObject_CubeN2.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((z - 0) % 1 * 0.5f, Mathf.FloorToInt((z - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(0, 0, 0);
@@ -655,12 +663,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN2.SetActive(false);
                 ListGameObject_CubeN2.Add(GameObject_CubeN2);
             }
-            if (z >= 1 & z <= 4)
+            if (z >= 1 && z <= 4)
             {
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2" + z;
 
-                GameObject_CubeN2.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((z - 1) % 2 * 0.5f, Mathf.FloorToInt((z - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -670,12 +678,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN2.SetActive(false);
                 ListGameObject_CubeN2.Add(GameObject_CubeN2);
             }
-            if (z >= 5 & z <= 13)
+            if (z >= 5 && z <= 13)
             {
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2" + z;
 
-                GameObject_CubeN2.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((z - 5) % 3 * 0.5f, Mathf.FloorToInt((z - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -690,7 +698,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN2 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN2.name = "CubeN2" + z;
 
-                GameObject_CubeN2.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
+                GameObject_CubeN2.transform.position = Mark_Cube.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
                 GameObject_CubeN2.transform.position += new Vector3(12, 24, 0);
                 GameObject_CubeN2.transform.position -= new Vector3((z - 14) % 4 * 0.5f, Mathf.FloorToInt((z - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN2.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -709,7 +717,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3" + z;
 
-                GameObject_CubeN3.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((z - 0) % 1 * 0.5f, Mathf.FloorToInt((z - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(0, 0, 0);
@@ -719,12 +727,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN3.SetActive(false);
                 ListGameObject_CubeN3.Add(GameObject_CubeN3);
             }
-            if (z >= 1 & z <= 4)
+            if (z >= 1 && z <= 4)
             {
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3" + z;
 
-                GameObject_CubeN3.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((z - 1) % 2 * 0.5f, Mathf.FloorToInt((z - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -734,12 +742,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN3.SetActive(false);
                 ListGameObject_CubeN3.Add(GameObject_CubeN3);
             }
-            if (z >= 5 & z <= 13)
+            if (z >= 5 && z <= 13)
             {
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3" + z;
 
-                GameObject_CubeN3.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((z - 5) % 3 * 0.5f, Mathf.FloorToInt((z - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -754,7 +762,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN3 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN3.name = "CubeN3" + z;
 
-                GameObject_CubeN3.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
+                GameObject_CubeN3.transform.position = Mark_Cube.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
                 GameObject_CubeN3.transform.position += new Vector3(12, 20, 0);
                 GameObject_CubeN3.transform.position -= new Vector3((z - 14) % 4 * 0.5f, Mathf.FloorToInt((z - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN3.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -773,7 +781,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4" + z;
 
-                GameObject_CubeN4.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((z - 0) % 1 * 0.5f, Mathf.FloorToInt((z - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(0, 0, 0);
@@ -783,12 +791,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN4.SetActive(false);
                 ListGameObject_CubeN4.Add(GameObject_CubeN4);
             }
-            if (z >= 1 & z <= 4)
+            if (z >= 1 && z <= 4)
             {
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4" + z;
 
-                GameObject_CubeN4.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((z - 1) % 2 * 0.5f, Mathf.FloorToInt((z - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -798,12 +806,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN4.SetActive(false);
                 ListGameObject_CubeN4.Add(GameObject_CubeN4);
             }
-            if (z >= 5 & z <= 13)
+            if (z >= 5 && z <= 13)
             {
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4" + z;
 
-                GameObject_CubeN4.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((z - 5) % 3 * 0.5f, Mathf.FloorToInt((z - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -818,7 +826,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN4 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN4.name = "CubeN4" + z;
 
-                GameObject_CubeN4.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
+                GameObject_CubeN4.transform.position = Mark_Cube.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
                 GameObject_CubeN4.transform.position += new Vector3(12, 16, 0);
                 GameObject_CubeN4.transform.position -= new Vector3((z - 14) % 4 * 0.5f, Mathf.FloorToInt((z - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN4.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -837,7 +845,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5" + z;
 
-                GameObject_CubeN5.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((z - 0) % 1 + 1, Mathf.FloorToInt((z - 0) / 1) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((z - 0) % 1 * 0.5f, Mathf.FloorToInt((z - 0) / 1) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(0, 0, 0);
@@ -847,12 +855,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN5.SetActive(false);
                 ListGameObject_CubeN5.Add(GameObject_CubeN5);
             }
-            if (z >= 1 & z <= 4)
+            if (z >= 1 && z <= 4)
             {
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5" + z;
 
-                GameObject_CubeN5.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((z - 1) % 2 + 1, Mathf.FloorToInt((z - 1) / 2) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((z - 1) % 2 * 0.5f, Mathf.FloorToInt((z - 1) / 2) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(-0.25f, -0.25f, 0);
@@ -862,12 +870,12 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject_CubeN5.SetActive(false);
                 ListGameObject_CubeN5.Add(GameObject_CubeN5);
             }
-            if (z >= 5 & z <= 13)
+            if (z >= 5 && z <= 13)
             {
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5" + z;
 
-                GameObject_CubeN5.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((z - 5) % 3 + 1, Mathf.FloorToInt((z - 5) / 3) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((z - 5) % 3 * 0.5f, Mathf.FloorToInt((z - 5) / 3) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(-0.5f, -0.5f, 0);
@@ -882,7 +890,7 @@ public class AIVsAI_Control : MonoBehaviour
                 GameObject GameObject_CubeN5 = Instantiate(CubeN) as GameObject;
                 GameObject_CubeN5.name = "CubeN5" + z;
 
-                GameObject_CubeN5.transform.position = Mark_Cube_O.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
+                GameObject_CubeN5.transform.position = Mark_Cube.transform.position + new Vector3((z - 14) % 4 + 1, Mathf.FloorToInt((z - 14) / 4) + 1, 0);
                 GameObject_CubeN5.transform.position += new Vector3(12, 12, 0);
                 GameObject_CubeN5.transform.position -= new Vector3((z - 14) % 4 * 0.5f, Mathf.FloorToInt((z - 14) / 4) * 0.5f, 0);
                 GameObject_CubeN5.transform.position += new Vector3(-0.75f, -0.75f, 0);
@@ -900,7 +908,7 @@ public class AIVsAI_Control : MonoBehaviour
             GameObject GameObject_CubeP = Instantiate(CubeP) as GameObject;
             GameObject_CubeP.name = "CubeP" + z;
 
-            GameObject_CubeP.transform.position = Mark_Cube_O.transform.position + new Vector3(z % 5 + 1, Mathf.FloorToInt(z / 5) + 1, 0);
+            GameObject_CubeP.transform.position = Mark_Cube.transform.position + new Vector3(z % 5 + 1, Mathf.FloorToInt(z / 5) + 1, 0);
             GameObject_CubeP.transform.position += new Vector3(-10, 32.25f, 0);
             GameObject_CubeP.transform.position -= new Vector3(z % 5 * 0.5f, Mathf.FloorToInt(z / 5) * 0.5f, 0);
             GameObject_CubeP.transform.position += new Vector3(Mathf.FloorToInt(z / 25) * 3, -Mathf.FloorToInt(z / 25) * 2.5f, 0);
@@ -917,7 +925,7 @@ public class AIVsAI_Control : MonoBehaviour
             GameObject GameObject_CubeS = Instantiate(CubeS) as GameObject;
             GameObject_CubeS.name = "CubeS" + z;
 
-            GameObject_CubeS.transform.position = Mark_Cube_O.transform.position + new Vector3(z % 5 + 1, Mathf.FloorToInt(z / 5) + 1, 0);
+            GameObject_CubeS.transform.position = Mark_Cube.transform.position + new Vector3(z % 5 + 1, Mathf.FloorToInt(z / 5) + 1, 0);
             GameObject_CubeS.transform.position += new Vector3(11, -6.25f, 0);
             GameObject_CubeS.transform.position -= new Vector3(z % 5 * 0.5f, Mathf.FloorToInt(z / 5) * 0.5f, 0);
             GameObject_CubeS.transform.position -= new Vector3(Mathf.FloorToInt(z / 25) * 2, Mathf.FloorToInt(z / 25) * 2.5f, 0);
@@ -931,11 +939,11 @@ public class AIVsAI_Control : MonoBehaviour
         //CubeDの召喚
         for (int z = 0; z < ListInt_ColorOfCubeG.Count; z++)
         {
-            if (z % 14 + 1 >= 3 & z % 14 + 1 <= 12 & Mathf.FloorToInt(z / 14) + 1 >= 3 & Mathf.FloorToInt(z / 14) + 1 <= 33)
+            if (z % 14 + 1 >= 3 && z % 14 + 1 <= 12 && Mathf.FloorToInt(z / 14) + 1 >= 3 && Mathf.FloorToInt(z / 14) + 1 <= 33)
             {
                 GameObject GameObject_CubeD = Instantiate(CubeD) as GameObject;
                 GameObject_CubeD.name = "CubeD" + z;
-                GameObject_CubeD.transform.position = Mark_Cube_O.transform.position + new Vector3(z % 14 + 1, Mathf.FloorToInt(z / 14) + 1, 0);
+                GameObject_CubeD.transform.position = Mark_Cube.transform.position + new Vector3(z % 14 + 1, Mathf.FloorToInt(z / 14) + 1, 0);
                 GameObject_CubeD.transform.position += new Vector3(-2, -2, 0);
                 GameObject_CubeD.transform.parent = Cubes_CubeD.transform;
                 ListGameObject_CubeD.Add(GameObject_CubeD);
@@ -1240,15 +1248,15 @@ public class AIVsAI_Control : MonoBehaviour
     //VsAIのリセット
     void Resetting_VsAI()
     {
-        if (ListInt_TypeOfCubeG[380] == 0 &
-            ListInt_TypeOfCubeG[381] == 0 &
-            ListInt_TypeOfCubeG[382] == 0 &
-            ListInt_TypeOfCubeG[383] == 0 &
-            ListInt_TypeOfCubeG[384] == 0 &
-            ListInt_TypeOfCubeG[385] == 0 &
-            ListInt_TypeOfCubeG[386] == 0 &
-            ListInt_TypeOfCubeG[387] == 0 &
-            ListInt_TypeOfCubeG[388] == 0 &
+        if (ListInt_TypeOfCubeG[380] == 0 &&
+            ListInt_TypeOfCubeG[381] == 0 &&
+            ListInt_TypeOfCubeG[382] == 0 &&
+            ListInt_TypeOfCubeG[383] == 0 &&
+            ListInt_TypeOfCubeG[384] == 0 &&
+            ListInt_TypeOfCubeG[385] == 0 &&
+            ListInt_TypeOfCubeG[386] == 0 &&
+            ListInt_TypeOfCubeG[387] == 0 &&
+            ListInt_TypeOfCubeG[388] == 0 &&
             ListInt_TypeOfCubeG[389] == 0)
         {
             if (TotalNumberOfGotAttack_O - TotalNumberOfGotAttack == 0)
@@ -1636,7 +1644,7 @@ public class AIVsAI_Control : MonoBehaviour
         //
         for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
         {
-            if (x % 14 + 1 == 3 | x % 14 + 1 == 12)
+            if (x % 14 + 1 == 3 || x % 14 + 1 == 12)
             {
                 switch (ListInt_TemporaryOfCubeG1[x])
                 {
@@ -1779,7 +1787,7 @@ public class AIVsAI_Control : MonoBehaviour
             }
         }
         //
-        if (CountOfR == 0 & CountOfG == 0 & CountOfB == 0)
+        if (CountOfR == 0 && CountOfG == 0 && CountOfB == 0)
         {
             switch (ColorOfCurrentBlock)
             {
@@ -1955,9 +1963,6 @@ public class AIVsAI_Control : MonoBehaviour
     }
 
 
-
-
-
     //脳
     void Brain()
     {
@@ -1986,7 +1991,7 @@ public class AIVsAI_Control : MonoBehaviour
         Debug.Log("CurrentBlockの形は" + CurrentBlock + "です");
 
         //プレイヤーに攻撃
-        if (Score_VsAI >= 5000 & Score_VsAI <= 15000)
+        if (Score_VsAI >= 5000 && Score_VsAI <= 15000)
         {
             //AudioSource_AudioSource15.Play();
 
@@ -1995,9 +2000,9 @@ public class AIVsAI_Control : MonoBehaviour
         }
 
         //CurrentBlockをホールドするか
-        if (ColorOfCurrentBlock != ColorOfFirstCandidate & ListInt_DataOfHoldBlock.Count == 0 |
-            ColorOfCurrentBlock != ColorOfFirstCandidate & ColorOfHoldBlock == ColorOfFirstCandidate |
-            ColorOfCurrentBlock == ColorOfThirdCandidate & ColorOfHoldBlock == ColorOfSecondCandidate)
+        if (ColorOfCurrentBlock != ColorOfFirstCandidate && ListInt_DataOfHoldBlock.Count == 0 ||
+            ColorOfCurrentBlock != ColorOfFirstCandidate && ColorOfHoldBlock == ColorOfFirstCandidate ||
+            ColorOfCurrentBlock == ColorOfThirdCandidate && ColorOfHoldBlock == ColorOfSecondCandidate)
         {
             Debug.Log("CurrentBlockをホールドします");
 
@@ -2179,9 +2184,9 @@ public class AIVsAI_Control : MonoBehaviour
                     //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                     for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                     {
-                        if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 2)
                                 {
@@ -2189,9 +2194,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 }
                             }
                         }
-                        if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 3)
                                 {
@@ -2203,7 +2208,7 @@ public class AIVsAI_Control : MonoBehaviour
                     //Debug.Log("ListInt_PosXOfTipOf2.Count : " + ListInt_PosXOfTipOf2.Count);
                     //Debug.Log("ListInt_PosXOfTipOf3.Count : " + ListInt_PosXOfTipOf3.Count);
                     //
-                    if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count | ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count & ListInt_PosXOfTipOf2.Count != 0 & ListInt_PosXOfTipOf3.Count != 0)
+                    if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count || ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count && ListInt_PosXOfTipOf2.Count != 0 && ListInt_PosXOfTipOf3.Count != 0)
                     {
                         //Debug.Log("左から計算");
 
@@ -2270,7 +2275,7 @@ public class AIVsAI_Control : MonoBehaviour
                         }
                     }
                     //
-                    if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                    if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                     {
                         //
                         FromSide = "Left";
@@ -2445,9 +2450,9 @@ public class AIVsAI_Control : MonoBehaviour
                     //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                     for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                     {
-                        if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 2)
                                 {
@@ -2455,9 +2460,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 }
                             }
                         }
-                        if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 3)
                                 {
@@ -2536,7 +2541,7 @@ public class AIVsAI_Control : MonoBehaviour
                         }
                     }
                     //
-                    if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                    if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                     {
 
                     }
@@ -2649,7 +2654,7 @@ public class AIVsAI_Control : MonoBehaviour
                         {
                             if (x >= 44)
                             {
-                                if (ListInt_TemporaryOfCubeG1[x] == 1 | ListInt_TemporaryOfCubeG1[x] == -1)
+                                if (ListInt_TemporaryOfCubeG1[x] == 1 || ListInt_TemporaryOfCubeG1[x] == -1)
                                 {
                                     if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
                                     {
@@ -2734,9 +2739,9 @@ public class AIVsAI_Control : MonoBehaviour
                     //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                     for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                     {
-                        if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 2)
                                 {
@@ -2744,9 +2749,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 }
                             }
                         }
-                        if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 3)
                                 {
@@ -2758,7 +2763,7 @@ public class AIVsAI_Control : MonoBehaviour
                     //Debug.Log("ListInt_PosXOfTipOf2.Count : " + ListInt_PosXOfTipOf2.Count);
                     //Debug.Log("ListInt_PosXOfTipOf3.Count : " + ListInt_PosXOfTipOf3.Count);
                     //
-                    if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count | ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count & ListInt_PosXOfTipOf2.Count != 0 & ListInt_PosXOfTipOf3.Count != 0)
+                    if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count || ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count && ListInt_PosXOfTipOf2.Count != 0 && ListInt_PosXOfTipOf3.Count != 0)
                     {
                         //Debug.Log("左から計算");
 
@@ -2821,7 +2826,7 @@ public class AIVsAI_Control : MonoBehaviour
                         }
                     }
                     //
-                    if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                    if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                     {
 
                     }
@@ -2933,7 +2938,7 @@ public class AIVsAI_Control : MonoBehaviour
                         {
                             if (x >= 44)
                             {
-                                if (ListInt_TemporaryOfCubeG1[x] == 1 | ListInt_TemporaryOfCubeG1[x] == -1)
+                                if (ListInt_TemporaryOfCubeG1[x] == 1 || ListInt_TemporaryOfCubeG1[x] == -1)
                                 {
                                     if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
                                     {
@@ -3018,9 +3023,9 @@ public class AIVsAI_Control : MonoBehaviour
                     //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                     for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                     {
-                        if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 2)
                                 {
@@ -3028,9 +3033,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 }
                             }
                         }
-                        if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                        if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                         {
-                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                            if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                             {
                                 if (ListInt_TemporaryOfCubeG1[x] == 3)
                                 {
@@ -3105,7 +3110,7 @@ public class AIVsAI_Control : MonoBehaviour
                         }
                     }
                     //
-                    if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                    if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                     {
 
                     }
@@ -3317,9 +3322,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                                 for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                                 {
-                                    if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                                    if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                                     {
-                                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                                         {
                                             if (ListInt_TemporaryOfCubeG1[x] == 2)
                                             {
@@ -3327,9 +3332,9 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                     }
-                                    if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                                    if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                                     {
-                                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                                         {
                                             if (ListInt_TemporaryOfCubeG1[x] == 3)
                                             {
@@ -3341,7 +3346,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //Debug.Log("ListInt_PosXOfTipOf2.Count : " + ListInt_PosXOfTipOf2.Count);
                                 //Debug.Log("ListInt_PosXOfTipOf3.Count : " + ListInt_PosXOfTipOf3.Count);
                                 //
-                                if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count | ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count & ListInt_PosXOfTipOf2.Count != 0 & ListInt_PosXOfTipOf3.Count != 0)
+                                if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count || ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count && ListInt_PosXOfTipOf2.Count != 0 && ListInt_PosXOfTipOf3.Count != 0)
                                 {
                                     //Debug.Log("左から計算");
 
@@ -3408,7 +3413,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     }
                                 }
                                 //
-                                if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                                if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                                 {
                                     //
                                     FromSide = "Left";
@@ -3461,9 +3466,9 @@ public class AIVsAI_Control : MonoBehaviour
 
                                         for (int xx = 0; xx < ListInt_DataOfTemporaryBlock1.Count; xx++)
                                         {
-                                            if (ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != -1 &
-                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 13 &
-                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 27 &
+                                            if (ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != -1 &&
+                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 13 &&
+                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 27 &&
                                                 ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 41)
                                             {
                                                 xxx += 1;
@@ -3591,7 +3596,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 1)
                                             {
-                                                if (xxx % 14 + 1 == 3 | xxx % 14 + 1 == 12)
+                                                if (xxx % 14 + 1 == 3 || xxx % 14 + 1 == 12)
                                                 {
                                                     ListInt_TemporaryOfCubeG1[xxx] = 2;
                                                 }
@@ -3687,7 +3692,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         //
                                         for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                         {
-                                            if (xxx % 14 + 1 >= 3 & xxx % 14 + 1 <= 12 & Mathf.FloorToInt(xxx / 14) + 1 >= 3 & Mathf.FloorToInt(xxx / 14) + 1 <= 33)
+                                            if (xxx % 14 + 1 >= 3 && xxx % 14 + 1 <= 12 && Mathf.FloorToInt(xxx / 14) + 1 >= 3 && Mathf.FloorToInt(xxx / 14) + 1 <= 33)
                                             {
                                                 switch (xxx % 14 + 1)
                                                 {
@@ -3814,7 +3819,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                                                 for (int xxxx = 0; xxxx < ListInt_CoordinateOfTipOf2.Count; xxxx++)
                                                 {
-                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf2[xxxx] | xxx - 1 == ListInt_CoordinateOfTipOf2[xxxx])
+                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf2[xxxx] || xxx - 1 == ListInt_CoordinateOfTipOf2[xxxx])
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                     }
@@ -3822,13 +3827,13 @@ public class AIVsAI_Control : MonoBehaviour
 
                                                 for (int xxxx = 0; xxxx < ListInt_CoordinateOfTipOf3.Count; xxxx++)
                                                 {
-                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf3[xxxx] | xxx + 1 == ListInt_CoordinateOfTipOf3[xxxx])
+                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf3[xxxx] || xxx + 1 == ListInt_CoordinateOfTipOf3[xxxx])
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                     }
                                                 }
 
-                                                //if ((xxx - 1) % 14 + 1 == 2 | (xxx + 1) % 14 + 1 == 13)
+                                                //if ((xxx - 1) % 14 + 1 == 2 || (xxx + 1) % 14 + 1 == 13)
                                                 //{
                                                 //    ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                 //}
@@ -3843,22 +3848,22 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[xxx] == 4)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 | ListInt_TemporaryOfCubeG1[xxx + 14] == 2 | ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 || ListInt_TemporaryOfCubeG1[xxx + 14] == 2 || ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 | ListInt_TemporaryOfCubeG1[xxx - 14] == 2 | ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 || ListInt_TemporaryOfCubeG1[xxx - 14] == 2 || ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 | ListInt_TemporaryOfCubeG1[xxx + 1] == 2 | ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 || ListInt_TemporaryOfCubeG1[xxx + 1] == 2 || ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 1] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 | ListInt_TemporaryOfCubeG1[xxx - 1] == 2 | ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 || ListInt_TemporaryOfCubeG1[xxx - 1] == 2 || ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 1] = 4;
                                                         IsChanging1And2And3To4 = true;
@@ -3929,7 +3934,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListInt_PosXDifferenceMax.Add(ListListInt_PosXDifference[x].Max());
                                         int Int1 = ListListInt_PosXDifference[x].Max();
                                         int Int2 = 0;
-                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count | ListInt_CoordinateOfTipOf2.Count == 0 & ListInt_CoordinateOfTipOf3.Count == 0)
+                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count || ListInt_CoordinateOfTipOf2.Count == 0 && ListInt_CoordinateOfTipOf3.Count == 0)
                                         {
                                             Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
                                         }
@@ -3945,7 +3950,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListInt_CountOfAdjacentMax.Add(ListListInt_CountOfAdjacent[x].Max());
                                         int Int1 = ListListInt_CountOfAdjacent[x].Max();
                                         int Int2 = 0;
-                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count | ListInt_CoordinateOfTipOf2.Count == 0 & ListInt_CoordinateOfTipOf3.Count == 0)
+                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count || ListInt_CoordinateOfTipOf2.Count == 0 && ListInt_CoordinateOfTipOf3.Count == 0)
                                         {
                                             Int2 = ListListInt_CountOfAdjacent[x].IndexOf(Int1);
                                         }
@@ -4001,16 +4006,16 @@ public class AIVsAI_Control : MonoBehaviour
                             //RotationOfCurrentBlockとBestPosXOfFirstCandidateを決定
                             if (true)
                             {
-                                if (ListInt_PosXDifferenceMax.All(value => value == 0 | value == -1) == true)
+                                if (ListInt_PosXDifferenceMax.All(value => value == 0 || value == -1) == true)
                                 {
-                                    if (ListInt_CountOfAdjacentMax.All(value => value == 0 | value == -1) == true)
+                                    if (ListInt_CountOfAdjacentMax.All(value => value == 0 || value == -1) == true)
                                     {
                                         Debug.Log("A_1");
                                         int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
                                         int Int2 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(Int1);
                                         int Int3 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].LastIndexOf(Int1);
                                         int Int4 = 0;
-                                        if (ListListInt_PosXDifference[0][0] == -1 & ListListInt_PosXDifference[1][0] == -1 & ListListInt_PosXDifference[2][0] == -1 & ListListInt_PosXDifference[3][0] == -1)
+                                        if (ListListInt_PosXDifference[0][0] == -1 && ListListInt_PosXDifference[1][0] == -1 && ListListInt_PosXDifference[2][0] == -1 && ListListInt_PosXDifference[3][0] == -1)
                                         {
                                             //
                                             CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
@@ -4160,14 +4165,14 @@ public class AIVsAI_Control : MonoBehaviour
                                         }
                                         else
                                         {
-                                            if (ListInt_CountOfAdjacentMax.All(value => value == 0 | value == -1) == true)
+                                            if (ListInt_CountOfAdjacentMax.All(value => value == 0 || value == -1) == true)
                                             {
                                                 Debug.Log("A_1");
                                                 int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
                                                 int Int2 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(Int1);
                                                 int Int3 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].LastIndexOf(Int1);
                                                 int Int4 = 0;
-                                                if (ListListInt_PosXDifference[0][0] == -1 & ListListInt_PosXDifference[1][0] == -1 & ListListInt_PosXDifference[2][0] == -1 & ListListInt_PosXDifference[3][0] == -1)
+                                                if (ListListInt_PosXDifference[0][0] == -1 && ListListInt_PosXDifference[1][0] == -1 && ListListInt_PosXDifference[2][0] == -1 && ListListInt_PosXDifference[3][0] == -1)
                                                 {
                                                     //
                                                     CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
@@ -4428,7 +4433,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         if (x >= 44)
                                         {
-                                            if (ListInt_TemporaryOfCubeG1[x] == 1 | ListInt_TemporaryOfCubeG1[x] == -1)
+                                            if (ListInt_TemporaryOfCubeG1[x] == 1 || ListInt_TemporaryOfCubeG1[x] == -1)
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
                                                 {
@@ -4513,9 +4518,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                                 for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                                 {
-                                    if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                                    if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                                     {
-                                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                                         {
                                             if (ListInt_TemporaryOfCubeG1[x] == 2)
                                             {
@@ -4523,9 +4528,9 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                     }
-                                    if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                                    if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                                     {
-                                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                                         {
                                             if (ListInt_TemporaryOfCubeG1[x] == 3)
                                             {
@@ -4537,7 +4542,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //Debug.Log("ListInt_PosXOfTipOf2.Count : " + ListInt_PosXOfTipOf2.Count);
                                 //Debug.Log("ListInt_PosXOfTipOf3.Count : " + ListInt_PosXOfTipOf3.Count);
                                 //
-                                if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count | ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count & ListInt_PosXOfTipOf2.Count != 0 & ListInt_PosXOfTipOf3.Count != 0)
+                                if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count || ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count && ListInt_PosXOfTipOf2.Count != 0 && ListInt_PosXOfTipOf3.Count != 0)
                                 {
                                     //Debug.Log("左から計算");
 
@@ -4600,7 +4605,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     }
                                 }
                                 //
-                                if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                                if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                                 {
 
                                 }
@@ -4652,9 +4657,9 @@ public class AIVsAI_Control : MonoBehaviour
 
                                         for (int xx = 0; xx < ListInt_DataOfTemporaryBlock1.Count; xx++)
                                         {
-                                            if (ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != -1 &
-                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 13 &
-                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 27 &
+                                            if (ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != -1 &&
+                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 13 &&
+                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 27 &&
                                                 ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 41)
                                             {
                                                 xxx += 1;
@@ -4789,7 +4794,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (xxx >= 44)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx] == 1 | ListInt_TemporaryOfCubeG1[xxx] == -1)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx] == 1 || ListInt_TemporaryOfCubeG1[xxx] == -1)
                                                     {
                                                         if (ListInt_TemporaryOfCubeG1[xxx - 14] == 0)
                                                         {
@@ -4807,7 +4812,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 1)
                                             {
-                                                if (xxx % 14 + 1 == 3 | xxx % 14 + 1 == 12)
+                                                if (xxx % 14 + 1 == 3 || xxx % 14 + 1 == 12)
                                                 {
                                                     ListInt_TemporaryOfCubeG1[xxx] = 2;
                                                 }
@@ -4903,7 +4908,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         //
                                         for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                         {
-                                            if (xxx % 14 + 1 >= 3 & xxx % 14 + 1 <= 12 & Mathf.FloorToInt(xxx / 14) + 1 >= 3 & Mathf.FloorToInt(xxx / 14) + 1 <= 33)
+                                            if (xxx % 14 + 1 >= 3 && xxx % 14 + 1 <= 12 && Mathf.FloorToInt(xxx / 14) + 1 >= 3 && Mathf.FloorToInt(xxx / 14) + 1 <= 33)
                                             {
                                                 switch (xxx % 14 + 1)
                                                 {
@@ -5028,7 +5033,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 for (int xxxx = 0; xxxx < ListInt_CoordinateOfTipOf2.Count; xxxx++)
                                                 {
-                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf2[xxxx] | xxx - 1 == ListInt_CoordinateOfTipOf2[xxxx])
+                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf2[xxxx] || xxx - 1 == ListInt_CoordinateOfTipOf2[xxxx])
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                     }
@@ -5036,13 +5041,13 @@ public class AIVsAI_Control : MonoBehaviour
 
                                                 for (int xxxx = 0; xxxx < ListInt_CoordinateOfTipOf3.Count; xxxx++)
                                                 {
-                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf3[xxxx] | xxx + 1 == ListInt_CoordinateOfTipOf3[xxxx])
+                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf3[xxxx] || xxx + 1 == ListInt_CoordinateOfTipOf3[xxxx])
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                     }
                                                 }
 
-                                                //if ((xxx - 1) % 14 + 1 == 2 | (xxx + 1) % 14 + 1 == 13)
+                                                //if ((xxx - 1) % 14 + 1 == 2 || (xxx + 1) % 14 + 1 == 13)
                                                 //{
                                                 //    ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                 //}
@@ -5057,22 +5062,22 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[xxx] == 4)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 | ListInt_TemporaryOfCubeG1[xxx + 14] == 2 | ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 || ListInt_TemporaryOfCubeG1[xxx + 14] == 2 || ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 | ListInt_TemporaryOfCubeG1[xxx - 14] == 2 | ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 || ListInt_TemporaryOfCubeG1[xxx - 14] == 2 || ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 | ListInt_TemporaryOfCubeG1[xxx + 1] == 2 | ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 || ListInt_TemporaryOfCubeG1[xxx + 1] == 2 || ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 1] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 | ListInt_TemporaryOfCubeG1[xxx - 1] == 2 | ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 || ListInt_TemporaryOfCubeG1[xxx - 1] == 2 || ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 1] = 4;
                                                         IsChanging1And2And3To4 = true;
@@ -5182,7 +5187,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         //
                                         for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                         {
-                                            if (xxx % 14 + 1 >= 3 & xxx % 14 + 1 <= 12 & Mathf.FloorToInt(xxx / 14) + 1 >= 3 & Mathf.FloorToInt(xxx / 14) + 1 <= 33)
+                                            if (xxx % 14 + 1 >= 3 && xxx % 14 + 1 <= 12 && Mathf.FloorToInt(xxx / 14) + 1 >= 3 && Mathf.FloorToInt(xxx / 14) + 1 <= 33)
                                             {
                                                 switch (xxx % 14 + 1)
                                                 {
@@ -5325,7 +5330,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                             {
-                                                if ((BestCoordinateOfFirstCandidate + 0) % 14 + 1 >= 10)
+                                                if ((BestCoordinateOfFirstCandidate + 1) % 14 + 1 >= 10)
                                                 {
                                                     if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                                     {
@@ -5344,7 +5349,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                             {
-                                                if ((BestCoordinateOfFirstCandidate - 0) % 14 + 1 <= 5)
+                                                if ((BestCoordinateOfFirstCandidate - 1) % 14 + 1 <= 5)
                                                 {
                                                     if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                                     {
@@ -5364,7 +5369,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (xxx % 14 + 1 == 3)
                                             {
-                                                if (ListInt_TemporaryOfCubeG1[xxx] == 1 | ListInt_TemporaryOfCubeG1[xxx] == 3)
+                                                if (ListInt_TemporaryOfCubeG1[xxx] == 1 || ListInt_TemporaryOfCubeG1[xxx] == 3)
                                                 {
                                                     ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                 }
@@ -5380,22 +5385,22 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[xxx] == 4)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 | ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 || ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 | ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 || ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 | ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 || ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 1] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 | ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 || ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 1] = 4;
                                                         IsChanging1And2And3To4 = true;
@@ -5412,7 +5417,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                         //
-                                        if (IsOverlaped == false & ListInt_PosYOf3.Max() < 28)
+                                        if (IsOverlaped == false && ListInt_PosYOf3.Max() < 28)
                                         {
                                             //ListInt_PosXDifferenceに追加
                                             ListInt_PosXOf2And4.AddRange(ListInt_PosXOf2);
@@ -5455,7 +5460,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListInt_PosXDifferenceMax.Add(ListListInt_PosXDifference[x].Max());
                                         int Int1 = ListListInt_PosXDifference[x].Max();
                                         int Int2 = 0;
-                                        if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count | ListInt_CoordinateOfTipOf2.Count == 0 & ListInt_CoordinateOfTipOf3.Count == 0)
+                                        if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count || ListInt_CoordinateOfTipOf2.Count == 0 && ListInt_CoordinateOfTipOf3.Count == 0)
                                         {
                                             Int2 = ListListInt_PosXDifference[x].LastIndexOf(Int1);
                                         }
@@ -5471,7 +5476,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListInt_CountOfAdjacentMax.Add(ListListInt_CountOfAdjacent[x].Max());
                                         int Int1 = ListListInt_CountOfAdjacent[x].Max();
                                         int Int2 = 0;
-                                        if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count | ListInt_CoordinateOfTipOf2.Count == 0 & ListInt_CoordinateOfTipOf3.Count == 0)
+                                        if (ListInt_CoordinateOfTipOf2.Count > ListInt_CoordinateOfTipOf3.Count || ListInt_CoordinateOfTipOf2.Count == 0 && ListInt_CoordinateOfTipOf3.Count == 0)
                                         {
                                             Int2 = ListListInt_CountOfAdjacent[x].LastIndexOf(Int1);
                                         }
@@ -5535,7 +5540,7 @@ public class AIVsAI_Control : MonoBehaviour
                             //RotationOfCurrentBlockとBestPosXOfSecondCandidateを決定
                             if (true)
                             {
-                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 //& ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max())
+                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 //&& ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max())
                                     )
                                 {
                                     Debug.Log("D_1");
@@ -5590,16 +5595,16 @@ public class AIVsAI_Control : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (ListInt_PosXDifferenceMax.All(value => value == 0 | value == -1) == true)
+                                    if (ListInt_PosXDifferenceMax.All(value => value == 0 || value == -1) == true)
                                     {
-                                        if (ListInt_CountOfAdjacentMax.All(value => value == 0 | value == -1) == true)
+                                        if (ListInt_CountOfAdjacentMax.All(value => value == 0 || value == -1) == true)
                                         {
                                             Debug.Log("A_1");
                                             int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
                                             int Int2 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].LastIndexOf(Int1);
                                             int Int3 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(Int1);
                                             int Int4 = 0;
-                                            if (ListListInt_PosXDifference[0][ListListInt_PosXDifference[0].Count - 1] == -1 & ListListInt_PosXDifference[1][ListListInt_PosXDifference[0].Count - 1] == -1 & ListListInt_PosXDifference[2][ListListInt_PosXDifference[0].Count - 1] == -1 & ListListInt_PosXDifference[3][ListListInt_PosXDifference[0].Count - 1] == -1)
+                                            if (ListListInt_PosXDifference[0][ListListInt_PosXDifference[0].Count - 1] == -1 && ListListInt_PosXDifference[1][ListListInt_PosXDifference[0].Count - 1] == -1 && ListListInt_PosXDifference[2][ListListInt_PosXDifference[0].Count - 1] == -1 && ListListInt_PosXDifference[3][ListListInt_PosXDifference[0].Count - 1] == -1)
                                             {
                                                 //
                                                 CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
@@ -5749,14 +5754,14 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                             else
                                             {
-                                                if (ListInt_CountOfAdjacentMax.All(value => value == 0 | value == -1) == true)
+                                                if (ListInt_CountOfAdjacentMax.All(value => value == 0 || value == -1) == true)
                                                 {
                                                     Debug.Log("A_2");
                                                     int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
                                                     int Int2 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].LastIndexOf(Int1);
                                                     int Int3 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(Int1);
                                                     int Int4 = 0;
-                                                    if (ListListInt_PosXDifference[0][ListListInt_PosXDifference[0].Count - 1] == -1 & ListListInt_PosXDifference[1][ListListInt_PosXDifference[0].Count - 1] == -1 & ListListInt_PosXDifference[2][ListListInt_PosXDifference[0].Count - 1] == -1 & ListListInt_PosXDifference[3][ListListInt_PosXDifference[0].Count - 1] == -1)
+                                                    if (ListListInt_PosXDifference[0][ListListInt_PosXDifference[0].Count - 1] == -1 && ListListInt_PosXDifference[1][ListListInt_PosXDifference[0].Count - 1] == -1 && ListListInt_PosXDifference[2][ListListInt_PosXDifference[0].Count - 1] == -1 && ListListInt_PosXDifference[3][ListListInt_PosXDifference[0].Count - 1] == -1)
                                                     {
                                                         //
                                                         CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
@@ -6018,7 +6023,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     {
                                         if (x >= 44)
                                         {
-                                            if (ListInt_TemporaryOfCubeG1[x] == 1 | ListInt_TemporaryOfCubeG1[x] == -1)
+                                            if (ListInt_TemporaryOfCubeG1[x] == 1 || ListInt_TemporaryOfCubeG1[x] == -1)
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[x - 14] == 0)
                                                 {
@@ -6103,9 +6108,9 @@ public class AIVsAI_Control : MonoBehaviour
                                 //ListInt_PosXOfTipOf2にListInt_TemporaryOfCubeG1の中で2であるPosXを追加し、ListInt_PosXOfTipOf3に3であるPosXを追加する
                                 for (int x = 0; x < ListInt_TemporaryOfCubeG1.Count; x++)
                                 {
-                                    if (x % 14 + 1 >= 3 & x % 14 + 1 <= 11 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                                    if (x % 14 + 1 >= 3 && x % 14 + 1 <= 11 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                                     {
-                                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                                        if (ListInt_TemporaryOfCubeG1[x + 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                                         {
                                             if (ListInt_TemporaryOfCubeG1[x] == 2)
                                             {
@@ -6113,9 +6118,9 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                     }
-                                    if (x % 14 + 1 >= 2 & x % 14 + 1 <= 12 & Mathf.FloorToInt(x / 14) + 1 >= 3 & Mathf.FloorToInt(x / 14) + 1 <= 30)
+                                    if (x % 14 + 1 >= 2 && x % 14 + 1 <= 12 && Mathf.FloorToInt(x / 14) + 1 >= 3 && Mathf.FloorToInt(x / 14) + 1 <= 30)
                                     {
-                                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0 | ListInt_TemporaryOfCubeG1[x + 14] == 0)
+                                        if (ListInt_TemporaryOfCubeG1[x - 1] == 0 || ListInt_TemporaryOfCubeG1[x + 14] == 0)
                                         {
                                             if (ListInt_TemporaryOfCubeG1[x] == 3)
                                             {
@@ -6127,7 +6132,7 @@ public class AIVsAI_Control : MonoBehaviour
                                 //Debug.Log("ListInt_PosXOfTipOf2.Count : " + ListInt_PosXOfTipOf2.Count);
                                 //Debug.Log("ListInt_PosXOfTipOf3.Count : " + ListInt_PosXOfTipOf3.Count);
                                 //
-                                if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count | ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count & ListInt_PosXOfTipOf2.Count != 0 & ListInt_PosXOfTipOf3.Count != 0)
+                                if (ListInt_PosXOfTipOf2.Count > ListInt_PosXOfTipOf3.Count || ListInt_PosXOfTipOf2.Count == ListInt_PosXOfTipOf3.Count && ListInt_PosXOfTipOf2.Count != 0 && ListInt_PosXOfTipOf3.Count != 0)
                                 {
                                     //Debug.Log("左から計算");
 
@@ -6190,7 +6195,7 @@ public class AIVsAI_Control : MonoBehaviour
                                     }
                                 }
                                 //
-                                if (ListInt_PosXOfTipOf2.Count == 0 & ListInt_PosXOfTipOf3.Count == 0)
+                                if (ListInt_PosXOfTipOf2.Count == 0 && ListInt_PosXOfTipOf3.Count == 0)
                                 {
 
                                 }
@@ -6242,9 +6247,9 @@ public class AIVsAI_Control : MonoBehaviour
 
                                         for (int xx = 0; xx < ListInt_DataOfTemporaryBlock1.Count; xx++)
                                         {
-                                            if (ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != -1 &
-                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 13 &
-                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 27 &
+                                            if (ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != -1 &&
+                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 13 &&
+                                                ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 27 &&
                                                 ListInt_DataOfTemporaryBlock1[xx] - 1 * (CorrectionValueCandidate + 1) != 41)
                                             {
                                                 xxx += 1;
@@ -6379,7 +6384,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (xxx >= 44)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx] == 1 | ListInt_TemporaryOfCubeG1[xxx] == -1)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx] == 1 || ListInt_TemporaryOfCubeG1[xxx] == -1)
                                                     {
                                                         if (ListInt_TemporaryOfCubeG1[xxx - 14] == 0)
                                                         {
@@ -6397,7 +6402,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (ListInt_TemporaryOfCubeG1[xxx] == 1)
                                             {
-                                                if (xxx % 14 + 1 == 3 | xxx % 14 + 1 == 12)
+                                                if (xxx % 14 + 1 == 3 || xxx % 14 + 1 == 12)
                                                 {
                                                     ListInt_TemporaryOfCubeG1[xxx] = 2;
                                                 }
@@ -6493,7 +6498,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         //
                                         for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                         {
-                                            if (xxx % 14 + 1 >= 3 & xxx % 14 + 1 <= 12 & Mathf.FloorToInt(xxx / 14) + 1 >= 3 & Mathf.FloorToInt(xxx / 14) + 1 <= 33)
+                                            if (xxx % 14 + 1 >= 3 && xxx % 14 + 1 <= 12 && Mathf.FloorToInt(xxx / 14) + 1 >= 3 && Mathf.FloorToInt(xxx / 14) + 1 <= 33)
                                             {
                                                 switch (xxx % 14 + 1)
                                                 {
@@ -6618,7 +6623,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 for (int xxxx = 0; xxxx < ListInt_CoordinateOfTipOf2.Count; xxxx++)
                                                 {
-                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf2[xxxx] | xxx - 1 == ListInt_CoordinateOfTipOf2[xxxx])
+                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf2[xxxx] || xxx - 1 == ListInt_CoordinateOfTipOf2[xxxx])
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                     }
@@ -6626,13 +6631,13 @@ public class AIVsAI_Control : MonoBehaviour
 
                                                 for (int xxxx = 0; xxxx < ListInt_CoordinateOfTipOf3.Count; xxxx++)
                                                 {
-                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf3[xxxx] | xxx + 1 == ListInt_CoordinateOfTipOf3[xxxx])
+                                                    if (xxx - 14 == ListInt_CoordinateOfTipOf3[xxxx] || xxx + 1 == ListInt_CoordinateOfTipOf3[xxxx])
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                     }
                                                 }
 
-                                                //if ((xxx - 1) % 14 + 1 == 2 | (xxx + 1) % 14 + 1 == 13)
+                                                //if ((xxx - 1) % 14 + 1 == 2 || (xxx + 1) % 14 + 1 == 13)
                                                 //{
                                                 //    ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                 //}
@@ -6647,22 +6652,22 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[xxx] == 4)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 | ListInt_TemporaryOfCubeG1[xxx + 14] == 2 | ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 || ListInt_TemporaryOfCubeG1[xxx + 14] == 2 || ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 | ListInt_TemporaryOfCubeG1[xxx - 14] == 2 | ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 || ListInt_TemporaryOfCubeG1[xxx - 14] == 2 || ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 | ListInt_TemporaryOfCubeG1[xxx + 1] == 2 | ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 || ListInt_TemporaryOfCubeG1[xxx + 1] == 2 || ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 1] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 | ListInt_TemporaryOfCubeG1[xxx - 1] == 2 | ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 || ListInt_TemporaryOfCubeG1[xxx - 1] == 2 || ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 1] = 4;
                                                         IsChanging1And2And3To4 = true;
@@ -6772,7 +6777,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         //
                                         for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                         {
-                                            if (xxx % 14 + 1 >= 3 & xxx % 14 + 1 <= 12 & Mathf.FloorToInt(xxx / 14) + 1 >= 3 & Mathf.FloorToInt(xxx / 14) + 1 <= 33)
+                                            if (xxx % 14 + 1 >= 3 && xxx % 14 + 1 <= 12 && Mathf.FloorToInt(xxx / 14) + 1 >= 3 && Mathf.FloorToInt(xxx / 14) + 1 <= 33)
                                             {
                                                 switch (xxx % 14 + 1)
                                                 {
@@ -6923,7 +6928,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                             {
-                                                if ((BestCoordinateOfFirstCandidate + 0) % 14 + 1 >= 10)
+                                                if ((BestCoordinateOfFirstCandidate + 1) % 14 + 1 >= 10)
                                                 {
                                                     if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                                     {
@@ -6942,7 +6947,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             for (int xxx = 0; xxx < ListInt_TemporaryOfCubeG1.Count; xxx++)
                                             {
-                                                if ((BestCoordinateOfFirstCandidate - 0) % 14 + 1 <= 5)
+                                                if ((BestCoordinateOfFirstCandidate - 1) % 14 + 1 <= 5)
                                                 {
                                                     if (ListInt_TemporaryOfCubeG1[xxx] == 3)
                                                     {
@@ -6962,7 +6967,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         {
                                             if (xxx % 14 + 1 == 3)
                                             {
-                                                if (ListInt_TemporaryOfCubeG1[xxx] == 1 | ListInt_TemporaryOfCubeG1[xxx] == 3)
+                                                if (ListInt_TemporaryOfCubeG1[xxx] == 1 || ListInt_TemporaryOfCubeG1[xxx] == 3)
                                                 {
                                                     ListInt_TemporaryOfCubeG1[xxx] = 4;
                                                 }
@@ -6978,22 +6983,22 @@ public class AIVsAI_Control : MonoBehaviour
                                             {
                                                 if (ListInt_TemporaryOfCubeG1[xxx] == 4)
                                                 {
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 | ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 14] == 1 || ListInt_TemporaryOfCubeG1[xxx + 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 | ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 14] == 1 || ListInt_TemporaryOfCubeG1[xxx - 14] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 14] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 | ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx + 1] == 1 || ListInt_TemporaryOfCubeG1[xxx + 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx + 1] = 4;
                                                         IsChanging1And2And3To4 = true;
                                                     }
-                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 | ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
+                                                    if (ListInt_TemporaryOfCubeG1[xxx - 1] == 1 || ListInt_TemporaryOfCubeG1[xxx - 1] == 3)
                                                     {
                                                         ListInt_TemporaryOfCubeG1[xxx - 1] = 4;
                                                         IsChanging1And2And3To4 = true;
@@ -7010,7 +7015,7 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                         }
                                         //
-                                        if (IsOverlaped == false & ListInt_PosYOf3.Max() < 28)
+                                        if (IsOverlaped == false && ListInt_PosYOf3.Max() < 28)
                                         {
                                             //ListInt_PosXDifferenceに追加
                                             ListInt_PosXOf2And4.AddRange(ListInt_PosXOf2);
@@ -7053,7 +7058,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListInt_PosXDifferenceMax.Add(ListListInt_PosXDifference[x].Max());
                                         int Int1 = ListListInt_PosXDifference[x].Max();
                                         int Int2 = 0;
-                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count | ListInt_CoordinateOfTipOf2.Count == 0 & ListInt_CoordinateOfTipOf3.Count == 0)
+                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count || ListInt_CoordinateOfTipOf2.Count == 0 && ListInt_CoordinateOfTipOf3.Count == 0)
                                         {
                                             Int2 = ListListInt_PosXDifference[x].IndexOf(Int1);
                                         }
@@ -7069,7 +7074,7 @@ public class AIVsAI_Control : MonoBehaviour
                                         ListInt_CountOfAdjacentMax.Add(ListListInt_CountOfAdjacent[x].Max());
                                         int Int1 = ListListInt_CountOfAdjacent[x].Max();
                                         int Int2 = 0;
-                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count | ListInt_CoordinateOfTipOf2.Count == 0 & ListInt_CoordinateOfTipOf3.Count == 0)
+                                        if (ListInt_CoordinateOfTipOf2.Count < ListInt_CoordinateOfTipOf3.Count || ListInt_CoordinateOfTipOf2.Count == 0 && ListInt_CoordinateOfTipOf3.Count == 0)
                                         {
                                             Int2 = ListListInt_CountOfAdjacent[x].IndexOf(Int1);
                                         }
@@ -7133,7 +7138,7 @@ public class AIVsAI_Control : MonoBehaviour
                             //RotationOfCurrentBlockとBestPosXOfThirdCandidateを決定
                             if (true)
                             {
-                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 //& ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max())
+                                if (ListInt_PosXOfLengthMaxMax.Max() == 10 //&& ListInt_CountOfAdjacentMax.All(value => value == ListInt_CountOfAdjacentMax.Max())
                                     )
                                 {
                                     Debug.Log("D_1");
@@ -7188,16 +7193,16 @@ public class AIVsAI_Control : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (ListInt_PosXDifferenceMax.All(value => value == 0 | value == -1) == true)
+                                    if (ListInt_PosXDifferenceMax.All(value => value == 0 || value == -1) == true)
                                     {
-                                        if (ListInt_CountOfAdjacentMax.All(value => value == 0 | value == -1) == true)
+                                        if (ListInt_CountOfAdjacentMax.All(value => value == 0 || value == -1) == true)
                                         {
                                             Debug.Log("A_1");
                                             int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
                                             int Int2 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(Int1);
                                             int Int3 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].LastIndexOf(Int1);
                                             int Int4 = 0;
-                                            if (ListListInt_PosXDifference[0][0] == -1 & ListListInt_PosXDifference[1][0] == -1 & ListListInt_PosXDifference[2][0] == -1 & ListListInt_PosXDifference[3][0] == -1)
+                                            if (ListListInt_PosXDifference[0][0] == -1 && ListListInt_PosXDifference[1][0] == -1 && ListListInt_PosXDifference[2][0] == -1 && ListListInt_PosXDifference[3][0] == -1)
                                             {
                                                 //
                                                 CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
@@ -7347,14 +7352,14 @@ public class AIVsAI_Control : MonoBehaviour
                                             }
                                             else
                                             {
-                                                if (ListInt_CountOfAdjacentMax.All(value => value == 0 | value == -1) == true)
+                                                if (ListInt_CountOfAdjacentMax.All(value => value == 0 || value == -1) == true)
                                                 {
                                                     Debug.Log("A_2");
                                                     int Int1 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].Max();
                                                     int Int2 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].IndexOf(Int1);
                                                     int Int3 = ListListInt_SideLengthOfBlock[CurrentBlock - 1].LastIndexOf(Int1);
                                                     int Int4 = 0;
-                                                    if (ListListInt_PosXDifference[0][0] == -1 & ListListInt_PosXDifference[1][0] == -1 & ListListInt_PosXDifference[2][0] == -1 & ListListInt_PosXDifference[3][0] == -1)
+                                                    if (ListListInt_PosXDifference[0][0] == -1 && ListListInt_PosXDifference[1][0] == -1 && ListListInt_PosXDifference[2][0] == -1 && ListListInt_PosXDifference[3][0] == -1)
                                                     {
                                                         //
                                                         CorrectionValue = ListInt_CorrectionValueCandidate[Int3];
@@ -7521,11 +7526,6 @@ public class AIVsAI_Control : MonoBehaviour
     }
 
 
-
-
-
-
-
     //CurrentBlockの自由落下
     void FreeFall_CurrentBlock()
     {
@@ -7536,7 +7536,7 @@ public class AIVsAI_Control : MonoBehaviour
             {
                 if (CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] >= 44)
                 {
-                    if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - 14] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - 14] == 1)
+                    if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - 14] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - 14] == 1)
                     {
                         a += 1;
                     }
@@ -7608,7 +7608,7 @@ public class AIVsAI_Control : MonoBehaviour
                 {
                     if (CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] >= 44)
                     {
-                        if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - (14 * b)] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - (14 * b)] == 1)
+                        if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - (14 * b)] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i] - (14 * b)] == 1)
                         {
                             a += 1;
                         }
@@ -7673,7 +7673,7 @@ public class AIVsAI_Control : MonoBehaviour
             int a = 0;
             for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
             {
-                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
+                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
                 {
                     a += 1;
                 }
@@ -7743,7 +7743,7 @@ public class AIVsAI_Control : MonoBehaviour
             int a = 0;
             for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
             {
-                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
+                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
                 {
                     a += 1;
                 }
@@ -7814,7 +7814,7 @@ public class AIVsAI_Control : MonoBehaviour
             int a = 0;
             for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
             {
-                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
+                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
                 {
                     a += 1;
                 }
@@ -7862,8 +7862,8 @@ public class AIVsAI_Control : MonoBehaviour
                 {
                     case 2:
                         //上+1
-                        if (ListInt_OverlapCubeG.Contains(0) == true & ListInt_DataOfTemporaryBlock1.Contains(14) == true |
-                            ListInt_OverlapCubeG.Contains(1) == true & ListInt_DataOfTemporaryBlock1.Contains(15) == true)
+                        if (ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(14) == true ||
+                            ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(15) == true)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -7875,7 +7875,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -7915,8 +7915,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (ListInt_OverlapCubeG.Contains(1) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == true |
-                            ListInt_OverlapCubeG.Contains(15) == true & ListInt_DataOfTemporaryBlock1.Contains(14) == true)
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == true ||
+                            ListInt_OverlapCubeG.Contains(15) == true && ListInt_DataOfTemporaryBlock1.Contains(14) == true)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -7928,7 +7928,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -7968,8 +7968,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (ListInt_OverlapCubeG.Contains(0) == true & ListInt_DataOfTemporaryBlock1.Contains(1) == true |
-                            ListInt_OverlapCubeG.Contains(14) == true & ListInt_DataOfTemporaryBlock1.Contains(15) == true)
+                        if (ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(1) == true ||
+                            ListInt_OverlapCubeG.Contains(14) == true && ListInt_DataOfTemporaryBlock1.Contains(15) == true)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -7981,7 +7981,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8023,10 +8023,10 @@ public class AIVsAI_Control : MonoBehaviour
                         break;
                     case 3:
                         //上+1
-                        if (ListInt_OverlapCubeG.Contains(1) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == false & ListInt_DataOfTemporaryBlock1.Contains(14) == false & ListInt_DataOfTemporaryBlock1.Contains(28) == false |
-                            ListInt_OverlapCubeG.Contains(2) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == false & ListInt_DataOfTemporaryBlock1.Contains(14) == false & ListInt_DataOfTemporaryBlock1.Contains(28) == false |
-                            ListInt_OverlapCubeG.Contains(0) == true & ListInt_DataOfTemporaryBlock1.Contains(2) == false & ListInt_DataOfTemporaryBlock1.Contains(16) == false & ListInt_DataOfTemporaryBlock1.Contains(30) == false |
-                            ListInt_OverlapCubeG.Contains(1) == true & ListInt_DataOfTemporaryBlock1.Contains(2) == false & ListInt_DataOfTemporaryBlock1.Contains(16) == false & ListInt_DataOfTemporaryBlock1.Contains(30) == false)
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(14) == false && ListInt_DataOfTemporaryBlock1.Contains(28) == false ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(14) == false && ListInt_DataOfTemporaryBlock1.Contains(28) == false ||
+                            ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(2) == false && ListInt_DataOfTemporaryBlock1.Contains(16) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false ||
+                            ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(2) == false && ListInt_DataOfTemporaryBlock1.Contains(16) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8038,7 +8038,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8078,10 +8078,10 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (ListInt_OverlapCubeG.Contains(16) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == false & ListInt_DataOfTemporaryBlock1.Contains(1) == false & ListInt_DataOfTemporaryBlock1.Contains(2) == false |
-                            ListInt_OverlapCubeG.Contains(30) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == false & ListInt_DataOfTemporaryBlock1.Contains(1) == false & ListInt_DataOfTemporaryBlock1.Contains(2) == false |
-                            ListInt_OverlapCubeG.Contains(16) == true & ListInt_DataOfTemporaryBlock1.Contains(28) == false & ListInt_DataOfTemporaryBlock1.Contains(29) == false & ListInt_DataOfTemporaryBlock1.Contains(30) == false |
-                            ListInt_OverlapCubeG.Contains(2) == true & ListInt_DataOfTemporaryBlock1.Contains(28) == false & ListInt_DataOfTemporaryBlock1.Contains(29) == false & ListInt_DataOfTemporaryBlock1.Contains(30) == false)
+                        if (ListInt_OverlapCubeG.Contains(16) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(30) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(16) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8093,7 +8093,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8133,10 +8133,10 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (ListInt_OverlapCubeG.Contains(14) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == false & ListInt_DataOfTemporaryBlock1.Contains(1) == false & ListInt_DataOfTemporaryBlock1.Contains(2) == false |
-                            ListInt_OverlapCubeG.Contains(28) == true & ListInt_DataOfTemporaryBlock1.Contains(0) == false & ListInt_DataOfTemporaryBlock1.Contains(1) == false & ListInt_DataOfTemporaryBlock1.Contains(2) == false |
-                            ListInt_OverlapCubeG.Contains(14) == true & ListInt_DataOfTemporaryBlock1.Contains(28) == false & ListInt_DataOfTemporaryBlock1.Contains(29) == false & ListInt_DataOfTemporaryBlock1.Contains(30) == false |
-                            ListInt_OverlapCubeG.Contains(0) == true & ListInt_DataOfTemporaryBlock1.Contains(28) == false & ListInt_DataOfTemporaryBlock1.Contains(29) == false & ListInt_DataOfTemporaryBlock1.Contains(30) == false)
+                        if (ListInt_OverlapCubeG.Contains(14) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(28) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(14) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false ||
+                            ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8148,7 +8148,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8190,8 +8190,8 @@ public class AIVsAI_Control : MonoBehaviour
                         break;
                     case 4:
                         //上+1
-                        if (ListInt_OverlapCubeG.Contains(1) == true & ListInt_OverlapCubeG.Contains(15) == false |
-                            ListInt_OverlapCubeG.Contains(2) == true & ListInt_OverlapCubeG.Contains(16) == false)
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_OverlapCubeG.Contains(15) == false ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_OverlapCubeG.Contains(16) == false)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8203,7 +8203,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8243,8 +8243,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //左+1
-                        if (ListInt_OverlapCubeG.Contains(17) == true & ListInt_OverlapCubeG.Contains(16) == false |
-                            ListInt_OverlapCubeG.Contains(31) == true & ListInt_OverlapCubeG.Contains(30) == false)
+                        if (ListInt_OverlapCubeG.Contains(17) == true && ListInt_OverlapCubeG.Contains(16) == false ||
+                            ListInt_OverlapCubeG.Contains(31) == true && ListInt_OverlapCubeG.Contains(30) == false)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8256,7 +8256,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8296,8 +8296,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //右+1
-                        if (ListInt_OverlapCubeG.Contains(14) == true & ListInt_OverlapCubeG.Contains(15) == false |
-                            ListInt_OverlapCubeG.Contains(28) == true & ListInt_OverlapCubeG.Contains(29) == false)
+                        if (ListInt_OverlapCubeG.Contains(14) == true && ListInt_OverlapCubeG.Contains(15) == false ||
+                            ListInt_OverlapCubeG.Contains(28) == true && ListInt_OverlapCubeG.Contains(29) == false)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8309,7 +8309,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8349,8 +8349,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //上+2
-                        if (ListInt_OverlapCubeG.Contains(1) == true & ListInt_OverlapCubeG.Contains(15) == true |
-                            ListInt_OverlapCubeG.Contains(2) == true & ListInt_OverlapCubeG.Contains(16) == true)
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_OverlapCubeG.Contains(15) == true ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_OverlapCubeG.Contains(16) == true)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8362,7 +8362,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8402,8 +8402,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //左+2
-                        if (ListInt_OverlapCubeG.Contains(17) == true & ListInt_OverlapCubeG.Contains(16) == true |
-                            ListInt_OverlapCubeG.Contains(31) == true & ListInt_OverlapCubeG.Contains(30) == true)
+                        if (ListInt_OverlapCubeG.Contains(17) == true && ListInt_OverlapCubeG.Contains(16) == true ||
+                            ListInt_OverlapCubeG.Contains(31) == true && ListInt_OverlapCubeG.Contains(30) == true)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8415,7 +8415,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8455,8 +8455,8 @@ public class AIVsAI_Control : MonoBehaviour
                             }
                         }
                         //右+2
-                        if (ListInt_OverlapCubeG.Contains(14) == true & ListInt_OverlapCubeG.Contains(15) == true |
-                            ListInt_OverlapCubeG.Contains(28) == true & ListInt_OverlapCubeG.Contains(29) == true)
+                        if (ListInt_OverlapCubeG.Contains(14) == true && ListInt_OverlapCubeG.Contains(15) == true ||
+                            ListInt_OverlapCubeG.Contains(28) == true && ListInt_OverlapCubeG.Contains(29) == true)
                         {
                             ListInt_DataOfTemporaryBlock2 = new List<int> { };
                             a = 0;
@@ -8468,7 +8468,7 @@ public class AIVsAI_Control : MonoBehaviour
 
                             for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
                             {
-                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 | ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
                                 {
                                     a += 1;
                                 }
@@ -8664,11 +8664,11 @@ public class AIVsAI_Control : MonoBehaviour
     //PartOfCurrentBlockの自由落下
     void FreeFall_PartOfCurrentBlock()
     {
-        if (ListInt_TypeOfCubeG.Contains(3) == true | ListInt_TypeOfCubeG.Contains(4) == true | ListInt_TypeOfCubeG.Contains(6) == true | ListInt_TypeOfCubeG.Contains(8) == true)
+        if (ListInt_TypeOfCubeG.Contains(3) == true || ListInt_TypeOfCubeG.Contains(4) == true || ListInt_TypeOfCubeG.Contains(6) == true || ListInt_TypeOfCubeG.Contains(8) == true)
         {
             for (int i = 0; i < ListInt_TypeOfCubeG.Count; i++)
             {
-                if (ListInt_TypeOfCubeG[i] == 3 | ListInt_TypeOfCubeG[i] == 4 | ListInt_TypeOfCubeG[i] == 6 | ListInt_TypeOfCubeG[i] == 8)
+                if (ListInt_TypeOfCubeG[i] == 3 || ListInt_TypeOfCubeG[i] == 4 || ListInt_TypeOfCubeG[i] == 6 || ListInt_TypeOfCubeG[i] == 8)
                 {
                     ListInt_TypeOfCubeG[i] = 2;
                 }
@@ -8689,7 +8689,7 @@ public class AIVsAI_Control : MonoBehaviour
                         ListInt_TypeOfCubeG[i - 14] = 2;
                         ListInt_TypeOfCubeG[i] = 0;
                     }
-                    if (ListInt_TypeOfCubeG[i - 14] != 0 & ListInt_TypeOfCubeG[i - 14] != 1 & ListInt_TypeOfCubeG[i - 14] != 2)
+                    if (ListInt_TypeOfCubeG[i - 14] != 0 && ListInt_TypeOfCubeG[i - 14] != 1 && ListInt_TypeOfCubeG[i - 14] != 2)
                     {
                         ListInt_TypeOfCubeG[i] = 3;
                     }
@@ -8871,7 +8871,7 @@ public class AIVsAI_Control : MonoBehaviour
         {
             if (i % 14 + 1 == 12)
             {
-                if (ListInt_TypeOfCubeG[i] == 4 | ListInt_TypeOfCubeG[i] == 6 | ListInt_TypeOfCubeG[i] == 8)
+                if (ListInt_TypeOfCubeG[i] == 4 || ListInt_TypeOfCubeG[i] == 6 || ListInt_TypeOfCubeG[i] == 8)
                 {
                     switch (ListInt_TypeOfCubeG[i])
                     {
@@ -8896,7 +8896,7 @@ public class AIVsAI_Control : MonoBehaviour
 
             for (int i = 0; i < ListInt_TypeOfCubeG.Count; i++)
             {
-                if (ListInt_TypeOfCubeG[i] == 4 | ListInt_TypeOfCubeG[i] == 6 | ListInt_TypeOfCubeG[i] == 8)
+                if (ListInt_TypeOfCubeG[i] == 4 || ListInt_TypeOfCubeG[i] == 6 || ListInt_TypeOfCubeG[i] == 8)
                 {
                     switch (ListInt_TypeOfCubeG[i])
                     {
@@ -9019,7 +9019,7 @@ public class AIVsAI_Control : MonoBehaviour
             }
         }
 
-        if (ListInt_TypeOfCubeG.Contains(5) == true | ListInt_TypeOfCubeG.Contains(7) == true | ListInt_TypeOfCubeG.Contains(9) == true)
+        if (ListInt_TypeOfCubeG.Contains(5) == true || ListInt_TypeOfCubeG.Contains(7) == true || ListInt_TypeOfCubeG.Contains(9) == true)
         {
             CanInvokeResetting_Priority = true;
 
@@ -9048,13 +9048,13 @@ public class AIVsAI_Control : MonoBehaviour
 
         for (int i = 0; i < ListInt_TypeOfCubeG.Count; i++)
         {
-            if (ListInt_TypeOfCubeG[i] == 5 | ListInt_TypeOfCubeG[i] == 7 | ListInt_TypeOfCubeG[i] == 9)
+            if (ListInt_TypeOfCubeG[i] == 5 || ListInt_TypeOfCubeG[i] == 7 || ListInt_TypeOfCubeG[i] == 9)
             {
                 //通常換算
                 Score_VsAI += 50;
             }
         }
-        if (ListInt_TypeOfCubeG.Contains(2) == false & ListInt_TypeOfCubeG.Contains(3) == false & ListInt_TypeOfCubeG.Contains(4) == false & ListInt_TypeOfCubeG.Contains(6) == false & ListInt_TypeOfCubeG.Contains(8) == false)
+        if (ListInt_TypeOfCubeG.Contains(2) == false && ListInt_TypeOfCubeG.Contains(3) == false && ListInt_TypeOfCubeG.Contains(4) == false && ListInt_TypeOfCubeG.Contains(6) == false && ListInt_TypeOfCubeG.Contains(8) == false)
         {
             //ALLCLEAR換算
             Score_VsAI += 500;
@@ -9065,7 +9065,7 @@ public class AIVsAI_Control : MonoBehaviour
         {
             ListListInt_Sentence.Add(new List<int> { 1, 14, 26, 24, 13, 26, 40, 10, 0 });
         }
-        if (NumberOfCombos_VsAI >= 2 & NumberOfCombos_VsAI <= 9)
+        if (NumberOfCombos_VsAI >= 2 && NumberOfCombos_VsAI <= 9)
         {
             //COMBO換算
             Score_VsAI += 1000;
@@ -9076,32 +9076,32 @@ public class AIVsAI_Control : MonoBehaviour
         {
             ListListInt_Sentence.Add(new List<int> { 1, 29, 16, 25, 40, 10, 0 });
         }
-        if (NumberOfRens_VsAI >= 2 & NumberOfRens_VsAI <= 9)
+        if (NumberOfRens_VsAI >= 2 && NumberOfRens_VsAI <= 9)
         {
             //REN換算
             Score_VsAI += 300;
 
             ListListInt_Sentence.Add(new List<int> { NumberOfRens_VsAI, 29, 16, 25, 40, 10, 3, 0, 0 });
         }
-        if (ListInt_TypeOfCubeG.Contains(5) == true & ListInt_TypeOfCubeG.Contains(7) == false & ListInt_TypeOfCubeG.Contains(9) == false |
-            ListInt_TypeOfCubeG.Contains(5) == false & ListInt_TypeOfCubeG.Contains(7) == true & ListInt_TypeOfCubeG.Contains(9) == false |
-            ListInt_TypeOfCubeG.Contains(5) == false & ListInt_TypeOfCubeG.Contains(7) == false & ListInt_TypeOfCubeG.Contains(9) == true)
+        if (ListInt_TypeOfCubeG.Contains(5) == true && ListInt_TypeOfCubeG.Contains(7) == false && ListInt_TypeOfCubeG.Contains(9) == false ||
+            ListInt_TypeOfCubeG.Contains(5) == false && ListInt_TypeOfCubeG.Contains(7) == true && ListInt_TypeOfCubeG.Contains(9) == false ||
+            ListInt_TypeOfCubeG.Contains(5) == false && ListInt_TypeOfCubeG.Contains(7) == false && ListInt_TypeOfCubeG.Contains(9) == true)
         {
             //SINGLE換算
             Score_VsAI += 0;
 
             ListListInt_Sentence.Add(new List<int> { 30, 20, 25, 18, 23, 16, 40, 10, 0 });
         }
-        if (ListInt_TypeOfCubeG.Contains(5) == true & ListInt_TypeOfCubeG.Contains(7) == true & ListInt_TypeOfCubeG.Contains(9) == false |
-            ListInt_TypeOfCubeG.Contains(5) == true & ListInt_TypeOfCubeG.Contains(7) == false & ListInt_TypeOfCubeG.Contains(9) == true |
-            ListInt_TypeOfCubeG.Contains(5) == false & ListInt_TypeOfCubeG.Contains(7) == true & ListInt_TypeOfCubeG.Contains(9) == true)
+        if (ListInt_TypeOfCubeG.Contains(5) == true && ListInt_TypeOfCubeG.Contains(7) == true && ListInt_TypeOfCubeG.Contains(9) == false ||
+            ListInt_TypeOfCubeG.Contains(5) == true && ListInt_TypeOfCubeG.Contains(7) == false && ListInt_TypeOfCubeG.Contains(9) == true ||
+            ListInt_TypeOfCubeG.Contains(5) == false && ListInt_TypeOfCubeG.Contains(7) == true && ListInt_TypeOfCubeG.Contains(9) == true)
         {
             //DOUBLE換算
             Score_VsAI += 2000;
 
             ListListInt_Sentence.Add(new List<int> { 15, 26, 32, 13, 23, 16, 40, 10, 2, 0, 0, 0 });
         }
-        if (ListInt_TypeOfCubeG.Contains(5) == true & ListInt_TypeOfCubeG.Contains(7) == true & ListInt_TypeOfCubeG.Contains(9) == true)
+        if (ListInt_TypeOfCubeG.Contains(5) == true && ListInt_TypeOfCubeG.Contains(7) == true && ListInt_TypeOfCubeG.Contains(9) == true)
         {
             //TRIPLE換算
             Score_VsAI += 3000;
@@ -9141,9 +9141,9 @@ public class AIVsAI_Control : MonoBehaviour
 
         for (int i = 0; i < ListInt_TypeOfCubeG.Count; i++)
         {
-            if (i % 14 + 1 >= 3 & i % 14 + 1 <= 12 & Mathf.FloorToInt(i / 14) + 1 >= 3 & Mathf.FloorToInt(i / 14) + 1 <= 33)
+            if (i % 14 + 1 >= 3 && i % 14 + 1 <= 12 && Mathf.FloorToInt(i / 14) + 1 >= 3 && Mathf.FloorToInt(i / 14) + 1 <= 33)
             {
-                if (ListInt_TypeOfCubeG[i] == 5 | ListInt_TypeOfCubeG[i] == 7 | ListInt_TypeOfCubeG[i] == 9)
+                if (ListInt_TypeOfCubeG[i] == 5 || ListInt_TypeOfCubeG[i] == 7 || ListInt_TypeOfCubeG[i] == 9)
                 {
                     switch (ListInt_TypeOfCubeG[i])
                     {
@@ -9157,7 +9157,7 @@ public class AIVsAI_Control : MonoBehaviour
                             ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
                             ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
 
-                            ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(3000, 3500), Mark_Cube_O.transform.position + new Vector3(5.5f, -5, 5) + new Vector3(Random.Range(-5.5f, 5.5f), ListGameObject_CubeD[i - 30 - b].transform.position.y - Mark_Cube_O.transform.position.y, 0), 100, 0);
+                            ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(3000, 3500), Mark_Cube.transform.position + new Vector3(5.5f, -5, 5) + new Vector3(Random.Range(-5.5f, 5.5f), ListGameObject_CubeD[i - 30 - b].transform.position.y - Mark_Cube.transform.position.y, 0), 100, 0);
 
                             ListInt_TypeOfCubeG[i] = 0;
                             ListInt_ColorOfCubeG[i] = 0;
@@ -9172,7 +9172,7 @@ public class AIVsAI_Control : MonoBehaviour
                             ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
                             ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
 
-                            ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(3000, 3500), Mark_Cube_O.transform.position + new Vector3(5.5f, -5, 5) + new Vector3(Random.Range(-5.5f, 5.5f), ListGameObject_CubeD[i - 30 - b].transform.position.y - Mark_Cube_O.transform.position.y, 0), 100, 0);
+                            ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(3000, 3500), Mark_Cube.transform.position + new Vector3(5.5f, -5, 5) + new Vector3(Random.Range(-5.5f, 5.5f), ListGameObject_CubeD[i - 30 - b].transform.position.y - Mark_Cube.transform.position.y, 0), 100, 0);
 
                             ListInt_TypeOfCubeG[i] = 0;
                             ListInt_ColorOfCubeG[i] = 0;
@@ -9187,7 +9187,7 @@ public class AIVsAI_Control : MonoBehaviour
                             ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
                             ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
 
-                            ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(3000, 3500), Mark_Cube_O.transform.position + new Vector3(5.5f, -5, 5) + new Vector3(Random.Range(-5.5f, 5.5f), ListGameObject_CubeD[i - 30 - b].transform.position.y - Mark_Cube_O.transform.position.y, 0), 100, 0);
+                            ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(3000, 3500), Mark_Cube.transform.position + new Vector3(5.5f, -5, 5) + new Vector3(Random.Range(-5.5f, 5.5f), ListGameObject_CubeD[i - 30 - b].transform.position.y - Mark_Cube.transform.position.y, 0), 100, 0);
 
                             ListInt_TypeOfCubeG[i] = 0;
                             ListInt_ColorOfCubeG[i] = 0;
@@ -9219,47 +9219,41 @@ public class AIVsAI_Control : MonoBehaviour
 
         for (int i = 0; i < ListInt_ColorOfCubeG.Count; i++)
         {
-            if (i % 14 + 1 >= 3 & i % 14 + 1 <= 12 & Mathf.FloorToInt(i / 14) + 1 >= 3 & Mathf.FloorToInt(i / 14) + 1 <= 33)
+            if (i % 14 + 1 >= 3 && i % 14 + 1 <= 12 && Mathf.FloorToInt(i / 14) + 1 >= 3 && Mathf.FloorToInt(i / 14) + 1 <= 33)
             {
+                ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
                 switch (ListInt_ColorOfCubeG[i])
                 {
                     case 0:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         break;
                     case 1:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                         break;
                     case 2:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                         break;
                     case 3:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                         break;
                     case 4:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_DarkWhite;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_DarkWhite);
                         break;
                     case 5:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_DarkRed;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_DarkRed);
                         break;
                     case 6:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_DarkGreen;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_DarkGreen);
                         break;
                     case 7:
-                        ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_DarkBlue;
                         ListGameObject_CubeG[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_DarkBlue);
                         break;
@@ -9428,28 +9422,26 @@ public class AIVsAI_Control : MonoBehaviour
             }
             for (int i = 0; i < ListInt_ColorOfCubeH.Count; i++)
             {
+                ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
                 switch (ListInt_ColorOfCubeH[i])
                 {
                     case 0:
-                        ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                         ListGameObject_CubeH[i].transform.Find("Frames").gameObject.SetActive(true);
                         break;
                     case 1:
-                        ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                         ListGameObject_CubeH[i].transform.Find("Frames").gameObject.SetActive(false);
                         break;
                     case 2:
-                        ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                         ListGameObject_CubeH[i].transform.Find("Frames").gameObject.SetActive(false);
                         break;
                     case 3:
-                        ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                         ListGameObject_CubeH[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                         ListGameObject_CubeH[i].transform.Find("Frames").gameObject.SetActive(false);
@@ -9610,28 +9602,26 @@ public class AIVsAI_Control : MonoBehaviour
         }
         for (int i = 0; i < ListInt_ColorOfCubeN1.Count; i++)
         {
+            ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
             switch (ListInt_ColorOfCubeN1[i])
             {
                 case 0:
-                    ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                     ListGameObject_CubeN1[i].transform.Find("Frames").gameObject.SetActive(true);
                     break;
                 case 1:
-                    ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                     ListGameObject_CubeN1[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 2:
-                    ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                     ListGameObject_CubeN1[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 3:
-                    ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                     ListGameObject_CubeN1[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                     ListGameObject_CubeN1[i].transform.Find("Frames").gameObject.SetActive(false);
@@ -9787,28 +9777,26 @@ public class AIVsAI_Control : MonoBehaviour
         }
         for (int i = 0; i < ListInt_ColorOfCubeN2.Count; i++)
         {
+            ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
             switch (ListInt_ColorOfCubeN2[i])
             {
                 case 0:
-                    ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                     ListGameObject_CubeN2[i].transform.Find("Frames").gameObject.SetActive(true);
                     break;
                 case 1:
-                    ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                     ListGameObject_CubeN2[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 2:
-                    ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                     ListGameObject_CubeN2[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 3:
-                    ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                     ListGameObject_CubeN2[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                     ListGameObject_CubeN2[i].transform.Find("Frames").gameObject.SetActive(false);
@@ -9964,28 +9952,26 @@ public class AIVsAI_Control : MonoBehaviour
         }
         for (int i = 0; i < ListInt_ColorOfCubeN3.Count; i++)
         {
+            ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
             switch (ListInt_ColorOfCubeN3[i])
             {
                 case 0:
-                    ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                     ListGameObject_CubeN3[i].transform.Find("Frames").gameObject.SetActive(true);
                     break;
                 case 1:
-                    ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                     ListGameObject_CubeN3[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 2:
-                    ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                     ListGameObject_CubeN3[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 3:
-                    ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                     ListGameObject_CubeN3[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                     ListGameObject_CubeN3[i].transform.Find("Frames").gameObject.SetActive(false);
@@ -10141,28 +10127,26 @@ public class AIVsAI_Control : MonoBehaviour
         }
         for (int i = 0; i < ListInt_ColorOfCubeN4.Count; i++)
         {
+            ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
             switch (ListInt_ColorOfCubeN4[i])
             {
                 case 0:
-                    ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                     ListGameObject_CubeN4[i].transform.Find("Frames").gameObject.SetActive(true);
                     break;
                 case 1:
-                    ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                     ListGameObject_CubeN4[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 2:
-                    ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                     ListGameObject_CubeN4[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 3:
-                    ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                     ListGameObject_CubeN4[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                     ListGameObject_CubeN4[i].transform.Find("Frames").gameObject.SetActive(false);
@@ -10318,28 +10302,26 @@ public class AIVsAI_Control : MonoBehaviour
         }
         for (int i = 0; i < ListInt_ColorOfCubeN5.Count; i++)
         {
+            ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
             switch (ListInt_ColorOfCubeN5[i])
             {
                 case 0:
-                    ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Default;
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Default);
                     ListGameObject_CubeN5[i].transform.Find("Frames").gameObject.SetActive(true);
                     break;
                 case 1:
-                    ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
                     ListGameObject_CubeN5[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 2:
-                    ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
                     ListGameObject_CubeN5[i].transform.Find("Frames").gameObject.SetActive(false);
                     break;
                 case 3:
-                    ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                     ListGameObject_CubeN5[i].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
                     ListGameObject_CubeN5[i].transform.Find("Frames").gameObject.SetActive(false);
@@ -10468,7 +10450,7 @@ public class AIVsAI_Control : MonoBehaviour
         //CubePの再設置
         for (int i = 0; i < ListGameObject_CubeP.Count; i++)
         {
-            ListGameObject_CubeP[i].transform.position = Mark_Cube_O.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
+            ListGameObject_CubeP[i].transform.position = Mark_Cube.transform.position + new Vector3(i % 5 + 1, Mathf.FloorToInt(i / 5) + 1, 0);
             ListGameObject_CubeP[i].transform.position += new Vector3(-10, 32.25f, 0);
             ListGameObject_CubeP[i].transform.position -= new Vector3(i % 5 * 0.5f, Mathf.FloorToInt(i / 5) * 0.5f, 0);
             ListGameObject_CubeP[i].transform.position += new Vector3(Mathf.FloorToInt(i / 25) * 3, -Mathf.FloorToInt(i / 25) * 2.5f, 0);
@@ -10538,165 +10520,11 @@ public class AIVsAI_Control : MonoBehaviour
         }
     }
 
-    //CubeGの価値付け
-    void Evaluating_CubeG()
-    {
-        bool IsChanging = true;
-
-        //
-        for (int x = 0; x < ListInt_ColorOfCubeG.Count; x++)
-        {
-            if (ListInt_TypeOfCubeG[x] != 1)
-            {
-                if (ListInt_ColorOfCubeG[x] == 0)
-                {
-                    ListInt_PriorityOfCubeG[x] = 0;
-                }
-                if (ListInt_ColorOfCubeG[x] == ColorOfFirstCandidate)
-                {
-                    ListInt_PriorityOfCubeG[x] = 1;
-                }
-                else
-                {
-                    if (ListInt_ColorOfCubeG[x] == ColorOfSecondCandidate)
-                    {
-                        ListInt_PriorityOfCubeG[x] = 3;
-                    }
-                    else
-                    {
-                        if (ListInt_ColorOfCubeG[x] == ColorOfThirdCandidate)
-                        {
-                            ListInt_PriorityOfCubeG[x] = 5;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                ListInt_PriorityOfCubeG[x] = 0;
-            }
-        }
-        //
-        for (int x = 0; x < ListInt_PriorityOfCubeG.Count; x++)
-        {
-            if (x % 14 + 1 == 3 | x % 14 + 1 == 12)
-            {
-                switch (ListInt_PriorityOfCubeG[x])
-                {
-                    case 1:
-                        ListInt_PriorityOfCubeG[x] = 2;
-                        break;
-                    case 3:
-                        ListInt_PriorityOfCubeG[x] = 4;
-                        break;
-                    case 5:
-                        ListInt_PriorityOfCubeG[x] = 6;
-                        break;
-                }
-            }
-        }
-        //
-        while (IsChanging == true)
-        {
-            IsChanging = false;
-
-            for (int x = 0; x < ListInt_PriorityOfCubeG.Count; x++)
-            {
-                switch (ListInt_PriorityOfCubeG[x])
-                {
-                    case 2:
-                        if (ListInt_PriorityOfCubeG[x + 14] == 1)
-                        {
-                            ListInt_PriorityOfCubeG[x + 14] = 2;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x - 14] == 1)
-                        {
-                            ListInt_PriorityOfCubeG[x - 14] = 2;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x + 1] == 1)
-                        {
-                            ListInt_PriorityOfCubeG[x + 1] = 2;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x - 1] == 1)
-                        {
-                            ListInt_PriorityOfCubeG[x - 1] = 2;
-                            IsChanging = true;
-                        }
-                        break;
-                    case 4:
-                        if (ListInt_PriorityOfCubeG[x + 14] == 3)
-                        {
-                            ListInt_PriorityOfCubeG[x + 14] = 4;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x - 14] == 3)
-                        {
-                            ListInt_PriorityOfCubeG[x - 14] = 4;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x + 1] == 3)
-                        {
-                            ListInt_PriorityOfCubeG[x + 1] = 4;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x - 1] == 3)
-                        {
-                            ListInt_PriorityOfCubeG[x - 1] = 4;
-                            IsChanging = true;
-                        }
-                        break;
-                    case 6:
-                        if (ListInt_PriorityOfCubeG[x + 14] == 5)
-                        {
-                            ListInt_PriorityOfCubeG[x + 14] = 6;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x - 14] == 5)
-                        {
-                            ListInt_PriorityOfCubeG[x - 14] = 6;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x + 1] == 5)
-                        {
-                            ListInt_PriorityOfCubeG[x + 1] = 6;
-                            IsChanging = true;
-                        }
-                        if (ListInt_PriorityOfCubeG[x - 1] == 5)
-                        {
-                            ListInt_PriorityOfCubeG[x - 1] = 6;
-                            IsChanging = true;
-                        }
-                        break;
-                }
-            }
-        }
-        //
-        int a = 0;
-        while (a <= 28)
-        {
-            if (ListInt_ColorOfCubeG[30 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[44 + (14 * a)] == 0 & ListInt_ColorOfCubeG[31 + (14 * a)] != ColorOfFirstCandidate)
-            {
-                ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
-            }
-            if (ListInt_ColorOfCubeG[39 + (14 * a)] == ColorOfFirstCandidate & ListInt_ColorOfCubeG[53 + (14 * a)] == 0 & ListInt_ColorOfCubeG[38 + (14 * a)] != ColorOfFirstCandidate)
-            {
-                ListInt_PriorityOfCubeG[30 + (14 * a)] = -1;
-            }
-
-            a += 1;
-        }
-
-        Invoke("Brain", 0);
-    }
-
 
     //CubeGを爆破
     void Exploding_CubeG()
     {
-        AudioSource_AudioSource18.Play();
+        AudioSource_AudioSource15.Play();
 
         //CubeDの再設置
         for (int i = 0; i < ListGameObject_CubeG.Count; i++)
@@ -10722,59 +10550,38 @@ public class AIVsAI_Control : MonoBehaviour
 
         for (int i = 0; i < ListInt_ColorOfCubeG.Count; i++)
         {
-            if (i % 14 + 1 >= 3 & i % 14 + 1 <= 12 & Mathf.FloorToInt(i / 14) + 1 >= 3 & Mathf.FloorToInt(i / 14) + 1 <= 33)
+            if (i % 14 + 1 >= 3 && i % 14 + 1 <= 12 && Mathf.FloorToInt(i / 14) + 1 >= 3 && Mathf.FloorToInt(i / 14) + 1 <= 33)
             {
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+
                 switch (ListInt_ColorOfCubeG[i])
                 {
                     case 1:
                         ListGameObject_CubeD[i - 30 - b].SetActive(true);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Red;
                         ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Red);
-
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<CubeD_Control>().enabled = true;
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
-
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 10, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 5, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 0, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -5, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -10, 5), 100, 0);
                         break;
                     case 2:
                         ListGameObject_CubeD[i - 30 - b].SetActive(true);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Green;
                         ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Green);
-
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<CubeD_Control>().enabled = true;
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
-
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 10, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 5, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 0, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -5, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -10, 5), 100, 0);
                         break;
                     case 3:
                         ListGameObject_CubeD[i - 30 - b].SetActive(true);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                         ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.color = Albedo_Blue;
                         ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", Emission_Blue);
-
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<CubeD_Control>().enabled = true;
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
-
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 10, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 5, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 0, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -5, 5), 100, 0);
-                        ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube_O.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -10, 5), 100, 0);
                         break;
                 }
+
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<CubeD_Control>().enabled = true;
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<BoxCollider>().enabled = true;
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().useGravity = true;
+
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 10, 5), 100, 0);
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 5, 5), 100, 0);
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, 0, 5), 100, 0);
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -5, 5), 100, 0);
+                ListGameObject_CubeD[i - 30 - b].transform.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(0, 500), Mark_Cube.transform.position + new Vector3(5.5f, 15.5f, 0) + new Vector3(0, -10, 5), 100, 0);
 
                 a += 1;
 
