@@ -2490,7 +2490,7 @@ public class AIVsAI_Control : MonoBehaviour
                             //BestCoordinateOfFirstCandidateを算出
                             ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf2 + 14);
                             //
-                            ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf2 + 14 + 1);
+                            //ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf2 + 14 + 1);
                         }
                     }
                     //
@@ -2524,7 +2524,7 @@ public class AIVsAI_Control : MonoBehaviour
                             //BestCoordinateOfFirstCandidateを算出
                             ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14);
                             //
-                            ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14 -1);
+                            //ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14 -1);
                         }
                     }
                     //
@@ -7505,7 +7505,21 @@ public class AIVsAI_Control : MonoBehaviour
                 }
             }
 
-            Invoke("ContinuousRightRoll_CurrentBlock", RateOfMovement);
+            //
+            if (RotationOfCurrentBlock >= 4)
+            {
+                RotationOfCurrentBlock -= 4;
+            }
+            if (RotationOfCurrentBlock > 2)
+            {
+                RotationOfCurrentBlock -= 2;
+
+                Invoke("ContinuousLeftRoll_CurrentBlock", RateOfMovement);
+            }
+            else
+            {
+                Invoke("ContinuousRightRoll_CurrentBlock", RateOfMovement);
+            }
         }
 
         Invoke("Painting_CubeS", 0);
@@ -8516,6 +8530,768 @@ public class AIVsAI_Control : MonoBehaviour
         if (RotationOfCurrentBlock == 0)
         {
             CancelInvoke("ContinuousRightRoll_CurrentBlock");
+
+            //CurrentBlockのX座標は最善のX座標か否か
+            if (CoordinateOfCurrentBlock % 14 + 1 == PosXOfCurrentBlock)
+            {
+                //T
+
+                //CurrentBlockを設置する
+                Invoke("IntermittentDownMovement_CurrentBlock", RateOfMovement);
+            }
+            else
+            {
+                //F
+
+                //CurrentBlockのX座標は最善のX座標より右にあるか否か
+                if (CoordinateOfCurrentBlock % 14 + 1 > PosXOfCurrentBlock)
+                {
+                    //T
+
+                    //CurrentBlockのX座標を最善のX座標にする(右から左へ)
+                    Invoke("ContinuousLeftMovement_CurrentBlock", RateOfMovement);
+                }
+                else
+                {
+                    //F
+
+                    //CurrentBlockのX座標を最善のX座標にする(左から右へ)
+                    Invoke("ContinuousRightMovement_CurrentBlock", RateOfMovement);
+                }
+            }
+        }
+    }
+    //CurrentBlockの左回転(S)
+    void IntermittentLeftRoll_CurrentBlock()
+    {
+        if (ListInt_TypeOfCubeG.Contains(1) == true)
+        {
+            ListInt_DataOfTemporaryBlock1 = new List<int> { };
+            ListInt_OverlapCubeG = new List<int> { };
+
+            for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+            {
+                ListInt_DataOfTemporaryBlock1.Add((ListInt_DataOfCurrentBlock[i] % 14 + 1 - 1) * 14 + (ListInt_SideLengthOfCurrentBlock.Max() - (Mathf.FloorToInt(ListInt_DataOfCurrentBlock[i] / 14) + 1)));
+            }
+
+            int a = 0;
+            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+            {
+                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock1[i]] == 1)
+                {
+                    a += 1;
+                }
+                else if (ListInt_SideLengthOfCurrentBlock.Max() != ListInt_SideLengthOfCurrentBlock.Min())
+                {
+                    ListInt_OverlapCubeG.Add(ListInt_DataOfTemporaryBlock1[i]);
+                }
+            }
+
+            if (ListInt_DataOfCurrentBlock.Count == a)
+            {
+                //CurrentBlockの左回転が可能な時
+                //AudioSource_AudioSource6.Play();
+
+                CancelInvoke("Disassembly_CurrentBlock");
+                CanInvokeDisassembly_CurrentBlock = true;
+
+                if (DirectionOfCurrentBlock > 1)
+                {
+                    DirectionOfCurrentBlock -= 1;
+                }
+                else
+                {
+                    DirectionOfCurrentBlock = 4;
+                }
+
+                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                {
+                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                }
+
+                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+
+                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                {
+                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                }
+            }
+            else if (ListInt_SideLengthOfCurrentBlock.Max() != ListInt_SideLengthOfCurrentBlock.Min())
+            {
+                //CurrentBlockの左回転が不可能な時
+                switch (ListInt_SideLengthOfCurrentBlock.Max())
+                {
+                    case 2:
+                        //上+1
+                        if (ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(14) == true ||
+                            ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(15) == true)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 14);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 14;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //左+1
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == true ||
+                            ListInt_OverlapCubeG.Contains(15) == true && ListInt_DataOfTemporaryBlock1.Contains(14) == true)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] - 1);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock -= 1;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //右+1
+                        if (ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(1) == true ||
+                            ListInt_OverlapCubeG.Contains(14) == true && ListInt_DataOfTemporaryBlock1.Contains(15) == true)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 1);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 1;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        break;
+                    case 3:
+                        //上+1
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(14) == false && ListInt_DataOfTemporaryBlock1.Contains(28) == false ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(14) == false && ListInt_DataOfTemporaryBlock1.Contains(28) == false ||
+                            ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(2) == false && ListInt_DataOfTemporaryBlock1.Contains(16) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false ||
+                            ListInt_OverlapCubeG.Contains(1) == true && ListInt_DataOfTemporaryBlock1.Contains(2) == false && ListInt_DataOfTemporaryBlock1.Contains(16) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 14);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 14;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //左+1
+                        if (ListInt_OverlapCubeG.Contains(16) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(30) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(16) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] - 1);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock -= 1;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //右+1
+                        if (ListInt_OverlapCubeG.Contains(14) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(28) == true && ListInt_DataOfTemporaryBlock1.Contains(0) == false && ListInt_DataOfTemporaryBlock1.Contains(1) == false && ListInt_DataOfTemporaryBlock1.Contains(2) == false ||
+                            ListInt_OverlapCubeG.Contains(14) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false ||
+                            ListInt_OverlapCubeG.Contains(0) == true && ListInt_DataOfTemporaryBlock1.Contains(28) == false && ListInt_DataOfTemporaryBlock1.Contains(29) == false && ListInt_DataOfTemporaryBlock1.Contains(30) == false)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 1);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 1;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        break;
+                    case 4:
+                        //上+1
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_OverlapCubeG.Contains(15) == false ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_OverlapCubeG.Contains(16) == false)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 14);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 14;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //左+1
+                        if (ListInt_OverlapCubeG.Contains(17) == true && ListInt_OverlapCubeG.Contains(16) == false ||
+                            ListInt_OverlapCubeG.Contains(31) == true && ListInt_OverlapCubeG.Contains(30) == false)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] - 1);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock -= 1;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //右+1
+                        if (ListInt_OverlapCubeG.Contains(14) == true && ListInt_OverlapCubeG.Contains(15) == false ||
+                            ListInt_OverlapCubeG.Contains(28) == true && ListInt_OverlapCubeG.Contains(29) == false)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 1);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 1;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //上+2
+                        if (ListInt_OverlapCubeG.Contains(1) == true && ListInt_OverlapCubeG.Contains(15) == true ||
+                            ListInt_OverlapCubeG.Contains(2) == true && ListInt_OverlapCubeG.Contains(16) == true)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 28);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 28;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //左+2
+                        if (ListInt_OverlapCubeG.Contains(17) == true && ListInt_OverlapCubeG.Contains(16) == true ||
+                            ListInt_OverlapCubeG.Contains(31) == true && ListInt_OverlapCubeG.Contains(30) == true)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] - 2);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock -= 2;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        //右+2
+                        if (ListInt_OverlapCubeG.Contains(14) == true && ListInt_OverlapCubeG.Contains(15) == true ||
+                            ListInt_OverlapCubeG.Contains(28) == true && ListInt_OverlapCubeG.Contains(29) == true)
+                        {
+                            ListInt_DataOfTemporaryBlock2 = new List<int> { };
+                            a = 0;
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock1.Count; i++)
+                            {
+                                ListInt_DataOfTemporaryBlock2.Add(ListInt_DataOfTemporaryBlock1[i] + 2);
+                            }
+
+                            for (int i = 0; i < ListInt_DataOfTemporaryBlock2.Count; i++)
+                            {
+                                if (ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 0 || ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfTemporaryBlock2[i]] == 1)
+                                {
+                                    a += 1;
+                                }
+                            }
+
+                            if (ListInt_DataOfTemporaryBlock1.Count == a)
+                            {
+                                //CurrentBlockの左回転が可能な時
+                                //AudioSource_AudioSource6.Play();
+
+                                CancelInvoke("Disassembly_CurrentBlock");
+                                CanInvokeDisassembly_CurrentBlock = true;
+
+                                if (DirectionOfCurrentBlock < 4)
+                                {
+                                    DirectionOfCurrentBlock += 1;
+                                }
+                                else
+                                {
+                                    DirectionOfCurrentBlock = 1;
+                                }
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 0;
+                                }
+
+                                ListInt_DataOfCurrentBlock = ListInt_DataOfTemporaryBlock1;
+                                CoordinateOfCurrentBlock += 2;
+
+                                for (int i = 0; i < ListInt_DataOfCurrentBlock.Count; i++)
+                                {
+                                    ListInt_ColorOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = ColorOfCurrentBlock;
+                                    ListInt_TypeOfCubeG[CoordinateOfCurrentBlock + ListInt_DataOfCurrentBlock[i]] = 1;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            a = 0;
+
+            Invoke("Painting_CubeG", 0);
+        }
+    }
+    //CurrentBlockの左回転(F)
+    void ContinuousLeftRoll_CurrentBlock()
+    {
+        Invoke("ContinuousLeftRoll_CurrentBlock", RateOfMovement);
+
+        if (RotationOfCurrentBlock > 0)
+        {
+            RotationOfCurrentBlock -= 1;
+
+            Invoke("IntermittentLeftRoll_CurrentBlock", 0);
+        }
+        if (RotationOfCurrentBlock == 0)
+        {
+            CancelInvoke("ContinuousLeftRoll_CurrentBlock");
 
             //CurrentBlockのX座標は最善のX座標か否か
             if (CoordinateOfCurrentBlock % 14 + 1 == PosXOfCurrentBlock)
