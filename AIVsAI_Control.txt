@@ -2534,7 +2534,7 @@ public class AIVsAI_Control : MonoBehaviour
                         {
                             //BestCoordinateOfFirstCandidateを算出
                             ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14);
-                            ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14 -1);
+                            ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14 - 1);
                         }
                     }
                     //
