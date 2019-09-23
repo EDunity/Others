@@ -1848,6 +1848,18 @@ public class AIVsAI_Control : MonoBehaviour
                     CountOfB += 1;
                     break;
             }
+            switch (ColorOfHoldBlock)
+            {
+                case 1:
+                    CountOfR += 1;
+                    break;
+                case 2:
+                    CountOfG += 1;
+                    break;
+                case 3:
+                    CountOfB += 1;
+                    break;
+            }
         }
         //
         List<int> ListInt1 = new List<int> { };
@@ -2489,8 +2501,7 @@ public class AIVsAI_Control : MonoBehaviour
                         {
                             //BestCoordinateOfFirstCandidateを算出
                             ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf2 + 14);
-                            //
-                            //ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf2 + 14 + 1);
+                            ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf2 + 14 + 1);
                         }
                     }
                     //
@@ -2523,8 +2534,7 @@ public class AIVsAI_Control : MonoBehaviour
                         {
                             //BestCoordinateOfFirstCandidateを算出
                             ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14);
-                            //
-                            //ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14 -1);
+                            ListInt_BestCoordinateOfFirstCandidate.Add(CoordinateOfTipOf3 + 14 -1);
                         }
                     }
                     //
