@@ -1953,9 +1953,9 @@ public class AIVsAI_Control : MonoBehaviour
     //脳
     void Brain()
     {
-        List<int> ListInt_BestCoordinateOfFirstCandidate = new List<int> { };
-        List<int> ListInt_BestCoordinateOfSecondCandidate = new List<int> { };
-        List<int> ListInt_BestCoordinateOfThirdCandidate = new List<int> { };
+        ListInt_BestCoordinateOfFirstCandidate = new List<int> { };
+        ListInt_BestCoordinateOfSecondCandidate = new List<int> { };
+        ListInt_BestCoordinateOfThirdCandidate = new List<int> { };
 
         Debug.Log("-----------------------------------------------------------------------------------------------------------------------------------------------");
 
