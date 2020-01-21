@@ -1,4 +1,4 @@
-        //ShortCutKey
+        //ショートカットキー
         if (CanUseShortCutKey == true)
         {
             if (Input.GetKeyUp(KeyCode.Q))
